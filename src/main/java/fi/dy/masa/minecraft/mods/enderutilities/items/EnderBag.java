@@ -34,13 +34,13 @@ public class EnderBag extends Item
 		if (stack.stackTagCompound != null)
 		{
 			// The bag must be in public mode, or the player must be the owner
-			if (stack.stackTagCompound.getByte("mode") == 1
-				|| stack.stackTagCompound.getString("owner").equals(player.getDisplayName()) == true)
+			if (stack.getTagCompound().getByte("mode") == 1
+				|| stack.getTagCompound().getString("owner").equals(player.getDisplayName()) == true)
 			{
 				// Unbind the bag when sneak + right clicking on air
 				if (player.isSneaking() == true && Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.MISS)
 				{
-					stack.stackTagCompound = null;
+					stack.setTagCompound(null);
 				}
 			}
 		}
@@ -68,11 +68,11 @@ public class EnderBag extends Item
 				//System.out.println("te: " + te.toString()); // FIXME debug
 
 				// The bag must be in public mode, or the player must be the owner
-				if (stack.stackTagCompound == null
-					|| stack.stackTagCompound.getByte("mode") == 1
-					|| stack.stackTagCompound.getString("owner").equals(player.getDisplayName()) == true)
+				if (stack.getTagCompound() == null
+					|| stack.getTagCompound().getByte("mode") == 1
+					|| stack.getTagCompound().getString("owner").equals(player.getDisplayName()) == true)
 				{
-					stack.stackTagCompound = new NBTTagCompound();
+					stack.setTagCompound(new NBTTagCompound());
 					NBTTagCompound target = new NBTTagCompound();
 					target.setInteger("dim", dim);
 					target.setInteger("posX", x);
@@ -88,9 +88,9 @@ public class EnderBag extends Item
 						target.setString("locname", name); // FIXME crappy check
 					}
 
-					stack.stackTagCompound.setString("owner", player.getDisplayName()); // FIXME
-					stack.stackTagCompound.setByte("mode", (byte)0); // 0 = private, 1 = public, 2 = friends (N/A)
-					stack.stackTagCompound.setTag("target", target);
+					stack.getTagCompound().setString("owner", player.getDisplayName()); // FIXME
+					stack.getTagCompound().setByte("mode", (byte)0); // 0 = private, 1 = public, 2 = friends (N/A)
+					stack.getTagCompound().setTag("target", target);
 				}
 			}
 			//System.out.println("Is Tile Entity");
