@@ -1,8 +1,11 @@
 package fi.dy.masa.minecraft.mods.enderutilities.items;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
@@ -22,6 +25,7 @@ public class EnderBag extends Item
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
 	{
+/*
 		System.out.println("onItemRightClick");
 		if (world.isRemote == false)
 		{
@@ -31,13 +35,38 @@ public class EnderBag extends Item
 		{
 			System.out.println("world.isRemote == true");
 		}
+*/
 		return itemStack;
 	}
 
 	@Override
 	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
 	{
-		System.out.println("onItemUseFirst");
+		// Do nothing on the client side
+		if (world.isRemote == true)
+		{
+			return false;
+		}
+
+		// FIXME debug code below!!
+		//System.out.println("onItemUseFirst");
+
+		Block block = world.getBlock(x, y, z);
+
+		if (block instanceof BlockChest)
+		{
+			System.out.println("Is a Chest!");
+		}
+
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te != null)
+		{
+			System.out.println("Is Tile Entity");
+		}
+		else
+		{
+			System.out.println("Not a Tile Entity");
+		}
 		return false;
 	}
 
