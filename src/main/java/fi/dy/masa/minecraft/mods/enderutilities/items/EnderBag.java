@@ -37,9 +37,9 @@ public class EnderBag extends Item
 		{
 			stack.stackTagCompound = null;
 		}
-/*
+
 		System.out.println("onItemRightClick");
-		if (world.isRemote == false)
+/*		if (world.isRemote == false)
 		{
 			System.out.println("world.isRemote == false");
 		}
@@ -61,16 +61,7 @@ public class EnderBag extends Item
 			return false;
 		}
 
-		// FIXME debug code below!!
-		//System.out.println("onItemUseFirst");
-
-		Block block = world.getBlock(x, y, z);
-
-		if (block instanceof BlockChest)
-		{
-			//System.out.println("Is a Chest!");
-		}
-
+		System.out.println("onItemUse");
 		TileEntity te = world.getTileEntity(x, y, z);
 		if (te != null)
 		{
@@ -78,7 +69,8 @@ public class EnderBag extends Item
 			{
 				int numSlots = ((IInventory) te).getSizeInventory();
 				int dim = player.dimension; // FIXME is this the right way of getting the dimension?
-				System.out.printf("Block at %d, %d, %d (dim: %d) has an inventory of %d slots\n", x, y, z, dim, numSlots); // FIXME debug
+				//System.out.printf("Block at %d, %d, %d (dim: %d) has an inventory of %d slots\n", x, y, z, dim, numSlots); // FIXME debug
+				System.out.println("te: " + te.toString()); // FIXME debug
 
 				// Only the owner is allowed to change the binding
 				if (stack.stackTagCompound == null || stack.stackTagCompound.getString("owner").equals(player.getDisplayName()) == true)
