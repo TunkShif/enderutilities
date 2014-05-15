@@ -107,17 +107,20 @@ public class EnderBag extends Item
 			int y = stack.stackTagCompound.getCompoundTag("target").getInteger("posY");
 			int z = stack.stackTagCompound.getCompoundTag("target").getInteger("posZ");
 			list.add("owner: " + owner);
-			list.add("dimension: " + dim);
+
+			String dimPre = "" + EnumChatFormatting.BLUE;
+			String cPre = "" + EnumChatFormatting.BLUE;
+			String rst = "" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY;
 
 			// Don't show the bound location to others, only the owner sees that
 			if (player.getDisplayName().equals(owner) == false) // FIXME
 			{
-				list.add(EnumChatFormatting.OBFUSCATED + String.format("x: %d, y: %d, z: %d", x, y, z) + EnumChatFormatting.RESET);
+				dimPre = "" + EnumChatFormatting.OBFUSCATED;
+				cPre = "" + EnumChatFormatting.OBFUSCATED;
 			}
-			else
-			{
-				list.add(String.format("x: %d, y: %d, z: %d", x, y, z));
-			}
+
+			list.add(String.format("dimension: %s%d%s", dimPre, dim, rst));
+			list.add(String.format("x: %s%d%s, y: %s%d%s, z: %s%d%s", cPre, x, rst, cPre, y, rst, cPre, z, rst));
 		}
 	}
 
