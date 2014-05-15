@@ -149,14 +149,7 @@ public class EnderBucket extends Item
 				return stack;
 			}
 
-			targetFluidName = Block.blockRegistry.getNameForObject(nbtFluid);
-			if (targetFluidName == null || targetFluidName.length() == 0)
-			{
-				FMLLog.warning("Invalid or null block name (nbtFluid: " + nbtFluid + ")");
-				return stack;
-			}
-
-			nbtFluidBlock = Block.getBlockFromName(targetFluidName);
+			nbtFluidBlock = Block.getBlockFromName(nbtFluid);
 			if (nbtFluidBlock == null)
 			{
 				FMLLog.warning("Fluid block was null");
