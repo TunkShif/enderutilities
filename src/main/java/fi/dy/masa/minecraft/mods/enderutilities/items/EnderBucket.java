@@ -33,8 +33,7 @@ public class EnderBucket extends Item
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
-		boolean canPickupFluid = true;
-		String nbtFluidName = "";
+		String nbtFluid = "";
 		short nbtAmount = 0;
 		String targetFluidName;
 		Block targetBlock;
@@ -54,7 +53,7 @@ public class EnderBucket extends Item
 
 		if (nbt != null)
 		{
-			nbtFluidName = nbt.getString("fluid");
+			nbtFluid = nbt.getString("fluid");
 			nbtAmount = nbt.getShort("amount");
 		}
 		else
@@ -81,7 +80,7 @@ public class EnderBucket extends Item
 			targetFluidName = Block.blockRegistry.getNameForObject(targetBlock);
 
 			// Same fluid, or empty bucket
-			if (targetFluidName.equals(nbtFluidName) == true || nbtAmount == 0) // FIXME needs a proper block type check?
+			if (targetFluidName.equals(nbtFluid) == true || nbtAmount == 0) // FIXME needs a proper block type check?
 			{
 				// Do we have space, and can we change the fluid block?
 				if ((MAX_AMOUNT - nbtAmount) < 1000 || player.canPlayerEdit(x, y, z, movingobjectposition.sideHit, stack) == false)
@@ -96,7 +95,7 @@ public class EnderBucket extends Item
 					{
 						nbtAmount += 1000;
 						nbt.setShort("amount", nbtAmount);
-						if (nbtFluidName.length() == 0)
+						if (nbtFluid.length() == 0)
 						{
 							nbt.setString("fluid", targetFluidName);
 						}
@@ -128,7 +127,7 @@ public class EnderBucket extends Item
 				return stack;
 			}
 
-			Block fluidBlock = Block.getBlockFromName(targetFluidName);
+			Block fluidBlock = Block.getBlockFromName(Block.blockRegistry.getNameForObject(nbtFluid));
 			if (this.tryPlaceContainedFluid(world, x, y, z, fluidBlock) == true)
 			{
 				nbtAmount -= 1000;
