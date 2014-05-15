@@ -181,7 +181,7 @@ public class EnderBucket extends Item
 	public boolean tryPlaceContainedFluid(World world, int x, int y, int z, Block fluid)
 	{
 		Material material = world.getBlock(x, y, z).getMaterial();
-	
+
 		if (world.isAirBlock(x, y, z) == false && material.isSolid() == true)
 		{
 			return false;
@@ -190,7 +190,7 @@ public class EnderBucket extends Item
 		if (world.provider.isHellWorld && fluid == Blocks.flowing_water)
 		{
 			world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-		
+
 			for (int l = 0; l < 8; ++l)
 			{
 				world.spawnParticle("largesmoke", (double)x + Math.random(), (double)y + Math.random(), (double)z + Math.random(), 0.0D, 0.0D, 0.0D);
@@ -202,10 +202,11 @@ public class EnderBucket extends Item
 			{
 				world.func_147480_a(x, y, z, true);
 			}
-		
+
 			world.setBlock(x, y, z, fluid, 0, 3);
+			//world.notifyBlockChange(x, y, z, fluid); // FIXME this doesn't work
 		}
-		
+
 		return true;
 	}
 
