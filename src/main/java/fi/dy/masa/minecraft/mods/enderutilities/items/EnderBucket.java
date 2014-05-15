@@ -36,17 +36,20 @@ public class EnderBucket extends Item
 	{
 		String nbtFluid = "";
 		short nbtAmount = 0;
+
+		Block nbtFluidBlock;
+		Material nbtFluidMaterial = null;
+
 		String targetFluidName;
 		Block targetBlock;
 		Material targetMaterial;
-		//Fluid targetFluid;
 
 		// FIXME the boolean flag does what exactly? In vanilla it seems to indicate that the bucket is empty.
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
 
 		if (movingobjectposition == null)
 		{
-			System.out.println("null");
+			System.out.println("null"); // FIXME debug
 			return stack;
 		}
 
@@ -80,12 +83,22 @@ public class EnderBucket extends Item
 			//targetFluidName = targetBlock.getUnlocalizedName();
 			targetFluidName = Block.blockRegistry.getNameForObject(targetBlock);
 
+			if (nbtFluid.length() > 0)
+			{
+				if (Block.getBlockFromName(nbtFluid) != null)
+				{
+					nbtFluidMaterial = Block.getBlockFromName(nbtFluid).getMaterial();
+				}
+			}
+
 			// Same fluid, or empty bucket
-			if (targetFluidName.equals(nbtFluid) == true || nbtAmount == 0) // FIXME needs a proper block type check?
+			//if (targetFluidName.equals(nbtFluid) == true || nbtAmount == 0) // FIXME needs a proper block type check?
+			if (nbtAmount == 0 || targetMaterial.equals(nbtFluidMaterial) == true) // FIXME needs a proper block type check?
 			{
 				// Do we have space, and can we change the fluid block?
 				if ((MAX_AMOUNT - nbtAmount) < 1000 || player.canPlayerEdit(x, y, z, movingobjectposition.sideHit, stack) == false)
 				{
+					System.out.println("no space or can't edit"); // FIXME debug
 					return stack;
 				}
 
@@ -142,14 +155,15 @@ public class EnderBucket extends Item
 				FMLLog.warning("Invalid or null block name (nbtFluid: " + nbtFluid + ")");
 				return stack;
 			}
-			Block fluidBlock = Block.getBlockFromName(targetFluidName);
-			if (fluidBlock == null)
+
+			nbtFluidBlock = Block.getBlockFromName(targetFluidName);
+			if (nbtFluidBlock == null)
 			{
 				FMLLog.warning("Fluid block was null");
 				return stack;
 			}
 
-			if (this.tryPlaceContainedFluid(world, x, y, z, fluidBlock) == true)
+			if (this.tryPlaceContainedFluid(world, x, y, z, nbtFluidBlock) == true)
 			{
 				nbtAmount -= 1000;
 				nbt.setShort("amount", nbtAmount);
