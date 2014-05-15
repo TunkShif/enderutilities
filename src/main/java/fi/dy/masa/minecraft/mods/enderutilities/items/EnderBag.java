@@ -1,5 +1,7 @@
 package fi.dy.masa.minecraft.mods.enderutilities.items;
 
+import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
+import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 import net.minecraft.item.Item;
 
 public class EnderBag extends Item
@@ -7,7 +9,9 @@ public class EnderBag extends Item
 	public EnderBag()
 	{
 		super();
-		this.maxStackSize = 1;
-		//this.setCreativeTab(CreativeTab.);
+		this.setMaxStackSize(1);
+		this.setHasSubtypes(true);
+		this.setUnlocalizedName(Reference.NAME_ITEM_ENDER_BAG);
+		this.setCreativeTab(CreativeTab.ENDER_UTILITIES_TAB);
 	}
 }
