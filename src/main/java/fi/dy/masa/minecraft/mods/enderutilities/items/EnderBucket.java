@@ -30,7 +30,16 @@ public class EnderBucket extends Item
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
-		NBTTagCompound nbt = stack.getTagCompound();
+		// FIXME the boolean flag does what exactly? In vanilla it seems to indicate that the bucket is empty.
+        MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
+
+		if (movingobjectposition == null)
+		{
+			System.out.println("null");
+			return stack;
+		}
+
+        NBTTagCompound nbt = stack.getTagCompound();
 
 		if (nbt != null)
 		{
