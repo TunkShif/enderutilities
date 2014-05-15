@@ -34,12 +34,12 @@ public class EnderBucket extends Item
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
 		boolean canPickupFluid = true;
-		String fluidName = "";
-		short amount = 0;
+		String nbtFluidName = "";
+		short nbtAmount = 0;
 		String targetFluidName;
 		Block targetBlock;
 		Material targetMaterial;
-		Fluid targetFluid;
+		//Fluid targetFluid;
 
 		// FIXME the boolean flag does what exactly? In vanilla it seems to indicate that the bucket is empty.
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
@@ -54,8 +54,12 @@ public class EnderBucket extends Item
 
 		if (nbt != null)
 		{
-			fluidName = nbt.getString("fluid");
-			amount = nbt.getShort("amount");
+			nbtFluidName = nbt.getString("fluid");
+			nbtAmount = nbt.getShort("amount");
+		}
+		else
+		{
+			nbt = new NBTTagCompound();
 		}
 
 		if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
@@ -73,12 +77,13 @@ public class EnderBucket extends Item
 			targetBlock = world.getBlock(x, y, z);
 			targetMaterial = targetBlock.getMaterial();
 			int meta = world.getBlockMetadata(x, y, z);
+			targetFluidName = targetBlock.getUnlocalizedName();
 
-			// Same fluid, or empty bucket FIXME needs a proper block type check?
-			if (targetBlock.getUnlocalizedName().equals(fluidName) == true || amount == 0)
+			// Same fluid, or empty bucket
+			if (targetFluidName.equals(nbtFluidName) == true || nbtAmount == 0) // FIXME needs a proper block type check?
 			{
 				// Do we have space, and can we change the fluid block?
-				if ((MAX_AMOUNT - amount) < 1000 || player.canPlayerEdit(x, y, z, movingobjectposition.sideHit, stack) == false)
+				if ((MAX_AMOUNT - nbtAmount) < 1000 || player.canPlayerEdit(x, y, z, movingobjectposition.sideHit, stack) == false)
 				{
 					return stack;
 				}
@@ -88,8 +93,14 @@ public class EnderBucket extends Item
 				{
 					if (world.setBlockToAir(x, y, z) == true)
 					{
-						amount += 1000;
-						nbt.setShort("amount", amount);
+						nbtAmount += 1000;
+						nbt.setShort("amount", nbtAmount);
+						if (nbtFluidName.length() == 0)
+						{
+							nbt.setString("fluid", targetFluidName);
+						}
+						stack.setTagCompound(nbt);
+						System.out.println("herehere"); // FIXME debug
 					}
 				}
 				return stack;
@@ -98,7 +109,7 @@ public class EnderBucket extends Item
 			// Different fluid, or other block type, we try to place a fluid block in the world
 
 			// No fluid stored
-			if (amount < 1000)
+			if (nbtAmount < 1000)
 			{
 				return stack;
 			}
@@ -119,12 +130,13 @@ public class EnderBucket extends Item
 		
 			if (this.tryPlaceContainedFluid(world, x, y, z, targetBlock) == true)
 			{
-				amount -= 1000;
-				nbt.setShort("amount", amount);
-				if (amount == 0)
+				nbtAmount -= 1000;
+				nbt.setShort("amount", nbtAmount);
+				if (nbtAmount == 0)
 				{
 					nbt.setString("fluid", "");
 				}
+				stack.setTagCompound(nbt);
 			}
 		}
 
@@ -132,8 +144,8 @@ public class EnderBucket extends Item
 	}
 
 	/**
-	 * Attempts to place the liquid contained inside the bucket.
-	 */
+	* Attempts to place the fluid contained inside the bucket.
+	*/
 	public boolean tryPlaceContainedFluid(World world, int x, int y, int z, Block fluid)
 	{
 		Material material = world.getBlock(x, y, z).getMaterial();
