@@ -13,7 +13,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import fi.dy.masa.minecraft.mods.enderutilities.EnderUtilities;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
+import fi.dy.masa.minecraft.mods.enderutilities.reference.GuiReference;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
 public class EnderBag extends Item
@@ -38,10 +40,16 @@ public class EnderBag extends Item
 			// The bag must be in public mode, or the player must be the owner
 			if (nbt.getByte("mode") == 1 || nbt.getString("owner").equals(player.getDisplayName()) == true)
 			{
-				// Unbind the bag when sneak + right clicking on air
+				// Unbind the bag when sneak + right clicking on air TODO is there any point in this?
 				if (player.isSneaking() == true && Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.MISS)
 				{
 					stack.setTagCompound(null);
+				}
+				// Access the inventory
+				else
+				{
+					player.openGui(EnderUtilities.instance, GuiReference.GUI_ID_ENDER_BAG,
+							player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
 				}
 			}
 		}
