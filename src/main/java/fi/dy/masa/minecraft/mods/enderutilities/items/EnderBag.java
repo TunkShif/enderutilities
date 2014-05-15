@@ -48,8 +48,8 @@ public class EnderBag extends Item
 				// Access the inventory
 				else
 				{
-					player.openGui(EnderUtilities.instance, GuiReference.GUI_ID_ENDER_BAG,
-							player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
+					//player.openGui(EnderUtilities.instance, GuiReference.GUI_ID_ENDER_BAG,
+					//		player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
 				}
 			}
 		}
