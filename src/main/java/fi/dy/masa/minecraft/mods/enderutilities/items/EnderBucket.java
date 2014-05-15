@@ -90,7 +90,7 @@ public class EnderBucket extends Item
 				}
 
 				// FIXME: recognize fluids properly
-				if ((targetMaterial == Material.water) || (targetMaterial == Material.lava))
+				if ((targetMaterial == Material.water && meta == 0) || (targetMaterial == Material.lava && meta == 0))
 				{
 					if (world.setBlockToAir(x, y, z) == true)
 					{
@@ -100,12 +100,18 @@ public class EnderBucket extends Item
 						{
 							nbt.setString("fluid", targetFluidName);
 						}
-						System.out.println("displayname: " + stack.getDisplayName());
-						stack.setStackDisplayName("test");
 						stack.setTagCompound(nbt);
 					}
 				}
+				else
+				{
+					System.out.println("failed material check"); // FIXME debug
+				}
 				return stack;
+			}
+			else
+			{
+				System.out.println("targetFluidName: " + targetFluidName + " nbtFluid: " + nbtFluid); // FIXME Debug
 			}
 
 			// Different fluid, or other block type, we try to place a fluid block in the world
