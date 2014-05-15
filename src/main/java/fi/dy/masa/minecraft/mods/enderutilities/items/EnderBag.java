@@ -64,7 +64,7 @@ public class EnderBag extends Item
 		{
 			if (te instanceof IInventory)
 			{
-				System.out.printf("Block at %d, %d, %d has an inventory of % slots\n", x, y, z, ((IInventory) te).getSizeInventory());
+				System.out.printf("Block at %d, %d, %d has an inventory of %d slots\n", x, y, z, ((IInventory) te).getSizeInventory());
 			}
 			//System.out.println("Is Tile Entity");
 		}
