@@ -135,13 +135,17 @@ public class EnderBucket extends Item
 				return stack;
 			}
 
-			// Adjust the target block position
-			if (movingobjectposition.sideHit == 0) { --y; }
-			if (movingobjectposition.sideHit == 1) { ++y; }
-			if (movingobjectposition.sideHit == 2) { --z; }
-			if (movingobjectposition.sideHit == 3) { ++z; }
-			if (movingobjectposition.sideHit == 4) { --x; }
-			if (movingobjectposition.sideHit == 5) { ++x; }
+			// Don't adjust the target block for liquids, we want to replace them
+			if (targetBlock.getMaterial().isLiquid() == false)
+			{
+				// Adjust the target block position
+				if (movingobjectposition.sideHit == 0) { --y; }
+				if (movingobjectposition.sideHit == 1) { ++y; }
+				if (movingobjectposition.sideHit == 2) { --z; }
+				if (movingobjectposition.sideHit == 3) { ++z; }
+				if (movingobjectposition.sideHit == 4) { --x; }
+				if (movingobjectposition.sideHit == 5) { ++x; }
+			}
 
 			// Can we place a fluid block here?
 			if (player.canPlayerEdit(x, y, z, movingobjectposition.sideHit, stack) == false)
