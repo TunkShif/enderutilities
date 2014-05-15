@@ -3,6 +3,7 @@ package fi.dy.masa.minecraft.mods.enderutilities.items;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -55,17 +56,21 @@ public class EnderBag extends Item
 
 		if (block instanceof BlockChest)
 		{
-			System.out.println("Is a Chest!");
+			//System.out.println("Is a Chest!");
 		}
 
 		TileEntity te = world.getTileEntity(x, y, z);
 		if (te != null)
 		{
-			System.out.println("Is Tile Entity");
+			if (te instanceof IInventory)
+			{
+				System.out.printf("Block at %d, %d, %d has an inventory of % slots\n", x, y, z, ((IInventory) te).getSizeInventory());
+			}
+			//System.out.println("Is Tile Entity");
 		}
 		else
 		{
-			System.out.println("Not a Tile Entity");
+			//System.out.println("Not a Tile Entity");
 		}
 		return false;
 	}
