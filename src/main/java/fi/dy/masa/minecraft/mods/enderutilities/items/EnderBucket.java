@@ -54,25 +54,24 @@ public class EnderBucket extends Item
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
-		if (stack.getTagCompound() != null)
+		String fluid = "<empty>";
+		short amount = 0;
+		String pre = "" + EnumChatFormatting.BLUE;
+		String rst = "" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY;
+		NBTTagCompound nbt = stack.getTagCompound();
+
+		if (nbt != null)
 		{
-			NBTTagCompound nbt = stack.getTagCompound();
-			String fluid	= nbt.getString("fluid");
-			short amount	= nbt.getShort("amount");
+			amount	= nbt.getShort("amount");
 
-			String pre = "" + EnumChatFormatting.BLUE;
-			String rst = "" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY;
-
-			if (nbt.hasKey("fluid") == false || amount == 0)
+			if (nbt.hasKey("fluid") == true && amount > 0)
 			{
-				list.add("Fluid: <empty>");
+				fluid = pre + nbt.getString("fluid") + rst; // FIXME get the localized name
 			}
-			else
-			{
-				list.add(String.format("Fluid: %s%s%s", pre, fluid, rst));
-			}
-			list.add(String.format("Amount: %s%d%smB", pre, amount, rst));
 		}
+
+		list.add("Fluid: " + fluid);
+		list.add(String.format("Amount: %d mB", amount));
 	}
 
 	@Override
