@@ -2,6 +2,7 @@ package fi.dy.masa.minecraft.mods.enderutilities.items;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -78,13 +79,14 @@ public class EnderBag extends Item
 					target.setInteger("posY", y);
 					target.setInteger("posZ", z);
 					target.setShort("numslots", (short)numSlots);
-					if (te.blockType == null)
+					Block b = te.getBlockType();
+					if (b == null)
 					{
 						System.out.println("null");
 					}
 					else
 					{
-						String teType = te.blockType.getUnlocalizedName();
+						String teType = b.getUnlocalizedName();
 						target.setString("tetype", teType); // FIXME crappy check
 					}
 
@@ -127,8 +129,12 @@ public class EnderBag extends Item
 				cPre = "" + EnumChatFormatting.OBFUSCATED;
 			}
 
+			String name = teType;
+			Block b = Block.getBlockFromName(teType.substring(5));
+			if (b != null) { name = b.getLocalizedName(); }
+
 			list.add(String.format("dim: %s%d%s x: %s%d%s, y: %s%d%s, z: %s%d%s", dimPre, dim, rst, cPre, x, rst, cPre, y, rst, cPre, z, rst));
-			list.add("type: " + teType);
+			list.add("type: " + name);
 			list.add(String.format("slots: %s%d%s", dimPre, numSlots, rst));
 		}
 	}
