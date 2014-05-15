@@ -2,6 +2,7 @@ package fi.dy.masa.minecraft.mods.enderutilities.items;
 
 import java.util.List;
 
+import cpw.mods.fml.common.FMLLog;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -89,7 +90,7 @@ public class EnderBucket extends Item
 				}
 
 				// FIXME: recognize fluids properly
-				if ((targetMaterial == Material.water && meta == 0) || (targetMaterial == Material.lava && meta == 0))
+				if ((targetMaterial == Material.water) || (targetMaterial == Material.lava))
 				{
 					if (world.setBlockToAir(x, y, z) == true)
 					{
@@ -99,6 +100,8 @@ public class EnderBucket extends Item
 						{
 							nbt.setString("fluid", targetFluidName);
 						}
+						System.out.println("displayname: " + stack.getDisplayName());
+						stack.setStackDisplayName("test");
 						stack.setTagCompound(nbt);
 					}
 				}
@@ -127,7 +130,19 @@ public class EnderBucket extends Item
 				return stack;
 			}
 
-			Block fluidBlock = Block.getBlockFromName(Block.blockRegistry.getNameForObject(nbtFluid));
+			targetFluidName = Block.blockRegistry.getNameForObject(nbtFluid);
+			if (targetFluidName == null || targetFluidName.length() == 0)
+			{
+				FMLLog.warning("Invalid or null block name (nbtFluid: " + nbtFluid + ")");
+				return stack;
+			}
+			Block fluidBlock = Block.getBlockFromName(targetFluidName);
+			if (fluidBlock == null)
+			{
+				FMLLog.warning("Fluid block was null");
+				return stack;
+			}
+
 			if (this.tryPlaceContainedFluid(world, x, y, z, fluidBlock) == true)
 			{
 				nbtAmount -= 1000;
@@ -204,7 +219,7 @@ public class EnderBucket extends Item
 
 			if (nbt.hasKey("fluid") == true && amount > 0)
 			{
-				String name = Block.getBlockFromName(nbt.getString("fluid")).getUnlocalizedName();
+				String name = Block.getBlockFromName(nbt.getString("fluid")).getLocalizedName();
 				fluid = pre + name + rst;
 			}
 		}
