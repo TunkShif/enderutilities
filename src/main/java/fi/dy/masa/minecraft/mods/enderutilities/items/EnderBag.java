@@ -22,10 +22,28 @@ public class EnderBag extends Item
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
 	{
+		System.out.println("onItemRightClick");
 		if (world.isRemote == false)
 		{
-			System.out.println("test");
+			System.out.println("world.isRemote == false");
+		}
+		else
+		{
+			System.out.println("world.isRemote == true");
 		}
 		return itemStack;
+	}
+
+	@Override
+	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+	{
+		System.out.println("onItemUseFirst");
+		return false;
+	}
+
+	@Override
+	public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player)
+	{
+		return false;
 	}
 }
