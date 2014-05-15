@@ -65,8 +65,6 @@ public class EnderBag extends Item
 			{
 				int numSlots = ((IInventory) te).getSizeInventory();
 				int dim = player.dimension; // FIXME is this the right way of getting the dimension?
-				//System.out.printf("Block at %d, %d, %d (dim: %d) has an inventory of %d slots\n", x, y, z, dim, numSlots); // FIXME debug
-				//System.out.println("te: " + te.toString()); // FIXME debug
 
 				NBTTagCompound nbt = stack.getTagCompound();
 
@@ -94,12 +92,8 @@ public class EnderBag extends Item
 					stack.setTagCompound(nbt);
 				}
 			}
-			//System.out.println("Is Tile Entity");
 		}
-		else
-		{
-			//System.out.println("Not a Tile Entity");
-		}
+
 		return false;
 	}
 
