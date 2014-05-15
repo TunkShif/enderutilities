@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "enderutilities",
+  "name": "Ender Utilities",
+  "description": "Some random, maybe even useful utilities",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["masa"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
