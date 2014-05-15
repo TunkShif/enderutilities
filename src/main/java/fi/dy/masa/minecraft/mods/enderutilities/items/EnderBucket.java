@@ -2,11 +2,16 @@ package fi.dy.masa.minecraft.mods.enderutilities.items;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
@@ -20,6 +25,30 @@ public class EnderBucket extends Item
 		this.setUnlocalizedName(Reference.NAME_ITEM_ENDER_BUCKET);
 		this.setTextureName(Reference.MOD_ID + ":" + this.getUnlocalizedName()); // FIXME?
 		this.setCreativeTab(CreativeTab.ENDER_UTILITIES_TAB);
+	}
+
+	@Override
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
+	{
+		NBTTagCompound nbt = stack.getTagCompound();
+
+		if (nbt != null)
+		{
+		}
+
+		return stack;
+	}
+
+	@Override
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+	{
+		// Do nothing on the client side
+		if (world.isRemote == true)
+		{
+			return false;
+		}
+
+		return false;
 	}
 
 	@Override
