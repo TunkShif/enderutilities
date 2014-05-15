@@ -77,7 +77,8 @@ public class EnderBucket extends Item
 			targetBlock = world.getBlock(x, y, z);
 			targetMaterial = targetBlock.getMaterial();
 			int meta = world.getBlockMetadata(x, y, z);
-			targetFluidName = targetBlock.getUnlocalizedName();
+			//targetFluidName = targetBlock.getUnlocalizedName();
+			targetFluidName = Block.blockRegistry.getNameForObject(targetBlock);
 
 			// Same fluid, or empty bucket
 			if (targetFluidName.equals(nbtFluidName) == true || nbtAmount == 0) // FIXME needs a proper block type check?
@@ -100,7 +101,6 @@ public class EnderBucket extends Item
 							nbt.setString("fluid", targetFluidName);
 						}
 						stack.setTagCompound(nbt);
-						System.out.println("herehere"); // FIXME debug
 					}
 				}
 				return stack;
@@ -127,8 +127,9 @@ public class EnderBucket extends Item
 			{
 				return stack;
 			}
-		
-			if (this.tryPlaceContainedFluid(world, x, y, z, targetBlock) == true)
+
+			Block fluidBlock = Block.getBlockFromName(targetFluidName);
+			if (this.tryPlaceContainedFluid(world, x, y, z, fluidBlock) == true)
 			{
 				nbtAmount -= 1000;
 				nbt.setShort("amount", nbtAmount);
@@ -204,7 +205,8 @@ public class EnderBucket extends Item
 
 			if (nbt.hasKey("fluid") == true && amount > 0)
 			{
-				fluid = pre + nbt.getString("fluid") + rst; // FIXME get the localized name
+				String name = Block.getBlockFromName(nbt.getString("fluid")).getUnlocalizedName();
+				fluid = pre + name + rst;
 			}
 		}
 
