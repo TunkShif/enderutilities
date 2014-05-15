@@ -77,8 +77,16 @@ public class EnderBag extends Item
 					target.setInteger("posX", x);
 					target.setInteger("posY", y);
 					target.setInteger("posZ", z);
-					target.setInteger("numslots", numSlots);
-					target.setString("type", te.toString().substring(0, te.toString().indexOf('@'))); // FIXME crappy check
+					target.setShort("numslots", (short)numSlots);
+					if (te.blockType == null)
+					{
+						System.out.println("null");
+					}
+					else
+					{
+						String teType = te.blockType.getUnlocalizedName();
+						target.setString("tetype", teType); // FIXME crappy check
+					}
 
 					stack.stackTagCompound.setString("owner", player.getDisplayName()); // FIXME
 					stack.stackTagCompound.setByte("mode", (byte)0); // 0 = private, 1 = public, 2 = friends (N/A)
@@ -104,6 +112,8 @@ public class EnderBag extends Item
 			int x = stack.stackTagCompound.getCompoundTag("target").getInteger("posX");
 			int y = stack.stackTagCompound.getCompoundTag("target").getInteger("posY");
 			int z = stack.stackTagCompound.getCompoundTag("target").getInteger("posZ");
+			short numSlots = stack.stackTagCompound.getCompoundTag("target").getShort("numslots");
+			String teType = stack.stackTagCompound.getCompoundTag("target").getString("tetype");
 			list.add("owner: " + owner);
 
 			String dimPre = "" + EnumChatFormatting.BLUE;
@@ -117,8 +127,9 @@ public class EnderBag extends Item
 				cPre = "" + EnumChatFormatting.OBFUSCATED;
 			}
 
-			list.add(String.format("dimension: %s%d%s", dimPre, dim, rst));
-			list.add(String.format("x: %s%d%s, y: %s%d%s, z: %s%d%s", cPre, x, rst, cPre, y, rst, cPre, z, rst));
+			list.add(String.format("dim: %s%d%s x: %s%d%s, y: %s%d%s, z: %s%d%s", dimPre, dim, rst, cPre, x, rst, cPre, y, rst, cPre, z, rst));
+			list.add("type: " + teType);
+			list.add(String.format("slots: %s%d%s", dimPre, numSlots, rst));
 		}
 	}
 
