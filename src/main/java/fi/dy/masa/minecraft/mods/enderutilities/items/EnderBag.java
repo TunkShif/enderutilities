@@ -80,14 +80,12 @@ public class EnderBag extends Item
 					target.setInteger("posZ", z);
 					target.setShort("numslots", (short)numSlots);
 					Block b = te.getBlockType();
-					if (b == null)
+					if (b != null)
 					{
-						System.out.println("null");
-					}
-					else
-					{
-						String teType = b.getUnlocalizedName();
-						target.setString("tetype", teType); // FIXME crappy check
+						String name = b.getUnlocalizedName();
+						target.setString("unlocname", name); // FIXME crappy check
+						name = b.getLocalizedName();
+						target.setString("locname", name); // FIXME crappy check
 					}
 
 					stack.stackTagCompound.setString("owner", player.getDisplayName()); // FIXME
@@ -115,7 +113,7 @@ public class EnderBag extends Item
 			int y = stack.stackTagCompound.getCompoundTag("target").getInteger("posY");
 			int z = stack.stackTagCompound.getCompoundTag("target").getInteger("posZ");
 			short numSlots = stack.stackTagCompound.getCompoundTag("target").getShort("numslots");
-			String teType = stack.stackTagCompound.getCompoundTag("target").getString("tetype");
+			String locName = stack.stackTagCompound.getCompoundTag("target").getString("locname");
 			list.add("owner: " + owner);
 
 			String dimPre = "" + EnumChatFormatting.BLUE;
@@ -129,12 +127,9 @@ public class EnderBag extends Item
 				cPre = "" + EnumChatFormatting.OBFUSCATED;
 			}
 
-			String name = teType;
-			Block b = Block.getBlockFromName(teType.substring(5));
-			if (b != null) { name = b.getLocalizedName(); }
 
 			list.add(String.format("dim: %s%d%s x: %s%d%s, y: %s%d%s, z: %s%d%s", dimPre, dim, rst, cPre, x, rst, cPre, y, rst, cPre, z, rst));
-			list.add("type: " + name);
+			list.add("type: " + locName);
 			list.add(String.format("slots: %s%d%s", dimPre, numSlots, rst));
 		}
 	}
