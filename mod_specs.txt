@@ -12,6 +12,8 @@
 
   - Ender Porter: (One-time-use?) item that can teleport the player to a pre-bound location.
 
+  - Ender Swapper: Swaps two pre-set blocks with eachother
+
   - Ender Arrows: Will teleport the entity they hit, to the location that has been bound to the stack
 
   - Ender Bucket: Can hold a maximum of 16 buckets
