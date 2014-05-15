@@ -3,21 +3,24 @@ package fi.dy.masa.minecraft.mods.enderutilities.items;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
 public class EnderBucket extends Item
 {
+	private static final short MAX_AMOUNT = 16000; // Can contain 16 buckets
+
 	public EnderBucket()
 	{
 		super();
@@ -30,6 +33,14 @@ public class EnderBucket extends Item
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
+		boolean canPickupFluid = true;
+		String fluidName = "";
+		short amount = 0;
+		String targetFluidName;
+		Block targetBlock;
+		Material targetMaterial;
+		Fluid targetFluid;
+
 		// FIXME the boolean flag does what exactly? In vanilla it seems to indicate that the bucket is empty.
         MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
 
@@ -43,9 +54,115 @@ public class EnderBucket extends Item
 
 		if (nbt != null)
 		{
+			fluidName = nbt.getString("fluid");
+			amount = nbt.getShort("amount");
+		}
+
+		if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+		{
+			int x = movingobjectposition.blockX;
+			int y = movingobjectposition.blockY;
+			int z = movingobjectposition.blockZ;
+
+			// Spawn safe zone checks etc.
+			if (world.canMineBlock(player, x, y, x) == false)
+			{
+				return stack;
+			}
+
+			targetBlock = world.getBlock(x, y, z);
+			targetMaterial = targetBlock.getMaterial();
+			int meta = world.getBlockMetadata(x, y, z);
+
+			// Same fluid, or empty bucket FIXME needs a proper block type check?
+			if (targetBlock.getUnlocalizedName().equals(fluidName) == true || amount == 0)
+			{
+				// Do we have space, and can we change the fluid block?
+				if ((MAX_AMOUNT - amount) < 1000 || player.canPlayerEdit(x, y, z, movingobjectposition.sideHit, stack) == false)
+				{
+					return stack;
+				}
+
+				// FIXME: recognize fluids properly
+				if ((targetMaterial == Material.water && meta == 0) || (targetMaterial == Material.lava && meta == 0))
+				{
+					if (world.setBlockToAir(x, y, z) == true)
+					{
+						amount += 1000;
+						nbt.setShort("amount", amount);
+					}
+				}
+				return stack;
+			}
+
+			// Different fluid, or other block type, we try to place a fluid block in the world
+
+			// No fluid stored
+			if (amount < 1000)
+			{
+				return stack;
+			}
+
+			// Adjust the target block position
+			if (movingobjectposition.sideHit == 0) { --y; }
+			if (movingobjectposition.sideHit == 1) { ++y; }
+			if (movingobjectposition.sideHit == 2) { --z; }
+			if (movingobjectposition.sideHit == 3) { ++z; }
+			if (movingobjectposition.sideHit == 4) { --x; }
+			if (movingobjectposition.sideHit == 5) { ++x; }
+
+			// Can we place a fluid block here?
+			if (player.canPlayerEdit(x, y, z, movingobjectposition.sideHit, stack) == false)
+			{
+				return stack;
+			}
+		
+			if (this.tryPlaceContainedFluid(world, x, y, z, targetBlock) == true)
+			{
+				amount -= 1000;
+				nbt.setShort("amount", amount);
+				if (amount == 0)
+				{
+					nbt.setString("fluid", "");
+				}
+			}
 		}
 
 		return stack;
+	}
+
+	/**
+	 * Attempts to place the liquid contained inside the bucket.
+	 */
+	public boolean tryPlaceContainedFluid(World world, int x, int y, int z, Block fluid)
+	{
+		Material material = world.getBlock(x, y, z).getMaterial();
+	
+		if (world.isAirBlock(x, y, z) == false && material.isSolid() == true)
+		{
+			return false;
+		}
+
+		if (world.provider.isHellWorld && fluid == Blocks.flowing_water)
+		{
+			world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+		
+			for (int l = 0; l < 8; ++l)
+			{
+				world.spawnParticle("largesmoke", (double)x + Math.random(), (double)y + Math.random(), (double)z + Math.random(), 0.0D, 0.0D, 0.0D);
+			}
+		}
+		else
+		{
+			if (world.isRemote == false && material.isSolid() == false && material.isLiquid() == false)
+			{
+				world.func_147480_a(x, y, z, true);
+			}
+		
+			world.setBlock(x, y, z, fluid, 0, 3);
+		}
+		
+		return true;
 	}
 
 	@Override
