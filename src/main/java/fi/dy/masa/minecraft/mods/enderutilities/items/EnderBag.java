@@ -31,7 +31,9 @@ public class EnderBag extends Item
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
 		// Unbind the bag when sneak + right clicking on air
-		if (player.isSneaking() == true)
+		if (player.isSneaking() == true
+			&& stack.stackTagCompound != null
+			&& stack.stackTagCompound.getString("owner").equals(player.getDisplayName()) == true)
 		{
 			stack.stackTagCompound = null;
 		}
@@ -50,7 +52,8 @@ public class EnderBag extends Item
 	}
 
 	@Override
-	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+	//public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
 	{
 		// Do nothing on the client side
 		if (world.isRemote == true)
@@ -77,15 +80,19 @@ public class EnderBag extends Item
 				int dim = player.dimension; // FIXME is this the right way of getting the dimension?
 				System.out.printf("Block at %d, %d, %d (dim: %d) has an inventory of %d slots\n", x, y, z, dim, numSlots); // FIXME debug
 
-				stack.stackTagCompound = new NBTTagCompound();
-				NBTTagCompound target = new NBTTagCompound();
-				target.setInteger("dim", dim);
-				target.setInteger("posX", x);
-				target.setInteger("posY", y);
-				target.setInteger("posZ", z);
+				// Only the owner is allowed to change the binding
+				if (stack.stackTagCompound == null || stack.stackTagCompound.getString("owner").equals(player.getDisplayName()) == true)
+				{
+					stack.stackTagCompound = new NBTTagCompound();
+					NBTTagCompound target = new NBTTagCompound();
+					target.setInteger("dim", dim);
+					target.setInteger("posX", x);
+					target.setInteger("posY", y);
+					target.setInteger("posZ", z);
 
-				stack.stackTagCompound.setString("owner", player.getDisplayName()); // FIXME
-				stack.stackTagCompound.setTag("target", target);
+					stack.stackTagCompound.setString("owner", player.getDisplayName()); // FIXME
+					stack.stackTagCompound.setTag("target", target);
+				}
 			}
 			//System.out.println("Is Tile Entity");
 		}
