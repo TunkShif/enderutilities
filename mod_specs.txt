@@ -5,7 +5,8 @@
   - Ender Sender: Can be linked to any(?) inventory, has a filter setting, will auto-send any
     picked up items (according to the filter) to the inventory it is linked to
   - Ender Lasso: Will teleport any living entities it is right clicked on, to the pre-bound location
-  - Ender Bucket: Cab hold a maximum of 16 buckets
+  - Ender Arrows: Will teleport the entity they hit, to the location that has been bound to the stack
+  - Ender Bucket: Can hold a maximum of 16 buckets
   - Ender Activator: Has an inventory for items, will use them when right clicking
     - Active slot selectable with sneak + scroll? When empty, uses the next one (with wrap).
     - What about items that would require sneak + right click? How do we access the activator's inventory?
