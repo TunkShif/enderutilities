@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.WorldInfo;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
@@ -64,7 +65,9 @@ public class EnderBag extends Item
 		{
 			if (te instanceof IInventory)
 			{
-				System.out.printf("Block at %d, %d, %d has an inventory of %d slots\n", x, y, z, ((IInventory) te).getSizeInventory());
+				int numSlots = ((IInventory) te).getSizeInventory();
+				int dim = player.dimension; // FIXME is this the right way of getting the dimension?
+				System.out.printf("Block at %d, %d, %d (dim: %d) has an inventory of %d slots\n", x, y, z, dim, numSlots); // FIXME debug
 			}
 			//System.out.println("Is Tile Entity");
 		}
