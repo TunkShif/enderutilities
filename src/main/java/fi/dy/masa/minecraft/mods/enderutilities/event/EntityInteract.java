@@ -23,7 +23,7 @@ public class EntityInteract
 			{
 				if (stack.getItem() == EnderUtilitiesItems.enderLasso)
 				{
-					TeleportEntity.teleportEntity(stack, (EntityLiving)event.target, event.entity.dimension);
+					TeleportEntity.lassoTeleportEntity(stack, (EntityLiving)event.target, event.entity.dimension);
 					event.setCanceled(true);
 					return;
 				}
