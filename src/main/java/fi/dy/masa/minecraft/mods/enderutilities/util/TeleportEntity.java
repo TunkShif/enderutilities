@@ -13,6 +13,19 @@ import net.minecraftforge.common.DimensionManager;
 
 public class TeleportEntity
 {
+	public static void teleportEntityRandomly(EntityLiving entity, double maxDist)
+	{
+		double deltaYaw = (Math.random() * 360.0f) / (2.0d / Math.PI);
+		double deltaPitch = ((90.0d - (Math.random() - 180.0d)) / (2.0d * Math.PI));
+		double x = entity.posX;
+		double y = entity.posY;
+		double z = entity.posZ;
+		x += Math.cos(deltaPitch) * Math.cos(deltaYaw) * maxDist;
+		z += Math.cos(deltaPitch) * Math.sin(deltaYaw) * maxDist;
+		y += Math.sin(deltaPitch) * maxDist;
+		
+	}
+
 	public static boolean transferEntityToDimension(EntityLiving entity, int dim)
 	{
 		TeleportEntity.transferEntityToDimension(entity, dim, entity.posX, entity.posY, entity.posZ);
