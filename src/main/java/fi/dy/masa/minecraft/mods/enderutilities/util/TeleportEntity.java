@@ -47,8 +47,7 @@ public class TeleportEntity
 		maxDist *= Math.random();
 
 		// Try to find a free spot (non-colliding with blocks)
-		int i;
-		for (i = 0; i < 10; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			deltaYaw = (Math.random() * 360.0f) / (2.0d / Math.PI);
 			deltaPitch = ((90.0d - (Math.random() * 180.0d)) / (2.0d * Math.PI));
