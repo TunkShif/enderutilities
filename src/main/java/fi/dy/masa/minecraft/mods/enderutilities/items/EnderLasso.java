@@ -129,16 +129,25 @@ public class EnderLasso extends Item
 		{
 			return;
 		}
-		int x = nbt.getInteger("x");
-		int y = nbt.getInteger("y");
-		int z = nbt.getInteger("z");
+		int xi = nbt.getInteger("x");
+		int yi = nbt.getInteger("y");
+		int zi = nbt.getInteger("z");
 
 		System.out.println("entity interact with lasso!"); // FIXME debug
 		//entity.setLocationAndAngles((double)x, (double)y, (double)z, entity.rotationYaw, entity.rotationPitch);
 		World world = entity.worldObj;
-		double xd = (double)x + 0.5d;
-		double yd = (double)y + 0.5d;
-		double zd = (double)z + 0.5d;
-		world.playSoundEffect(xd, yd, zd, "endermen.portal.random", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+		double x = (double)xi;
+		double y = (double)yi;
+		double z = (double)zi;
+		world.playSoundEffect(x, y, z, "endermen.portal", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+
+		// Spawn some particles
+		for (int i = 0; i < 10; i++)
+		{
+			double velx = (Math.random() - 0.5d) * 2.0d;
+			double vely = (Math.random() - 0.5d) * 2.0d;
+			double velz = (Math.random() - 0.5d) * 2.0d;
+			world.spawnParticle("portal", x, y, z, velx, vely, velz);
+		}
 	}
 }
