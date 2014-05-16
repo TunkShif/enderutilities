@@ -7,7 +7,7 @@ import fi.dy.masa.minecraft.mods.enderutilities.items.EnderBucket;
 import fi.dy.masa.minecraft.mods.enderutilities.items.EnderLasso;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
-public class ModItems
+public class EnderUtilitiesItems
 {
 	public static final Item enderBag = new EnderBag();
 	public static final Item enderBucket = new EnderBucket();
