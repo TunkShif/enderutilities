@@ -29,6 +29,7 @@ public class EnderLasso extends Item
 		this.setCreativeTab(CreativeTab.ENDER_UTILITIES_TAB);
 	}
 
+/*
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
@@ -48,6 +49,7 @@ public class EnderLasso extends Item
 		}
 		return stack;
 	}
+*/
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
