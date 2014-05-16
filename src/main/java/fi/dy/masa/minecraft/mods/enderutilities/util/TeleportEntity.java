@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
@@ -153,7 +154,8 @@ public class TeleportEntity
 			{
 				return false;
 			}
-
+			System.out.println("Is loaded: " + worldServerDst.getChunkProvider().chunkExists((int)x, (int)z)); // FIXME debug
+			return false;
 			entitySrc.dimension = dimDst;
 			entitySrc.worldObj.removeEntity(entitySrc);
 			entitySrc.isDead = false;
