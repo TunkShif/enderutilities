@@ -122,23 +122,31 @@ public class EnderLasso extends Item
 		return true;
 	}
 
-	public void teleportEntity(ItemStack stack, Entity entity)
+	public void teleportEntity(ItemStack stack, Entity entity, int dim)
 	{
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null || ! nbt.hasKey("x") || ! nbt.hasKey("y") || ! nbt.hasKey("z") || ! nbt.hasKey("dim"))
+		if (nbt == null || ! nbt.hasKey("x") || ! nbt.hasKey("y") || ! nbt.hasKey("z") || ! nbt.hasKey("dim")
+				|| entity.riddenByEntity != null || entity.ridingEntity != null)
 		{
 			return;
 		}
 		double x = (double)nbt.getInteger("x");
 		double y = (double)nbt.getInteger("y");
 		double z = (double)nbt.getInteger("z");
+		int targetDim = nbt.getInteger("dim");
 
 		double entX = entity.posX;
 		double entY = entity.posY;
 		double entZ = entity.posZ;
 
 		// FIXME change the dimension, check for chunk loaded etc.
+		if (dim != targetDim)
+		{
+			entity.travelToDimension(targetDim);
+		}
+
 		entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
+
 		World world = entity.worldObj;
 		world.playSoundEffect(entX, entY, entZ, "mob.endermen.portal", 0.5F, 1.0F + (world.rand.nextFloat() * 0.5f - world.rand.nextFloat() * 0.5f) * 0.5F);
 
