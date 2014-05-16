@@ -35,7 +35,7 @@ public class EntityInteract
 							System.out.printf("Persistent: x: %d, z: %d\n", coord.chunkXPos, coord.chunkZPos);
 						}
 					}
-					//TeleportEntity.teleportEntity(stack, (EntityLiving)event.target, event.entity.dimension);
+					TeleportEntity.teleportEntity(stack, (EntityLiving)event.target, event.entity.dimension);
 					event.setCanceled(true);
 					return;
 				}
