@@ -44,7 +44,9 @@ public class TeleportEntity
 
 				entityDst.copyDataFrom(entitySrc, true);
 				entityDst.setLocationAndAngles(x + 0.5d, y, z + 0.5d, entitySrc.rotationYaw, entitySrc.rotationPitch);
+				entityDst.setVelocity(0.0d, 0.0d, 0.0d);
 				worldServerDst.spawnEntityInWorld(entityDst);
+				// FIXME: Afaik this will kill mobs that can't naturally spawn due to gamerules, maybe take it out?
 				worldServerDst.updateEntityWithOptionalForce(entityDst, false);
 				entityDst.setWorld(worldServerDst);
 			}
