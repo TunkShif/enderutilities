@@ -17,6 +17,13 @@ public class TeleportEntity
 
 	public static boolean transferEntityToDimension(EntityLiving entitySrc, int dimDst, double x, double y, double z)
 	{
+		// FIXME debug
+		if (dimDst == 1)
+		{
+			entitySrc.travelToDimension(1);
+			return true;
+		}
+
 		if (entitySrc != null && entitySrc.worldObj.isRemote == false && entitySrc.isDead == false)
 		{
 			int dimSrc = entitySrc.dimension;
