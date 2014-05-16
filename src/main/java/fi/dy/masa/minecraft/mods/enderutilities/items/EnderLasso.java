@@ -8,9 +8,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeChunkManager;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
@@ -123,6 +125,15 @@ public class EnderLasso extends Item
 		double y = (double)nbt.getInteger("y");
 		double z = (double)nbt.getInteger("z") + 0.5d;
 		int targetDim = nbt.getInteger("dim");
+
+		// FIXME does this chunkloading work?
+		MinecraftServer minecraftserver = MinecraftServer.getServer();
+		WorldServer worldServerDst = minecraftserver.worldServerForDimension(targetDim);
+		//WorldServer worldServerDst = DimensionManager.getWorld(targetDim);
+		if (worldServerDst != null && worldServerDst.theChunkProviderServer != null)
+		{
+			worldServerDst.theChunkProviderServer.loadChunk((int)x >> 4, (int)z >> 4);
+		}
 
 		double entX = entity.posX;
 		double entY = entity.posY;
