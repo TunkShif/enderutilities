@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import fi.dy.masa.minecraft.mods.enderutilities.init.EnderUtilitiesItems;
-import fi.dy.masa.minecraft.mods.enderutilities.items.EnderLasso;
+import fi.dy.masa.minecraft.mods.enderutilities.util.TeleportEntity;
 
 public class EntityInteract
 {
@@ -16,11 +16,20 @@ public class EntityInteract
 		{
 			ItemStack stack = event.entityPlayer.inventory.getCurrentItem();
 
-			//if (stack != null && stack.getItem() == GameRegistry.findItem(Reference.MOD_ID, Reference.NAME_ITEM_ENDER_LASSO))
-			if (stack != null && stack.getItem() == EnderUtilitiesItems.enderLasso)
+			if (stack != null)
 			{
-				((EnderLasso)EnderUtilitiesItems.enderLasso).teleportEntity(stack, (EntityLiving)event.target, event.entity.dimension);
-				event.setCanceled(true);
+				if (stack.getItem() == EnderUtilitiesItems.enderLasso)
+				{
+					TeleportEntity.teleportEntity(stack, (EntityLiving)event.target, event.entity.dimension);
+					event.setCanceled(true);
+					return;
+				}
+				if (stack.getItem() == EnderUtilitiesItems.enderArrow)
+				{
+					TeleportEntity.teleportEntityRandomly((EntityLiving)event.target, 5.0d);
+					event.setCanceled(true);
+					return;
+				}
 			}
 		}
 	}
