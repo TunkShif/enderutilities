@@ -96,6 +96,11 @@ public class TeleportEntity
 			return;
 		}
 */
+		if (entity == null || entity.worldObj.isRemote != false || entity.isDead == true)
+		{
+			return;
+		}
+
 		WorldServer worldServerDst = DimensionManager.getWorld(dimDst);
 		if (worldServerDst == null)
 		{
@@ -105,15 +110,17 @@ public class TeleportEntity
 
 		System.out.println("Is loaded: " + worldServerDst.getChunkProvider().chunkExists((int)x >> 4, (int)z >> 4)); // FIXME debug
 		// FIXME: only allow overworld and nether until I figure out the dimension and chunk loading stuff...
+/*
 		if (dimDst < 5) //targetDim != 0 && targetDim != -1)
 		{
-			//return;
+			return;
 		}
-
+*/
 		IChunkProvider chunkProvider = worldServerDst.getChunkProvider();
 		if (chunkProvider != null && chunkProvider.chunkExists((int)x >> 4, (int)z >> 4) == false)
 		{
-			chunkProvider.loadChunk((int)x >> 4, (int)z >> 4);
+			worldServerDst.theChunkProviderServer.loadChunk((int)x >> 4, (int)z >> 4);
+			//chunkProvider.loadChunk((int)x >> 4, (int)z >> 4);
 		}
 
 		// TODO: Stop the mob AI: is this correct?
