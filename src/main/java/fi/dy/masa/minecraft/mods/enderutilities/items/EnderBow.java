@@ -35,11 +35,11 @@ public class EnderBow extends ItemBow
 	/**
 	 * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount
 	 */
-	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer, int par4)
+	public void onPlayerStoppedUsing(ItemStack bowStack, World world, EntityPlayer player, int itemInUseCount)
 	{
-		int j = this.getMaxItemUseDuration(par1ItemStack) - par4;
+		int j = this.getMaxItemUseDuration(bowStack) - itemInUseCount;
 
-		ArrowLooseEvent event = new ArrowLooseEvent(par3EntityPlayer, par1ItemStack, j);
+		ArrowLooseEvent event = new ArrowLooseEvent(player, bowStack, j);
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled())
 		{
@@ -47,9 +47,9 @@ public class EnderBow extends ItemBow
 		}
 		j = event.charge;
 
-		boolean flag = par3EntityPlayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, par1ItemStack) > 0;
+		boolean flag = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, bowStack) > 0;
 
-		if (flag || par3EntityPlayer.inventory.hasItem(Items.arrow))
+		if (flag || player.inventory.hasItem(EnderUtilitiesItems.enderArrow))
 		{
 			float f = (float)j / 20.0F;
 			f = (f * f + f * 2.0F) / 3.0F;
@@ -64,34 +64,34 @@ public class EnderBow extends ItemBow
 				f = 1.0F;
 			}
 
-			EntityArrow entityarrow = new EntityArrow(par2World, par3EntityPlayer, f * 2.0F);
+			EntityArrow entityarrow = new EntityArrow(world, player, f * 2.0F);
 
 			if (f == 1.0F)
 			{
 				entityarrow.setIsCritical(true);
 			}
 
-			int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, par1ItemStack);
+			int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, bowStack);
 
 			if (k > 0)
 			{
 					entityarrow.setDamage(entityarrow.getDamage() + (double)k * 0.5D + 0.5D);
 			}
 
-			int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, par1ItemStack);
+			int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, bowStack);
 
 			if (l > 0)
 			{
 				entityarrow.setKnockbackStrength(l);
 			}
 
-			if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, par1ItemStack) > 0)
+			if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, bowStack) > 0)
 			{
 				entityarrow.setFire(100);
 			}
 
-			par1ItemStack.damageItem(1, par3EntityPlayer);
-			par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+			bowStack.damageItem(1, player);
+			world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
 			if (flag)
 			{
@@ -99,12 +99,12 @@ public class EnderBow extends ItemBow
 			}
 			else
 			{
-				par3EntityPlayer.inventory.consumeInventoryItem(Items.arrow);
+				//player.inventory.consumeInventoryItem(EnderUtilitiesItems.enderArrow);
 			}
 
-			if (!par2World.isRemote)
+			if (!world.isRemote)
 			{
-				par2World.spawnEntityInWorld(entityarrow);
+				world.spawnEntityInWorld(entityarrow);
 			}
 		}
 	}
