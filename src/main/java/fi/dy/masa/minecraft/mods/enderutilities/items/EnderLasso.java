@@ -32,14 +32,18 @@ public class EnderLasso extends Item
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
+		System.out.println("onItemRightClick");
 		MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
 		if (movingobjectposition == null)
 		{
+			System.out.println("onItemRightClick: mop: null");
 			return stack;
 		}
 
+		System.out.println("onItemRightClick: mop: " + movingobjectposition.toString());
 		if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY)
 		{
+			System.out.println("onItemRightClick: hit entity");
 			System.out.println(movingobjectposition.entityHit.toString()); // FIXME debug
 		}
 		return stack;
@@ -117,6 +121,6 @@ public class EnderLasso extends Item
 	@Override
 	public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player)
 	{
-		return false;
+		return true;
 	}
 }
