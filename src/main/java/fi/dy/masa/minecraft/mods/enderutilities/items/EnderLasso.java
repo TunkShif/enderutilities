@@ -146,6 +146,7 @@ public class EnderLasso extends Item
 		}
 
 		entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
+		// TODO: Stop the mob AI
 
 		World world = entity.worldObj;
 		world.playSoundEffect(entX, entY, entZ, "mob.endermen.portal", 0.5F, 1.0F + (world.rand.nextFloat() * 0.5f - world.rand.nextFloat() * 0.5f) * 0.5F);
