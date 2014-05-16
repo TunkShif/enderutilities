@@ -155,7 +155,7 @@ public class TeleportEntity
 				return false;
 			}
 			System.out.println("Is loaded: " + worldServerDst.getChunkProvider().chunkExists((int)x, (int)z)); // FIXME debug
-			return false;
+			if (dimDst < 5) return false;
 			entitySrc.dimension = dimDst;
 			entitySrc.worldObj.removeEntity(entitySrc);
 			entitySrc.isDead = false;
