@@ -20,7 +20,7 @@ public class EntityInteract
 			if (stack != null && stack.getItem() == EnderUtilitiesItems.enderLasso)
 			{
 				EnderLasso el = (EnderLasso)EnderUtilitiesItems.enderLasso;
-				el.teleportEntity(stack, event.target, event.entity.dimension);
+				el.teleportEntity(stack, (EntityLiving)event.target, event.entity.dimension);
 				event.setCanceled(true);
 			}
 		}

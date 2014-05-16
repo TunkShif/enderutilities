@@ -3,7 +3,7 @@ package fi.dy.masa.minecraft.mods.enderutilities.items;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -122,7 +122,7 @@ public class EnderLasso extends Item
 		return true;
 	}
 
-	public void teleportEntity(ItemStack stack, Entity entity, int dim)
+	public void teleportEntity(ItemStack stack, EntityLiving entity, int dim)
 	{
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null || ! nbt.hasKey("x") || ! nbt.hasKey("y") || ! nbt.hasKey("z") || ! nbt.hasKey("dim")
@@ -142,11 +142,13 @@ public class EnderLasso extends Item
 		// FIXME change the dimension, check for chunk loaded etc.
 		if (dim != targetDim)
 		{
-			entity.travelToDimension(targetDim);
+			//entity.travelToDimension(targetDim);
 		}
 
+		// TODO: Stop the mob AI: is this correct?
+		entity.setMoveForward(0.0f);
+		entity.getNavigator().clearPathEntity();
 		entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
-		// TODO: Stop the mob AI
 
 		World world = entity.worldObj;
 		world.playSoundEffect(entX, entY, entZ, "mob.endermen.portal", 0.5F, 1.0F + (world.rand.nextFloat() * 0.5f - world.rand.nextFloat() * 0.5f) * 0.5F);
