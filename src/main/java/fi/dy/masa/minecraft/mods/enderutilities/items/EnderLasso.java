@@ -126,16 +126,22 @@ public class EnderLasso extends Item
 		double z = (double)nbt.getInteger("z") + 0.5d;
 		int targetDim = nbt.getInteger("dim");
 
+		// FIXME: only allow overworld and nether until I figure out the dimension and chunk laoding stuff...
+		if (targetDim != 0 && targetDim != -1)
+		{
+			return;
+		}
+
 		// FIXME does this chunkloading work?
 		//MinecraftServer minecraftserver = MinecraftServer.getServer();
 		//WorldServer worldServerDst = minecraftserver.worldServerForDimension(targetDim);
-/*
+
 		WorldServer worldServerDst = DimensionManager.getWorld(targetDim);
 		if (worldServerDst != null && worldServerDst.theChunkProviderServer != null)
 		{
 			worldServerDst.theChunkProviderServer.loadChunk((int)x >> 4, (int)z >> 4);
 		}
-*/
+
 		double entX = entity.posX;
 		double entY = entity.posY;
 		double entZ = entity.posZ;
