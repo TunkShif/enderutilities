@@ -96,7 +96,7 @@ public class EnderLasso extends Item
 
 		if (dim >= -1 && dim <= 1)
 		{
-			String dimStr = (dim == -1 ? "Nether" : (dim == 0 ? "Overworld" : "End"));
+			String dimStr = (dim == -1 ? "Nether" : (dim == 0 ? "Overworld" : "The End"));
 			list.add(String.format("Dimension: %s%s%s", dimPre, dimStr, rst));
 		}
 		else
