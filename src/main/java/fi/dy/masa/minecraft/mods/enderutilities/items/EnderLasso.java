@@ -92,8 +92,17 @@ public class EnderLasso extends Item
 		String coordPre = "" + EnumChatFormatting.BLUE;
 		String rst = "" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY;
 
-		list.add(String.format("dim: %s%d%s x: %s%d%s, y: %s%d%s, z: %s%d%s",
-					dimPre, dim, rst, coordPre, x, rst, coordPre, y, rst, coordPre, z, rst));
+		if (dim >= -1 && dim <= 1)
+		{
+			String dimStr = (dim == -1 ? "Nether" : (dim == 0 ? "Overworld" : "End"));
+			list.add(String.format("Dimension: %s%s%s", dimPre, dimStr, rst));
+		}
+		else
+		{
+			list.add(String.format("Dimension: %s%d%s", dimPre, dim, rst));
+		}
+
+		list.add(String.format("x: %s%d%s, y: %s%d%s, z: %s%d%s", coordPre, x, rst, coordPre, y, rst, coordPre, z, rst));
 	}
 
 	@Override
