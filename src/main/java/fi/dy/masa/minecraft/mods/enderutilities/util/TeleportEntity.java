@@ -42,14 +42,15 @@ public class TeleportEntity
 			
 			if (entityDst != null && entityDst.isEntityAlive() == true)
 			{
-					x = (double)MathHelper.clamp_int((int)x, -29999872, 29999872);
-					z = (double)MathHelper.clamp_int((int)z, -29999872, 29999872);
+				x = (double)MathHelper.clamp_int((int)x, -29999872, 29999872);
+				z = (double)MathHelper.clamp_int((int)z, -29999872, 29999872);
 			
-					entityDst.copyDataFrom(entitySrc, true);
+				entityDst.copyDataFrom(entitySrc, true);
 				entityDst.setLocationAndAngles(x, y, z, entitySrc.rotationYaw, entitySrc.rotationPitch);
 				worldServerDst.spawnEntityInWorld(entityDst);
-				worldServerDst.updateEntityWithOptionalForce(entityDst, false);
+				//worldServerDst.updateEntityWithOptionalForce(entityDst, false); // FIXME this seems to kill non-spawnable entities?
 				entityDst.setWorld(worldServerDst);
+				System.out.printf("debug: yawSrc: %f yawDst: %f\n", entitySrc.rotationYaw, entityDst.rotationYaw);
 			}
 			
 			entitySrc.isDead = true;
