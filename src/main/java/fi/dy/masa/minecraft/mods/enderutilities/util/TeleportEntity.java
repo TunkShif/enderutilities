@@ -20,47 +20,51 @@ public class TeleportEntity
 
 	public static boolean transferEntityToDimension(EntityLiving entitySrc, int dimDst, double x, double y, double z)
 	{
-        if (entitySrc.worldObj.isRemote == false && entitySrc.isDead == false)
-        {
-            entitySrc.worldObj.theProfiler.startSection("changeDimension");
-            MinecraftServer minecraftserver = MinecraftServer.getServer();
-            int dimSrc = entitySrc.dimension;
-            WorldServer worldServerSrc = minecraftserver.worldServerForDimension(dimSrc);
-            WorldServer worldServerDst = minecraftserver.worldServerForDimension(dimDst);
-            entitySrc.dimension = dimDst;
+		if (entitySrc != null && entitySrc.worldObj.isRemote == false && entitySrc.isDead == false)
+		{
+			int dimSrc = entitySrc.dimension;
+			entitySrc.worldObj.theProfiler.startSection("changeDimension");
 
-            entitySrc.worldObj.removeEntity(entitySrc);
-            entitySrc.isDead = false;
-            entitySrc.worldObj.theProfiler.startSection("reposition");
-
-            // FIXME have to get rid of transferEntityToWorld, it will create portals, check spawn points etc.
-            //this.transferEntityToWorld(entitySrc, dimSrc, worldServerSrc, worldServerDst);
-
-            entitySrc.worldObj.theProfiler.endStartSection("reloading");
-            Entity entityDst = EntityList.createEntityByName(EntityList.getEntityString(entitySrc), worldServerDst);
-
-            if (entityDst != null && entityDst.isEntityAlive() == true)
-            {
-        		x = (double)MathHelper.clamp_int((int)x, -29999872, 29999872);
-        		z = (double)MathHelper.clamp_int((int)z, -29999872, 29999872);
-
-        		entityDst.copyDataFrom(entitySrc, true);
-                entityDst.setLocationAndAngles(x, y, z, entitySrc.rotationYaw, entitySrc.rotationPitch);
-                worldServerDst.spawnEntityInWorld(entityDst);
-                worldServerDst.updateEntityWithOptionalForce(entityDst, false);
-                entityDst.setWorld(worldServerDst);
-            }
-
-            entitySrc.isDead = true;
-            entitySrc.worldObj.theProfiler.endSection();
-            worldServerSrc.resetUpdateEntityTick();
-            worldServerDst.resetUpdateEntityTick();
-            entitySrc.worldObj.theProfiler.endSection();
-
-            return true;
-        }
-
-        return false;
+			MinecraftServer minecraftserver = MinecraftServer.getServer();
+			WorldServer worldServerSrc = minecraftserver.worldServerForDimension(dimSrc);
+			WorldServer worldServerDst = minecraftserver.worldServerForDimension(dimDst);
+			entitySrc.dimension = dimDst;
+			
+			entitySrc.worldObj.removeEntity(entitySrc);
+			entitySrc.isDead = false;
+			entitySrc.worldObj.theProfiler.startSection("reposition");
+			
+			// FIXME have to get rid of transferEntityToWorld, it will create portals, check spawn points etc.
+			//this.transferEntityToWorld(entitySrc, dimSrc, worldServerSrc, worldServerDst);
+			
+			entitySrc.worldObj.theProfiler.endStartSection("reloading");
+			Entity entityDst = EntityList.createEntityByName(EntityList.getEntityString(entitySrc), worldServerDst);
+			
+			if (entityDst != null && entityDst.isEntityAlive() == true)
+			{
+					x = (double)MathHelper.clamp_int((int)x, -29999872, 29999872);
+					z = (double)MathHelper.clamp_int((int)z, -29999872, 29999872);
+			
+					entityDst.copyDataFrom(entitySrc, true);
+				entityDst.setLocationAndAngles(x, y, z, entitySrc.rotationYaw, entitySrc.rotationPitch);
+				worldServerDst.spawnEntityInWorld(entityDst);
+				worldServerDst.updateEntityWithOptionalForce(entityDst, false);
+				entityDst.setWorld(worldServerDst);
+			}
+			
+			entitySrc.isDead = true;
+			entitySrc.worldObj.theProfiler.endSection();
+			worldServerSrc.resetUpdateEntityTick();
+			worldServerDst.resetUpdateEntityTick();
+			entitySrc.worldObj.theProfiler.endSection();
+			
+			System.out.println("transferEntityToDimension("
+								+ entitySrc.toString() + ", "
+								+ dimDst + ", " + x + ", " + y + ", " + z + ")");
+			return true;
+		}
+		
+		return false;
 	}
 
 /*

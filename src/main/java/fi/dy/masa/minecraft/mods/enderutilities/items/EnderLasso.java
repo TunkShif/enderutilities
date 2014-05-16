@@ -140,18 +140,6 @@ public class EnderLasso extends Item
 		double entY = entity.posY;
 		double entZ = entity.posZ;
 
-		// FIXME change the dimension, check for chunk loaded etc.
-		if (dim != targetDim)
-		{
-			//entity.travelToDimension(targetDim);
-			TeleportEntity.transferEntityToDimension(entity, targetDim, x, y, z);
-		}
-
-		// TODO: Stop the mob AI: is this correct?
-		entity.setMoveForward(0.0f);
-		entity.getNavigator().clearPathEntity();
-		entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
-
 		World world = entity.worldObj;
 		world.playSoundEffect(entX, entY, entZ, "mob.endermen.portal", 0.5F, 1.0F + (world.rand.nextFloat() * 0.5f - world.rand.nextFloat() * 0.5f) * 0.5F);
 
@@ -166,6 +154,21 @@ public class EnderLasso extends Item
 			double velY = (Math.random() - 0.5d) * 1.0d;
 			double velZ = (Math.random() - 0.5d) * 1.0d;
 			world.spawnParticle("portal", entX + offX, entY + offY, entZ + offZ, velX, velY, velZ);
+		}
+
+		// TODO: Stop the mob AI: is this correct?
+		entity.setMoveForward(0.0f);
+		entity.getNavigator().clearPathEntity();
+
+		// FIXME change the dimension, check for chunk loaded etc.
+		if (entX != 0.0d) //dim != targetDim)
+		{
+			//entity.travelToDimension(targetDim);
+			TeleportEntity.transferEntityToDimension(entity, targetDim, x, y, z);
+		}
+		else
+		{
+			entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
 		}
 	}
 }
