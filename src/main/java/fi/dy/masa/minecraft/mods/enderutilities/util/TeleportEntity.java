@@ -13,17 +13,55 @@ import net.minecraftforge.common.DimensionManager;
 
 public class TeleportEntity
 {
+	public static void addEnderSoundsAndParticles(EntityLiving entity)
+	{
+		double entX = entity.posX;
+		double entY = entity.posY;
+		double entZ = entity.posZ;
+
+		World world = entity.worldObj;
+		world.playSoundEffect(entX, entY, entZ, "mob.endermen.portal", 0.8F, 1.0F + (world.rand.nextFloat() * 0.5f - world.rand.nextFloat() * 0.5f) * 0.5F);
+
+		// Spawn some particles
+		for (int i = 0; i < 20; i++)
+		{
+			double offX = (Math.random() - 0.5d) * 1.0d;
+			double offY = (Math.random() - 0.5d) * 1.0d;
+			double offZ = (Math.random() - 0.5d) * 1.0d;
+
+			double velX = (Math.random() - 0.5d) * 1.0d;
+			double velY = (Math.random() - 0.5d) * 1.0d;
+			double velZ = (Math.random() - 0.5d) * 1.0d;
+			world.spawnParticle("portal", entX + offX, entY + offY, entZ + offZ, velX, velY, velZ);
+		}
+	}
+
 	public static void teleportEntityRandomly(EntityLiving entity, double maxDist)
 	{
 		double deltaYaw = (Math.random() * 360.0f) / (2.0d / Math.PI);
 		double deltaPitch = ((90.0d - (Math.random() - 180.0d)) / (2.0d * Math.PI));
-		double x = entity.posX;
-		double y = entity.posY;
-		double z = entity.posZ;
-		x += Math.cos(deltaPitch) * Math.cos(deltaYaw) * maxDist;
-		z += Math.cos(deltaPitch) * Math.sin(deltaYaw) * maxDist;
-		y += Math.sin(deltaPitch) * maxDist;
-		
+		double x;
+		double y;
+		double z;
+
+		// Try to find a free spot (non-colliding with blocks)
+		for (int i = 0; i < 10; i++)
+		{
+			x = entity.posX;
+			y = entity.posY;
+			z = entity.posZ;
+			x += Math.cos(deltaPitch) * Math.cos(deltaYaw) * maxDist;
+			z += Math.cos(deltaPitch) * Math.sin(deltaYaw) * maxDist;
+			y += Math.sin(deltaPitch) * maxDist;
+
+			if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() == true)
+			{
+				TeleportEntity.addEnderSoundsAndParticles(entity);
+				// entity.rotationYaw, entity.rotationPitch
+				entity.setPosition(x, y, z);
+				return;
+			}
+		}
 	}
 
 	public static boolean transferEntityToDimension(EntityLiving entity, int dim)
@@ -61,29 +99,11 @@ public class TeleportEntity
 			worldServerDst.theChunkProviderServer.loadChunk((int)x >> 4, (int)z >> 4);
 		}
 
-		double entX = entity.posX;
-		double entY = entity.posY;
-		double entZ = entity.posZ;
-
-		World world = entity.worldObj;
-		world.playSoundEffect(entX, entY, entZ, "mob.endermen.portal", 0.8F, 1.0F + (world.rand.nextFloat() * 0.5f - world.rand.nextFloat() * 0.5f) * 0.5F);
-
-		// Spawn some particles
-		for (int i = 0; i < 20; i++)
-		{
-			double offX = (Math.random() - 0.5d) * 1.0d;
-			double offY = (Math.random() - 0.5d) * 1.0d;
-			double offZ = (Math.random() - 0.5d) * 1.0d;
-
-			double velX = (Math.random() - 0.5d) * 1.0d;
-			double velY = (Math.random() - 0.5d) * 1.0d;
-			double velZ = (Math.random() - 0.5d) * 1.0d;
-			world.spawnParticle("portal", entX + offX, entY + offY, entZ + offZ, velX, velY, velZ);
-		}
-
 		// TODO: Stop the mob AI: is this correct?
 		entity.setMoveForward(0.0f);
 		entity.getNavigator().clearPathEntity();
+
+		TeleportEntity.addEnderSoundsAndParticles(entity);
 
 		// FIXME Check for chunk loaded etc.
 		if (dim != targetDim)
