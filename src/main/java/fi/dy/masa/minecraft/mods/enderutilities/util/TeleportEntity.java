@@ -64,14 +64,11 @@ public class TeleportEntity
 			//if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() == true)
 			{
 				TeleportEntity.addEnderSoundsAndParticles(entity);
-				// entity.rotationYaw, entity.rotationPitch
 				entity.setPosition(x, y, z);
 				//entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
-				System.out.printf("x: %f y: %f z: %f maxDist: %f loop: %d\n", x, y, z, maxDist, i);
 				return;
 			}
 		}
-		System.out.printf("FAILED: x: %f y: %f z: %f loop: %d\n", x, y, z, i);
 	}
 
 	public static boolean transferEntityToDimension(EntityLiving entity, int dim)
