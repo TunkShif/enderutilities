@@ -118,7 +118,7 @@ public class EnderLasso extends Item
 		double entZ = entity.posZ;
 
 		World world = entity.worldObj;
-		world.playSoundEffect(entX, entY, entZ, "mob.endermen.portal", 0.5F, 1.0F + (world.rand.nextFloat() * 0.5f - world.rand.nextFloat() * 0.5f) * 0.5F);
+		world.playSoundEffect(entX, entY, entZ, "mob.endermen.portal", 0.8F, 1.0F + (world.rand.nextFloat() * 0.5f - world.rand.nextFloat() * 0.5f) * 0.5F);
 
 		// Spawn some particles
 		for (int i = 0; i < 20; i++)
