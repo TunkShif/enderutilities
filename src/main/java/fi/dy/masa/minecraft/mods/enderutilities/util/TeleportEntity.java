@@ -12,21 +12,21 @@ import net.minecraft.world.WorldServer;
 
 public class TeleportEntity
 {
-	public boolean transferEntityToDimension(EntityLiving entity, int dim)
+	public static boolean transferEntityToDimension(EntityLiving entity, int dim)
 	{
-		this.transferEntityToDimension(entity, dim, entity.posX, entity.posY, entity.posZ);
+		TeleportEntity.transferEntityToDimension(entity, dim, entity.posX, entity.posY, entity.posZ);
 		return true;
 	}
 
-	public boolean transferEntityToDimension(EntityLiving entitySrc, int dimDst, double x, double y, double z)
+	public static boolean transferEntityToDimension(EntityLiving entitySrc, int dimDst, double x, double y, double z)
 	{
         if (entitySrc.worldObj.isRemote == false && entitySrc.isDead == false)
         {
             entitySrc.worldObj.theProfiler.startSection("changeDimension");
             MinecraftServer minecraftserver = MinecraftServer.getServer();
             int dimSrc = entitySrc.dimension;
-            WorldServer worldserverSrc = minecraftserver.worldServerForDimension(dimSrc);
-            WorldServer worldserverDst = minecraftserver.worldServerForDimension(dimDst);
+            WorldServer worldServerSrc = minecraftserver.worldServerForDimension(dimSrc);
+            WorldServer worldServerDst = minecraftserver.worldServerForDimension(dimDst);
             entitySrc.dimension = dimDst;
 
             entitySrc.worldObj.removeEntity(entitySrc);
@@ -34,49 +34,54 @@ public class TeleportEntity
             entitySrc.worldObj.theProfiler.startSection("reposition");
 
             // FIXME have to get rid of transferEntityToWorld, it will create portals, check spawn points etc.
-            this.transferEntityToWorld(entitySrc, dimSrc, worldserverSrc, worldserverDst);
+            //this.transferEntityToWorld(entitySrc, dimSrc, worldServerSrc, worldServerDst);
 
             entitySrc.worldObj.theProfiler.endStartSection("reloading");
-            Entity entityDst = EntityList.createEntityByName(EntityList.getEntityString(entitySrc), worldserverDst);
+            Entity entityDst = EntityList.createEntityByName(EntityList.getEntityString(entitySrc), worldServerDst);
 
-            if (entityDst != null)
+            if (entityDst != null && entityDst.isEntityAlive() == true)
             {
-            	entityDst.copyDataFrom(entitySrc, true);
+        		x = (double)MathHelper.clamp_int((int)x, -29999872, 29999872);
+        		z = (double)MathHelper.clamp_int((int)z, -29999872, 29999872);
+
+        		entityDst.copyDataFrom(entitySrc, true);
                 entityDst.setLocationAndAngles(x, y, z, entitySrc.rotationYaw, entitySrc.rotationPitch);
-                worldserverDst.spawnEntityInWorld(entityDst);
+                worldServerDst.spawnEntityInWorld(entityDst);
+                worldServerDst.updateEntityWithOptionalForce(entityDst, false);
+                entityDst.setWorld(worldServerDst);
             }
 
             entitySrc.isDead = true;
             entitySrc.worldObj.theProfiler.endSection();
-            worldserverSrc.resetUpdateEntityTick();
-            worldserverDst.resetUpdateEntityTick();
+            worldServerSrc.resetUpdateEntityTick();
+            worldServerDst.resetUpdateEntityTick();
             entitySrc.worldObj.theProfiler.endSection();
 
             return true;
         }
+
         return false;
 	}
 
+/*
 	private void transferEntityToWorld(Entity entity, int dimSrc, WorldServer worldServerSrc, WorldServer worldServerDst)
 	{
-		WorldProvider pOld = worldServerSrc.provider;
-		WorldProvider pNew = worldServerDst.provider;
 		double x = entity.posX;
 		double y = entity.posY;
 		double z = entity.posZ;
-		
+
 		worldServerSrc.theProfiler.startSection("placing");
 		x = (double)MathHelper.clamp_int((int)x, -29999872, 29999872);
 		z = (double)MathHelper.clamp_int((int)z, -29999872, 29999872);
-		
+
 		if (entity.isEntityAlive())
 		{
 			entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
 			worldServerDst.spawnEntityInWorld(entity);
 			worldServerDst.updateEntityWithOptionalForce(entity, false);
 		}
-		
 		worldServerSrc.theProfiler.endSection();
 		entity.setWorld(worldServerDst);
 	}
+*/
 }

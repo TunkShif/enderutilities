@@ -13,6 +13,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
+import fi.dy.masa.minecraft.mods.enderutilities.util.TeleportEntity;
 
 public class EnderLasso extends Item
 {
@@ -143,6 +144,7 @@ public class EnderLasso extends Item
 		if (dim != targetDim)
 		{
 			//entity.travelToDimension(targetDim);
+			TeleportEntity.transferEntityToDimension(entity, targetDim, x, y, z);
 		}
 
 		// TODO: Stop the mob AI: is this correct?

@@ -19,8 +19,7 @@ public class EntityInteract
 			//if (stack != null && stack.getItem() == GameRegistry.findItem(Reference.MOD_ID, Reference.NAME_ITEM_ENDER_LASSO))
 			if (stack != null && stack.getItem() == EnderUtilitiesItems.enderLasso)
 			{
-				EnderLasso el = (EnderLasso)EnderUtilitiesItems.enderLasso;
-				el.teleportEntity(stack, (EntityLiving)event.target, event.entity.dimension);
+				((EnderLasso)EnderUtilitiesItems.enderLasso).teleportEntity(stack, (EntityLiving)event.target, event.entity.dimension);
 				event.setCanceled(true);
 			}
 		}
