@@ -21,6 +21,7 @@ public class EntityInteract
 			if (stack != null && stack.getItem() == EnderUtilitiesItems.enderLasso)
 			{
 				System.out.println("entity interact with lasso!"); // FIXME debug
+				event.setCanceled(true);
 			}
 		}
 	}
