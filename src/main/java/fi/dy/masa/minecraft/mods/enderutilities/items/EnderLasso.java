@@ -2,20 +2,16 @@ package fi.dy.masa.minecraft.mods.enderutilities.items;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import fi.dy.masa.minecraft.mods.enderutilities.EnderUtilities;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
-import fi.dy.masa.minecraft.mods.enderutilities.reference.GuiReference;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
 public class EnderLasso extends Item
@@ -124,5 +120,25 @@ public class EnderLasso extends Item
 	public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player)
 	{
 		return true;
+	}
+
+	public void teleportEntity(ItemStack stack, Entity entity)
+	{
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null || ! nbt.hasKey("x") || ! nbt.hasKey("y") || ! nbt.hasKey("z") || ! nbt.hasKey("dim"))
+		{
+			return;
+		}
+		int x = nbt.getInteger("x");
+		int y = nbt.getInteger("y");
+		int z = nbt.getInteger("z");
+
+		System.out.println("entity interact with lasso!"); // FIXME debug
+		//entity.setLocationAndAngles((double)x, (double)y, (double)z, entity.rotationYaw, entity.rotationPitch);
+		World world = entity.worldObj;
+		double xd = (double)x + 0.5d;
+		double yd = (double)y + 0.5d;
+		double zd = (double)z + 0.5d;
+		world.playSoundEffect(xd, yd, zd, "endermen.portal.random", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
 	}
 }
