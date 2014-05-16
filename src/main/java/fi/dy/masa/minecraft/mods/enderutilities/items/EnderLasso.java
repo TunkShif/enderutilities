@@ -83,7 +83,6 @@ public class EnderLasso extends Item
 			return;
 		}
 
-		ForgeChunkManager fcm = new ForgeChunkManager();
 		String side	= nbt.getString("side");
 		int dim		= nbt.getInteger("dim");
 		int x		= nbt.getInteger("x");
