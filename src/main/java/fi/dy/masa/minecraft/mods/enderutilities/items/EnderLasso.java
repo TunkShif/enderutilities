@@ -129,25 +129,30 @@ public class EnderLasso extends Item
 		{
 			return;
 		}
-		int xi = nbt.getInteger("x");
-		int yi = nbt.getInteger("y");
-		int zi = nbt.getInteger("z");
+		double x = (double)nbt.getInteger("x");
+		double y = (double)nbt.getInteger("y");
+		double z = (double)nbt.getInteger("z");
 
-		System.out.println("entity interact with lasso!"); // FIXME debug
-		//entity.setLocationAndAngles((double)x, (double)y, (double)z, entity.rotationYaw, entity.rotationPitch);
+		double entX = entity.posX;
+		double entY = entity.posY;
+		double entZ = entity.posZ;
+
+		// FIXME change the dimension, check for chunk loaded etc.
+		entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
 		World world = entity.worldObj;
-		double x = (double)xi;
-		double y = (double)yi;
-		double z = (double)zi;
-		world.playSoundEffect(x, y, z, "endermen.portal", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+		world.playSoundEffect(entX, entY, entZ, "mob.endermen.portal", 0.5F, 1.0F + (world.rand.nextFloat() * 0.5f - world.rand.nextFloat() * 0.5f) * 0.5F);
 
 		// Spawn some particles
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 20; i++)
 		{
-			double velx = (Math.random() - 0.5d) * 2.0d;
-			double vely = (Math.random() - 0.5d) * 2.0d;
-			double velz = (Math.random() - 0.5d) * 2.0d;
-			world.spawnParticle("portal", x, y, z, velx, vely, velz);
+			double offX = (Math.random() - 0.5d) * 1.0d;
+			double offY = (Math.random() - 0.5d) * 1.0d;
+			double offZ = (Math.random() - 0.5d) * 1.0d;
+
+			double velX = (Math.random() - 0.5d) * 1.0d;
+			double velY = (Math.random() - 0.5d) * 1.0d;
+			double velZ = (Math.random() - 0.5d) * 1.0d;
+			world.spawnParticle("portal", entX + offX, entY + offY, entZ + offZ, velX, velY, velZ);
 		}
 	}
 }
