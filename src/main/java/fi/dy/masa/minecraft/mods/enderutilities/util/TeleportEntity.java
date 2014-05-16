@@ -39,16 +39,19 @@ public class TeleportEntity
 
 	public static void teleportEntityRandomly(EntityLiving entity, double maxDist)
 	{
-		double deltaYaw = (Math.random() * 360.0f) / (2.0d / Math.PI);
-		double deltaPitch = ((90.0d - (Math.random() * 180.0d)) / (2.0d * Math.PI));
-		double x;
-		double y;
-		double z;
+		double deltaYaw = 0.0d;
+		double deltaPitch = 0.0d;
+		double x = 0.0d;
+		double y = 0.0d;
+		double z = 0.0d;
+		maxDist *= Math.random();
 
 		// Try to find a free spot (non-colliding with blocks)
 		int i;
 		for (i = 0; i < 10; i++)
 		{
+			deltaYaw = (Math.random() * 360.0f) / (2.0d / Math.PI);
+			deltaPitch = ((90.0d - (Math.random() * 180.0d)) / (2.0d * Math.PI));
 			x = entity.posX;
 			y = entity.posY;
 			z = entity.posZ;
@@ -62,9 +65,9 @@ public class TeleportEntity
 			{
 				TeleportEntity.addEnderSoundsAndParticles(entity);
 				// entity.rotationYaw, entity.rotationPitch
-				//entity.setPosition(x, y, z);
+				entity.setPosition(x, y, z);
 				//entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
-				System.out.printf("x: %f y: %f z: %f loop: %d\n", x, y, z, i);
+				System.out.printf("x: %f y: %f z: %f maxDist: %f loop: %d\n", x, y, z, maxDist, i);
 				return;
 			}
 		}

@@ -12,7 +12,7 @@ public class EntityInteract
 	@SubscribeEvent
 	public void onEntityInteractEvent(EntityInteractEvent event)
 	{
-		if (event.target instanceof EntityLiving)
+		if (event.target instanceof EntityLiving && event.target.worldObj.isRemote == false)
 		{
 			ItemStack stack = event.entityPlayer.inventory.getCurrentItem();
 

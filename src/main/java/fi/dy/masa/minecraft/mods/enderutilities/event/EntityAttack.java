@@ -12,7 +12,11 @@ public class EntityAttack
 	@SubscribeEvent
 	public void onEntityAttackEvent(AttackEntityEvent event)
 	{
-		if (event.target instanceof EntityLiving)
+		if (event.isCancelable() == false)
+		{
+			return;
+		}
+		if (event.target instanceof EntityLiving && event.target.worldObj.isRemote == false)
 		{
 			ItemStack stack = event.entityPlayer.inventory.getCurrentItem();
 
@@ -20,7 +24,7 @@ public class EntityAttack
 			{
 				if (stack.getItem() == EnderUtilitiesItems.enderArrow)
 				{
-					TeleportEntity.teleportEntityRandomly((EntityLiving)event.target, 5.0d);
+					TeleportEntity.teleportEntityRandomly((EntityLiving)event.target, 10.0d);
 					event.setCanceled(true);
 					return;
 				}
