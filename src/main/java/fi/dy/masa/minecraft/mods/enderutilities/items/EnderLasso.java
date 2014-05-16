@@ -168,7 +168,7 @@ public class EnderLasso extends Item
 		}
 		else
 		{
-			entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
+			entity.setLocationAndAngles(x + 0.5d, y, z + 0.5d, entity.rotationYaw, entity.rotationPitch);
 		}
 	}
 }

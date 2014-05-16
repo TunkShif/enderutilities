@@ -46,14 +46,14 @@ public class TeleportEntity
 				z = (double)MathHelper.clamp_int((int)z, -29999872, 29999872);
 			
 				entityDst.copyDataFrom(entitySrc, true);
-				entityDst.setLocationAndAngles(x, y, z, entitySrc.rotationYaw, entitySrc.rotationPitch);
+				entityDst.setLocationAndAngles(x + 0.5d, y, z + 0.5d, entitySrc.rotationYaw, entitySrc.rotationPitch);
 				worldServerDst.spawnEntityInWorld(entityDst);
 				worldServerDst.updateEntityWithOptionalForce(entityDst, false);
 				entityDst.setWorld(worldServerDst);
 				System.out.printf("debug: yawSrc: %f yawDst: %f\n", entitySrc.rotationYaw, entityDst.rotationYaw);
 			}
 			
-			//entitySrc.isDead = true; // FIXME debug: this actually kills the original entity, commenting it will make clones
+			entitySrc.isDead = true; // FIXME debug: this actually kills the original entity, commenting it will make clones
 			entitySrc.worldObj.theProfiler.endSection();
 			worldServerSrc.resetUpdateEntityTick();
 			worldServerDst.resetUpdateEntityTick();
