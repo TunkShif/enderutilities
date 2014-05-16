@@ -3,6 +3,7 @@ package fi.dy.masa.minecraft.mods.enderutilities.util;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -39,13 +40,14 @@ public class TeleportEntity
 	public static void teleportEntityRandomly(EntityLiving entity, double maxDist)
 	{
 		double deltaYaw = (Math.random() * 360.0f) / (2.0d / Math.PI);
-		double deltaPitch = ((90.0d - (Math.random() - 180.0d)) / (2.0d * Math.PI));
+		double deltaPitch = ((90.0d - (Math.random() * 180.0d)) / (2.0d * Math.PI));
 		double x;
 		double y;
 		double z;
 
 		// Try to find a free spot (non-colliding with blocks)
-		for (int i = 0; i < 10; i++)
+		int i;
+		for (i = 0; i < 10; i++)
 		{
 			x = entity.posX;
 			y = entity.posY;
@@ -54,14 +56,19 @@ public class TeleportEntity
 			z += Math.cos(deltaPitch) * Math.sin(deltaYaw) * maxDist;
 			y += Math.sin(deltaPitch) * maxDist;
 
-			if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() == true)
+			if (entity.worldObj.getBlock((int)x, (int)y, (int)z) == Blocks.air &&
+				entity.worldObj.getBlock((int)x, (int)y + 1, (int)z) == Blocks.air)
+			//if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() == true)
 			{
 				TeleportEntity.addEnderSoundsAndParticles(entity);
 				// entity.rotationYaw, entity.rotationPitch
-				entity.setPosition(x, y, z);
+				//entity.setPosition(x, y, z);
+				//entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
+				System.out.printf("x: %f y: %f z: %f loop: %d\n", x, y, z, i);
 				return;
 			}
 		}
+		System.out.printf("FAILED: x: %f y: %f z: %f loop: %d\n", x, y, z, i);
 	}
 
 	public static boolean transferEntityToDimension(EntityLiving entity, int dim)
