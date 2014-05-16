@@ -3,6 +3,7 @@ package fi.dy.masa.minecraft.mods.enderutilities.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
+import fi.dy.masa.minecraft.mods.enderutilities.init.EnderUtilitiesItems;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -112,21 +113,21 @@ public class EnderBow extends ItemBow
 	/**
 	 * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
 	 */
-	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+	public ItemStack onItemRightClick(ItemStack stack, World par2World, EntityPlayer player)
 	{
-		ArrowNockEvent event = new ArrowNockEvent(par3EntityPlayer, par1ItemStack);
+		ArrowNockEvent event = new ArrowNockEvent(player, stack);
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled())
 		{
 			return event.result;
 		}
 
-		if (par3EntityPlayer.capabilities.isCreativeMode || par3EntityPlayer.inventory.hasItem(Items.arrow))
+		if (player.inventory.hasItem(EnderUtilitiesItems.enderArrow))
 		{
-			par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+			player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
 		}
 
-		return par1ItemStack;
+		return stack;
 	}
 
 	/**
@@ -134,27 +135,18 @@ public class EnderBow extends ItemBow
 	 */
 	public int getItemEnchantability()
 	{
-		return 1;
+		return 0;
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister par1IconRegister)
+	public void registerIcons(IIconRegister iconRegister)
 	{
-		this.itemIcon = par1IconRegister.registerIcon(this.getIconString() + "_standby");
+		this.itemIcon = iconRegister.registerIcon(this.getIconString() + "_standby");
 		this.iconArray = new IIcon[bowPullIconNameArray.length];
 
 		for (int i = 0; i < this.iconArray.length; ++i)
 		{
-			this.iconArray[i] = par1IconRegister.registerIcon(this.getIconString() + "_" + bowPullIconNameArray[i]);
+			this.iconArray[i] = iconRegister.registerIcon(this.getIconString() + "_" + bowPullIconNameArray[i]);
 		}
-	}
-
-	/**
-	 * used to cycle through icons based on their used duration, i.e. for the bow
-	 */
-	@SideOnly(Side.CLIENT)
-	public IIcon getItemIconForUseDuration(int par1)
-	{
-		return this.iconArray[par1];
 	}
 }
