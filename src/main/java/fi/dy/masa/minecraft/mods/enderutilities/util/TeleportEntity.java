@@ -48,17 +48,18 @@ public class TeleportEntity
 				entityDst.copyDataFrom(entitySrc, true);
 				entityDst.setLocationAndAngles(x, y, z, entitySrc.rotationYaw, entitySrc.rotationPitch);
 				worldServerDst.spawnEntityInWorld(entityDst);
-				//worldServerDst.updateEntityWithOptionalForce(entityDst, false); // FIXME this seems to kill non-spawnable entities?
+				worldServerDst.updateEntityWithOptionalForce(entityDst, false);
 				entityDst.setWorld(worldServerDst);
 				System.out.printf("debug: yawSrc: %f yawDst: %f\n", entitySrc.rotationYaw, entityDst.rotationYaw);
 			}
 			
-			entitySrc.isDead = true;
+			//entitySrc.isDead = true; // FIXME debug: this actually kills the original entity, commenting it will make clones
 			entitySrc.worldObj.theProfiler.endSection();
 			worldServerSrc.resetUpdateEntityTick();
 			worldServerDst.resetUpdateEntityTick();
 			entitySrc.worldObj.theProfiler.endSection();
-			
+
+			// FIXME: debug
 			System.out.println("transferEntityToDimension("
 								+ entitySrc.toString() + ", "
 								+ dimDst + ", " + x + ", " + y + ", " + z + ")");
