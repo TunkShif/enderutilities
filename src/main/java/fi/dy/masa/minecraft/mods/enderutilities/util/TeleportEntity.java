@@ -4,17 +4,21 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.Teleporter;
+import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 
 public class TeleportEntity
 {
-	public boolean teleportEntityToDimension(EntityLiving entity, int dim)
+	public boolean transferEntityToDimension(EntityLiving entity, int dim)
 	{
-		this.teleportEntityToDimension(entity, dim, entity.posX, entity.posY, entity.posZ);
+		this.transferEntityToDimension(entity, dim, entity.posX, entity.posY, entity.posZ);
 		return true;
 	}
 
-	public boolean teleportEntityToDimension(EntityLiving entitySrc, int dimDst, double x, double y, double z)
+	public boolean transferEntityToDimension(EntityLiving entitySrc, int dimDst, double x, double y, double z)
 	{
         if (entitySrc.worldObj.isRemote == false && entitySrc.isDead == false)
         {
@@ -28,14 +32,17 @@ public class TeleportEntity
             entitySrc.worldObj.removeEntity(entitySrc);
             entitySrc.isDead = false;
             entitySrc.worldObj.theProfiler.startSection("reposition");
-            minecraftserver.getConfigurationManager().transferEntityToWorld(entitySrc, dimSrc, worldserverSrc, worldserverDst);
+
+            // FIXME have to get rid of transferEntityToWorld, it will create portals, check spawn points etc.
+            this.transferEntityToWorld(entitySrc, dimSrc, worldserverSrc, worldserverDst);
+
             entitySrc.worldObj.theProfiler.endStartSection("reloading");
             Entity entityDst = EntityList.createEntityByName(EntityList.getEntityString(entitySrc), worldserverDst);
 
             if (entityDst != null)
             {
             	entityDst.copyDataFrom(entitySrc, true);
-                entitySrc.setLocationAndAngles(x, y, z, entitySrc.rotationYaw, entitySrc.rotationPitch);
+                entityDst.setLocationAndAngles(x, y, z, entitySrc.rotationYaw, entitySrc.rotationPitch);
                 worldserverDst.spawnEntityInWorld(entityDst);
             }
 
@@ -48,5 +55,28 @@ public class TeleportEntity
             return true;
         }
         return false;
+	}
+
+	private void transferEntityToWorld(Entity entity, int dimSrc, WorldServer worldServerSrc, WorldServer worldServerDst)
+	{
+		WorldProvider pOld = worldServerSrc.provider;
+		WorldProvider pNew = worldServerDst.provider;
+		double x = entity.posX;
+		double y = entity.posY;
+		double z = entity.posZ;
+		
+		worldServerSrc.theProfiler.startSection("placing");
+		x = (double)MathHelper.clamp_int((int)x, -29999872, 29999872);
+		z = (double)MathHelper.clamp_int((int)z, -29999872, 29999872);
+		
+		if (entity.isEntityAlive())
+		{
+			entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
+			worldServerDst.spawnEntityInWorld(entity);
+			worldServerDst.updateEntityWithOptionalForce(entity, false);
+		}
+		
+		worldServerSrc.theProfiler.endSection();
+		entity.setWorld(worldServerDst);
 	}
 }
