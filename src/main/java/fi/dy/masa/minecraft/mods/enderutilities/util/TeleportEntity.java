@@ -69,12 +69,6 @@ public class TeleportEntity
 		}
 	}
 
-	public static boolean transferEntityToDimension(EntityLiving entity, int dim)
-	{
-		TeleportEntity.transferEntityToDimension(entity, dim, entity.posX, entity.posY, entity.posZ);
-		return true;
-	}
-
 	public static void teleportEntity(ItemStack stack, EntityLiving entity, int dim)
 	{
 		NBTTagCompound nbt = stack.getTagCompound();
@@ -94,14 +88,10 @@ public class TeleportEntity
 			//return;
 		}
 
-		// FIXME does this chunkloading work?
-		//MinecraftServer minecraftserver = MinecraftServer.getServer();
-		//WorldServer worldServerDst = minecraftserver.worldServerForDimension(targetDim);
-
 		WorldServer worldServerDst = DimensionManager.getWorld(targetDim);
-		System.out.println("Is loaded: " + worldServerDst.getChunkProvider().chunkExists((int)x, (int)z)); // FIXME debug
+		System.out.println("Is loaded: " + worldServerDst.getChunkProvider().chunkExists((int)x >> 4, (int)z >> 4)); // FIXME debug
 
-		// FIXME: only allow overworld and nether until I figure out the dimension and chunk laoding stuff...
+		// FIXME: only allow overworld and nether until I figure out the dimension and chunk loading stuff...
 		if (targetDim < 5) //targetDim != 0 && targetDim != -1)
 		{
 			return;
@@ -109,7 +99,7 @@ public class TeleportEntity
 
 		if (worldServerDst != null && worldServerDst.getChunkProvider() != null)
 		{
-			worldServerDst.getChunkProvider().loadChunk((int)x >> 4, (int)z >> 4);
+			//worldServerDst.getChunkProvider().loadChunk((int)x >> 4, (int)z >> 4);
 		}
 
 		// TODO: Stop the mob AI: is this correct?
@@ -189,6 +179,12 @@ public class TeleportEntity
 			return true;
 		}
 		return false;
+	}
+
+	public static boolean transferEntityToDimension(EntityLiving entity, int dim)
+	{
+		TeleportEntity.transferEntityToDimension(entity, dim, entity.posX, entity.posY, entity.posZ);
+		return true;
 	}
 
 	private static void transferEntityToWorld(Entity entity, int dimSrc, WorldServer worldServerSrc, WorldServer worldServerDst)
