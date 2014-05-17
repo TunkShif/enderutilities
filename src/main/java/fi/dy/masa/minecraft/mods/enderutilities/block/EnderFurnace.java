@@ -283,17 +283,36 @@ public class EnderFurnace extends BlockContainer
 	@SideOnly(Side.CLIENT)
     public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side)
     {
-		System.out.println("start");
-		if (side == 0 || side == 1) { return this.iconTop; }
-		if (side != blockAccess.getBlockMetadata(x, y, z)) { return this.blockIcon; }
-
-		TileEntityFurnace te = (TileEntityFurnace)blockAccess.getTileEntity(x, y, z);
-		//int i = te.furnaceBurnTime;
-		ItemStack stack = te.getStackInSlot(1);
-		if (stack != null && stack.stackSize > 0)
+		//System.out.println("\nstart");
+		if (side == 0 || side == 1)
 		{
-			System.out.println("..");
+			//System.out.println("top");
 			return this.iconTop;
+		}
+		if (side != blockAccess.getBlockMetadata(x, y, z))
+		{
+			//System.out.println("side");
+			return this.blockIcon;
+		}
+
+		//System.out.println("front");
+		if (x >= 1260)
+		{
+			TileEntityFurnace te = (TileEntityFurnace)blockAccess.getTileEntity(x, y, z);
+			if (te != null)
+			{
+				ItemStack stack;
+				int size = te.getSizeInventory();
+				for (int i = 0; i < size; i++)
+				{
+					System.out.printf("x: %d y: %d z: %d side: %d size: %d i:%d\n", x, y, z, side, size, i);
+					stack = te.getStackInSlot(i);
+					if (stack != null)
+					{
+						System.out.println("stack not null: " + i);
+					}
+				}
+			}
 		}
 		return this.iconFront;
     }
