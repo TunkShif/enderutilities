@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
+import fi.dy.masa.minecraft.mods.enderutilities.entity.EntityEnderPearlReusable;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
 public class EnderPearlReusable extends Item
@@ -27,7 +28,7 @@ public class EnderPearlReusable extends Item
 
 		if (world.isRemote == false)
 		{
-			//world.spawnEntityInWorld(new EntityEnderPearl(par2World, par3EntityPlayer));
+			world.spawnEntityInWorld(new EntityEnderPearlReusable(world, player));
 		}
 
 		return stack;

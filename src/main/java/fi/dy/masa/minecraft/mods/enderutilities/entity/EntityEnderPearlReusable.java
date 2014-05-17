@@ -2,8 +2,11 @@ package fi.dy.masa.minecraft.mods.enderutilities.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -11,6 +14,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import fi.dy.masa.minecraft.mods.enderutilities.init.EnderUtilitiesItems;
 
 public class EntityEnderPearlReusable extends EntityThrowable
 {
@@ -70,6 +74,19 @@ public class EntityEnderPearlReusable extends EntityThrowable
 					}
 				}
 			}
+
+			EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ,
+						new ItemStack(EnderUtilitiesItems.enderPearlReusable, 1, 0));
+/*
+			if (itemstack.hasTagCompound())
+			{
+				entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
+			}
+*/
+			entityitem.motionX = 0.0d;
+			entityitem.motionY = 0.2d;
+			entityitem.motionZ = 0.2d;
+			this.worldObj.spawnEntityInWorld(entityitem);
 
 			this.setDead();
 		}
