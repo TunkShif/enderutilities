@@ -9,6 +9,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import fi.dy.masa.minecraft.mods.enderutilities.event.EntityAttack;
 import fi.dy.masa.minecraft.mods.enderutilities.event.EntityInteract;
 import fi.dy.masa.minecraft.mods.enderutilities.init.EnderUtilitiesItems;
+import fi.dy.masa.minecraft.mods.enderutilities.init.EnderUtilitiesRenderers;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
 
@@ -23,6 +24,7 @@ public class EnderUtilities
 	{
 		// Initialize mod items
 		EnderUtilitiesItems.init();
+		EnderUtilitiesRenderers.init();
 	}
 
 	@EventHandler

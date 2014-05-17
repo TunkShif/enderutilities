@@ -5,6 +5,8 @@ public class Reference
 	public static final String MOD_ID = "enderutilities";
 	public static final String MOD_NAME = "Ender Utilities";
 	public static final String MOD_VERSION = "0.1";
+	public static final String CLASS_CLIENT_PROXY = "fi.dy.masa.minecraft.mods.enderutilities.proxy.ClientProxy";
+	public static final String CLASS_COMMON_PROXY = "fi.dy.masa.minecraft.mods.enderutilities.proxy.CommonProxy";
 
 	public static final String NAME_ITEM_ENDER_ARROW = "enderarrow";
 	public static final String NAME_ITEM_ENDER_BAG = "enderbag";
