@@ -2,27 +2,22 @@ package fi.dy.masa.minecraft.mods.enderutilities.block;
 
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
+import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
 public class EnderFurnace extends BlockContainer
 {
@@ -36,6 +31,7 @@ public class EnderFurnace extends BlockContainer
 	public EnderFurnace()
 	{
 		super(Material.rock);
+		this.setCreativeTab(CreativeTab.ENDER_UTILITIES_TAB);
 	}
 
 	public Item getItemDropped(int p1, Random r, int p3)

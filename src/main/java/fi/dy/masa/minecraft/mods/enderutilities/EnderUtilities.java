@@ -27,11 +27,11 @@ public class EnderUtilities
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		// Init mod blocks
-		EnderUtilitiesBlocks.init();
-
 		// Initialize mod items
 		EnderUtilitiesItems.init();
+
+		// Init mod blocks
+		EnderUtilitiesBlocks.init();
 	}
 
 	@EventHandler
