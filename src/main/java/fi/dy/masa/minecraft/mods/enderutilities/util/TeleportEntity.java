@@ -119,8 +119,8 @@ public class TeleportEntity
 		IChunkProvider chunkProvider = worldServerDst.getChunkProvider();
 		if (chunkProvider != null && chunkProvider.chunkExists((int)x >> 4, (int)z >> 4) == false)
 		{
-			worldServerDst.theChunkProviderServer.loadChunk((int)x >> 4, (int)z >> 4);
-			//chunkProvider.loadChunk((int)x >> 4, (int)z >> 4);
+			//worldServerDst.theChunkProviderServer.loadChunk((int)x >> 4, (int)z >> 4);
+			chunkProvider.loadChunk((int)x >> 4, (int)z >> 4);
 		}
 
 		// TODO: Stop the mob AI: is this correct?
