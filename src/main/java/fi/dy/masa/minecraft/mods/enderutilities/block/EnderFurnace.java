@@ -26,17 +26,15 @@ import net.minecraft.world.World;
 public class EnderFurnace extends BlockContainer
 {
 	private final Random random = new Random();
-	private final boolean what;
 	private static boolean field_149934_M;
 	@SideOnly(Side.CLIENT)
 	private IIcon field_149935_N;
 	@SideOnly(Side.CLIENT)
 	private IIcon field_149936_O;
 
-	public EnderFurnace(boolean what)
+	public EnderFurnace()
 	{
 		super(Material.rock);
-		this.what = what;
 	}
 
 	public Item getItemDropped(int p1, Random r, int p3)
