@@ -6,7 +6,9 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -73,7 +75,7 @@ public class EnderFurnace extends BlockContainer
 		//this.func_149930_e(world, x, y, z);
 	}
 
-	/*
+/*
 	private void func_149930_e(World p_149930_1_, int p_149930_2_, int p_149930_3_, int p_149930_4_)
 	{
 		if (!p_149930_1_.isRemote)
@@ -107,27 +109,29 @@ public class EnderFurnace extends BlockContainer
 			p_149930_1_.setBlockMetadataWithNotify(p_149930_2_, p_149930_3_, p_149930_4_, b0, 2);
 		}
 	}
-
+*/
 	// Called upon block activation (right click on the block.)
-	public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float hitX, float hitY, float hitZ)
 	{
-		if (p_149727_1_.isRemote)
+		if (world.isRemote == true)
 		{
 			return true;
 		}
 		else
 		{
-			TileEntityFurnace tileentityfurnace = (TileEntityFurnace)p_149727_1_.getTileEntity(p_149727_2_, p_149727_3_, p_149727_4_);
+			// FIXME debug
+			System.out.printf("x: %d y: %d z: %d hitX: %f hitY: %f hitZ: %f\n", x, y, z, hitX, hitY, hitZ);
+			TileEntityFurnace tileentityfurnace = (TileEntityFurnace)world.getTileEntity(x, y, z);
 
 			if (tileentityfurnace != null)
 			{
-				p_149727_5_.func_146101_a(tileentityfurnace);
+				player.func_146101_a(tileentityfurnace);
 			}
 
 			return true;
 		}
 	}
-
+/*
 	// Update which block the furnace is using depending on whether or not it is burning
 	public static void updateFurnaceBlockState(boolean p_149931_0_, World p_149931_1_, int p_149931_2_, int p_149931_3_, int p_149931_4_)
 	{
@@ -204,7 +208,7 @@ public class EnderFurnace extends BlockContainer
 	
 		super.breakBlock(world, x, y, z, block, meta);
 	}
-
+*/
 	// If this returns true, then comparators facing away from this block will use the value from
 	// getComparatorInputOverride instead of the actual redstone signal strength.
 	public boolean hasComparatorInputOverride()
@@ -218,7 +222,7 @@ public class EnderFurnace extends BlockContainer
 	{
 		return Container.calcRedstoneFromInventory((IInventory)world.getTileEntity(x, y, z));
 	}
-
+/*
 	// A randomly called display update to be able to add particles or other items for display
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
