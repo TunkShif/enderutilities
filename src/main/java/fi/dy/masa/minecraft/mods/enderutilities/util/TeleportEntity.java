@@ -46,12 +46,14 @@ public class TeleportEntity
 		double y = 0.0d;
 		double z = 0.0d;
 		maxDist *= Math.random();
+		//maxDist = maxDist - (Math.random() * maxDist);
 
 		// Try to find a free spot (non-colliding with blocks)
 		for (int i = 0; i < 10; i++)
 		{
 			deltaYaw = (Math.random() * 360.0f) / (2.0d / Math.PI);
-			deltaPitch = ((90.0d - (Math.random() * 180.0d)) / (2.0d * Math.PI));
+			//deltaPitch = ((90.0d - (Math.random() * 180.0d)) / (2.0d * Math.PI)); // free range on the y-direction
+			deltaPitch = ((Math.random() * 90.0d) / (2.0d * Math.PI)); // only from the same level upwards
 			x = entity.posX;
 			y = entity.posY;
 			z = entity.posZ;
@@ -64,6 +66,7 @@ public class TeleportEntity
 			//if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() == true)
 			{
 				TeleportEntity.addEnderSoundsAndParticles(entity);
+				System.out.printf("x: %f y: %f z: %f\n", x, y, z); // FIXME debug
 				entity.setPosition(x, y, z);
 				//entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
 				return;
