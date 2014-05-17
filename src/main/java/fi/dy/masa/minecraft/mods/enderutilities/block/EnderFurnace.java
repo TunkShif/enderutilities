@@ -142,6 +142,8 @@ public class EnderFurnace extends BlockContainer
 								System.out.println("stack not null: " + j);
 							}
 						}
+						World wo = te.getWorldObj();
+						if (wo != null && wo.isRemote == false) { wo.markBlockForUpdate(x, y, z); }
 					}
 				}
 				player.func_146101_a(tileentityfurnace);
@@ -323,9 +325,11 @@ public class EnderFurnace extends BlockContainer
 					stack = te.getStackInSlot(i);
 					if (stack != null)
 					{
-						System.out.println("stack not null: " + i);
+						System.out.println("getIcon(): stack not null: " + i);
 					}
 				}
+				if (te.getStackInSlot(2) != null){ return this.iconTop; }
+				else { return this.iconFront; }
 			}
 		}
 		return this.iconFront;
