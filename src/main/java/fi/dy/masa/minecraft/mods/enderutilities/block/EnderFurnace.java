@@ -270,9 +270,9 @@ public class EnderFurnace extends BlockContainer
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegister)
 	{
-		this.blockIcon = iconRegister.registerIcon(Reference.NAME_ITEM_ENDER_FURNACE + "_side");
-		this.iconTop = iconRegister.registerIcon(Reference.NAME_ITEM_ENDER_FURNACE + "_top");
+		this.blockIcon = iconRegister.registerIcon(Reference.getTileName(Reference.NAME_ITEM_ENDER_FURNACE) + ".side");
+		this.iconTop = iconRegister.registerIcon(Reference.getTileName(Reference.NAME_ITEM_ENDER_FURNACE) + ".top");
 		// FIXME how can we do the front icon based on state? Needs TESR?
-		this.iconFront = iconRegister.registerIcon(Reference.NAME_ITEM_ENDER_FURNACE + "_front_off");
+		this.iconFront = iconRegister.registerIcon(Reference.getTileName(Reference.NAME_ITEM_ENDER_FURNACE) + ".front.off");
 	}
 }
