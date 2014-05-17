@@ -32,7 +32,6 @@ public class EnderFurnace extends BlockContainer
 	private IIcon field_149935_N;
 	@SideOnly(Side.CLIENT)
 	private IIcon field_149936_O;
-	private static final String __OBFID = "CL_00000248";
 
 	public EnderFurnace(boolean what)
 	{
@@ -40,7 +39,7 @@ public class EnderFurnace extends BlockContainer
 		this.what = what;
 	}
 
-	public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+	public Item getItemDropped(int p1, Random r, int p3)
 	{
 		return Item.getItemFromBlock(Blocks.furnace);
 	}
@@ -101,7 +100,7 @@ public class EnderFurnace extends BlockContainer
 	public void registerBlockIcons(IIconRegister p_149651_1_)
 	{
 		this.blockIcon = p_149651_1_.registerIcon("furnace_side");
-		this.field_149936_O = p_149651_1_.registerIcon(this.field_149932_b ? "furnace_front_on" : "furnace_front_off");
+		this.field_149936_O = p_149651_1_.registerIcon(this.what ? "furnace_front_on" : "furnace_front_off");
 		this.field_149935_N = p_149651_1_.registerIcon("furnace_top");
 	}
 
@@ -253,7 +252,7 @@ public class EnderFurnace extends BlockContainer
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World p_149734_1_, int p_149734_2_, int p_149734_3_, int p_149734_4_, Random p_149734_5_)
 	{
-		if (this.field_149932_b)
+		if (this.what)
 		{
 			int l = p_149734_1_.getBlockMetadata(p_149734_2_, p_149734_3_, p_149734_4_);
 			float f = (float)p_149734_2_ + 0.5F;
