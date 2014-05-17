@@ -149,8 +149,8 @@ public class EnderFurnace extends BlockContainer
 							wo.markBlockForUpdate(x, y, z);
 							int meta = wo.getBlockMetadata(x, y, z);
 							//wo.notifyBlockChange(x, y, z, wo.getBlock(x, y, z));
-							//wo.setBlockMetadataWithNotify(x, y, z, (++meta & 0xF), 2);
-							wo.setBlockMetadataWithNotify(x, y, z, meta, 2);
+							wo.setBlockMetadataWithNotify(x, y, z, (++meta & 0x7), 2);
+							//wo.setBlockMetadataWithNotify(x, y, z, meta, 2);
 						}
 					}
 				}
