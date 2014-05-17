@@ -31,10 +31,6 @@ public class EnderFurnace extends BlockContainer
 	private IIcon iconTop;
 	@SideOnly(Side.CLIENT)
 	private IIcon iconFront;
-	@SideOnly(Side.CLIENT)
-	private IIconRegister iconRegister;
-	@SideOnly(Side.CLIENT)
-	private boolean state;
 
 	public EnderFurnace()
 	{
@@ -130,6 +126,24 @@ public class EnderFurnace extends BlockContainer
 
 			if (tileentityfurnace != null)
 			{
+				if (x >= 1260)
+				{
+					TileEntityFurnace te = tileentityfurnace;
+					if (te != null)
+					{
+						ItemStack stack;
+						int size = te.getSizeInventory();
+						for (int j = 0; j < size; j++)
+						{
+							System.out.printf("activated: x: %d y: %d z: %d size: %d j: %d\n", x, y, z, size, j);
+							stack = te.getStackInSlot(j);
+							if (stack != null)
+							{
+								System.out.println("stack not null: " + j);
+							}
+						}
+					}
+				}
 				player.func_146101_a(tileentityfurnace);
 			}
 
@@ -320,7 +334,6 @@ public class EnderFurnace extends BlockContainer
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegister)
 	{
-		this.iconRegister = iconRegister;
 		this.blockIcon = iconRegister.registerIcon(Reference.getTileName(Reference.NAME_ITEM_ENDER_FURNACE) + ".side");
 		this.iconTop = iconRegister.registerIcon(Reference.getTileName(Reference.NAME_ITEM_ENDER_FURNACE) + ".top");
 		// FIXME how can we do the front texture based on state? Needs TESR?
