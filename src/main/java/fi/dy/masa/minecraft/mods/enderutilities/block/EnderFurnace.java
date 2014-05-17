@@ -143,7 +143,11 @@ public class EnderFurnace extends BlockContainer
 							}
 						}
 						World wo = te.getWorldObj();
-						if (wo != null && wo.isRemote == false) { wo.markBlockForUpdate(x, y, z); }
+						if (wo != null && wo.isRemote == false)
+						{
+							System.out.println("marked");
+							wo.markBlockForUpdate(x, y, z);
+						}
 					}
 				}
 				player.func_146101_a(tileentityfurnace);
