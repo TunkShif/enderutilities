@@ -45,21 +45,21 @@ public class TeleportEntity
 		double x = 0.0d;
 		double y = 0.0d;
 		double z = 0.0d;
-		maxDist *= Math.random();
-		//maxDist = maxDist - (Math.random() * maxDist);
+		//maxDist *= Math.random();
+		maxDist = maxDist - (Math.random() * maxDist / 2.0d);
 
 		// Try to find a free spot (non-colliding with blocks)
 		for (int i = 0; i < 10; i++)
 		{
-			deltaYaw = (Math.random() * 360.0f) / (2.0d / Math.PI);
-			//deltaPitch = ((90.0d - (Math.random() * 180.0d)) / (2.0d * Math.PI)); // free range on the y-direction
-			deltaPitch = (Math.random() * 90.0d) / (2.0d * Math.PI); // only from the same level upwards
+			deltaYaw = ((Math.random() * 360.0f) / 180.0d) * Math.PI;
+			//deltaPitch = ((90.0d - (Math.random() * 180.0d)) / 180.0d) * Math.PI; // free range on the y-direction
+			deltaPitch = ((Math.random() * 90.0d) / 180.0d) * Math.PI; // only from the same level upwards
 			x = entity.posX;
 			y = entity.posY;
 			z = entity.posZ;
 			x += Math.cos(deltaPitch) * Math.cos(deltaYaw) * maxDist;
 			z += Math.cos(deltaPitch) * Math.sin(deltaYaw) * maxDist;
-			y -= Math.sin(deltaPitch) * maxDist;
+			y += Math.sin(deltaPitch) * maxDist;
 
 			if (entity.worldObj.getBlock((int)x, (int)y, (int)z) == Blocks.air &&
 				entity.worldObj.getBlock((int)x, (int)y + 1, (int)z) == Blocks.air)
