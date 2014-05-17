@@ -15,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -129,12 +130,6 @@ public class EnderFurnace extends BlockContainer
 
 			if (tileentityfurnace != null)
 			{
-				System.out.println("state: " + this.state);
-				if (this.state == false)
-					this.iconFront = this.iconRegister.registerIcon(Reference.getTileName(Reference.NAME_ITEM_ENDER_FURNACE) + ".top");
-				else
-					this.iconFront = this.iconRegister.registerIcon(Reference.getTileName(Reference.NAME_ITEM_ENDER_FURNACE) + ".front.off");
-				this.state = ! this.state;
 				player.func_146101_a(tileentityfurnace);
 			}
 
@@ -275,7 +270,7 @@ public class EnderFurnace extends BlockContainer
 	{
 		return Item.getItemFromBlock(EnderUtilitiesBlocks.enderFurnace);
 	}
-
+/*
 	// Gets the block's texture. Args: side, meta
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta)
@@ -284,6 +279,24 @@ public class EnderFurnace extends BlockContainer
 		if (side != meta) { return this.blockIcon; }
 		return this.iconFront;
 	}
+*/
+	@SideOnly(Side.CLIENT)
+    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side)
+    {
+		System.out.println("start");
+		if (side == 0 || side == 1) { return this.iconTop; }
+		if (side != blockAccess.getBlockMetadata(x, y, z)) { return this.blockIcon; }
+
+		TileEntityFurnace te = (TileEntityFurnace)blockAccess.getTileEntity(x, y, z);
+		//int i = te.furnaceBurnTime;
+		ItemStack stack = te.getStackInSlot(1);
+		if (stack != null && stack.stackSize > 0)
+		{
+			System.out.println("..");
+			return this.iconTop;
+		}
+		return this.iconFront;
+    }
 
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegister)
