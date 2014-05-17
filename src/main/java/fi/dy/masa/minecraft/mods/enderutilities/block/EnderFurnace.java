@@ -49,12 +49,10 @@ public class EnderFurnace extends BlockContainer
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
 	{
 		int rot = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-		world.setBlockMetadataWithNotify(x, y, z, rot, 2);
-
-		//if (rot == 0) { world.setBlockMetadataWithNotify(x, y, z, 2, 2); }
-		//if (rot == 1) { world.setBlockMetadataWithNotify(x, y, z, 5, 2); }
-		//if (rot == 2) { world.setBlockMetadataWithNotify(x, y, z, 3, 2); }
-		//if (rot == 3) { world.setBlockMetadataWithNotify(x, y, z, 4, 2); }
+		if (rot == 0) { world.setBlockMetadataWithNotify(x, y, z, 2, 2); }
+		if (rot == 1) { world.setBlockMetadataWithNotify(x, y, z, 5, 2); }
+		if (rot == 2) { world.setBlockMetadataWithNotify(x, y, z, 3, 2); }
+		if (rot == 3) { world.setBlockMetadataWithNotify(x, y, z, 4, 2); }
 
 		if (stack.hasDisplayName())
 		{
