@@ -120,7 +120,7 @@ public class EnderFurnace extends BlockContainer
 		else
 		{
 			// FIXME debug
-			System.out.printf("x: %d y: %d z: %d hitX: %f hitY: %f hitZ: %f\n", x, y, z, hitX, hitY, hitZ);
+			//System.out.printf("x: %d y: %d z: %d hitX: %f hitY: %f hitZ: %f\n", x, y, z, hitX, hitY, hitZ);
 			TileEntityFurnace tileentityfurnace = (TileEntityFurnace)world.getTileEntity(x, y, z);
 
 			if (tileentityfurnace != null)
