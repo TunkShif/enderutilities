@@ -53,20 +53,20 @@ public class TeleportEntity
 		{
 			deltaYaw = (Math.random() * 360.0f) / (2.0d / Math.PI);
 			//deltaPitch = ((90.0d - (Math.random() * 180.0d)) / (2.0d * Math.PI)); // free range on the y-direction
-			deltaPitch = ((Math.random() * 90.0d) / (2.0d * Math.PI)); // only from the same level upwards
+			deltaPitch = (Math.random() * 90.0d) / (2.0d * Math.PI); // only from the same level upwards
 			x = entity.posX;
 			y = entity.posY;
 			z = entity.posZ;
 			x += Math.cos(deltaPitch) * Math.cos(deltaYaw) * maxDist;
 			z += Math.cos(deltaPitch) * Math.sin(deltaYaw) * maxDist;
-			y += Math.sin(deltaPitch) * maxDist;
+			y -= Math.sin(deltaPitch) * maxDist;
 
 			if (entity.worldObj.getBlock((int)x, (int)y, (int)z) == Blocks.air &&
 				entity.worldObj.getBlock((int)x, (int)y + 1, (int)z) == Blocks.air)
 			//if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() == true)
 			{
 				TeleportEntity.addEnderSoundsAndParticles(entity);
-				System.out.printf("x: %f y: %f z: %f\n", x, y, z); // FIXME debug
+				System.out.printf("x: %f y: %f z: %f yaw: %f pitch: %f maxDist: %f\n", x, y, z, deltaYaw, deltaPitch, maxDist); // FIXME debug
 				entity.setPosition(x, y, z);
 				//entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
 				return;
