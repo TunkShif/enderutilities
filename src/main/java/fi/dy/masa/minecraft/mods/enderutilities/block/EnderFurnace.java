@@ -75,8 +75,7 @@ public class EnderFurnace extends BlockContainer
 		super.onBlockAdded(world, x, y, z);
 		this.func_149930_e(world, x, y, z);
 	}
-*/
-/*
+
 	private void func_149930_e(World p_149930_1_, int p_149930_2_, int p_149930_3_, int p_149930_4_)
 	{
 		if (!p_149930_1_.isRemote)
