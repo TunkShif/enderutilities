@@ -31,6 +31,9 @@ public class EnderFurnace extends BlockContainer
 	public EnderFurnace()
 	{
 		super(Material.rock);
+		this.setHardness(10.0f);
+		this.setStepSound(soundTypePiston);
+		this.setBlockName(Reference.NAME_TILE_ENDER_FURNACE);
 		this.setCreativeTab(CreativeTab.ENDER_UTILITIES_TAB);
 	}
 

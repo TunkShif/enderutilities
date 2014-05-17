@@ -27,6 +27,6 @@ public class Reference
 
 	public static String getTileName(String name)
 	{
-		return "tile." + name;
+		return Reference.MOD_ID + ":tile." + name;
 	}
 }
