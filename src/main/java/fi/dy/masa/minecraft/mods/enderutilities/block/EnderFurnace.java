@@ -66,16 +66,14 @@ public class EnderFurnace extends BlockContainer
 		}
 	}
 
-	/**
-	 * Called whenever the block is added into the world. Args: world, x, y, z
-	 */
-/*
+	// Called whenever the block is added into the world. Args: world, x, y, z
 	public void onBlockAdded(World world, int x, int y, int z)
 	{
 		super.onBlockAdded(world, x, y, z);
-		this.func_149930_e(world, x, y, z);
+		//this.func_149930_e(world, x, y, z);
 	}
 
+	/*
 	private void func_149930_e(World p_149930_1_, int p_149930_2_, int p_149930_3_, int p_149930_4_)
 	{
 		if (!p_149930_1_.isRemote)
@@ -278,7 +276,7 @@ public class EnderFurnace extends BlockContainer
 	{
 		this.blockIcon = iconRegister.registerIcon(Reference.getTileName(Reference.NAME_ITEM_ENDER_FURNACE) + ".side");
 		this.iconTop = iconRegister.registerIcon(Reference.getTileName(Reference.NAME_ITEM_ENDER_FURNACE) + ".top");
-		// FIXME how can we do the front icon based on state? Needs TESR?
+		// FIXME how can we do the front texture based on state? Needs TESR?
 		this.iconFront = iconRegister.registerIcon(Reference.getTileName(Reference.NAME_ITEM_ENDER_FURNACE) + ".front.off");
 	}
 }
