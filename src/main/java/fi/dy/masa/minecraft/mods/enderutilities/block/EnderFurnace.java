@@ -139,7 +139,7 @@ public class EnderFurnace extends BlockContainer
 							stack = te.getStackInSlot(j);
 							if (stack != null)
 							{
-								System.out.println("stack not null: " + j);
+								System.out.println("onBlockActivated(): stack not null: " + j);
 							}
 						}
 						World wo = te.getWorldObj();
@@ -321,7 +321,7 @@ public class EnderFurnace extends BlockContainer
 				int size = te.getSizeInventory();
 				for (int i = 0; i < size; i++)
 				{
-					System.out.printf("x: %d y: %d z: %d side: %d size: %d i:%d\n", x, y, z, side, size, i);
+					System.out.printf("getIcon(): x: %d y: %d z: %d side: %d size: %d i:%d\n", x, y, z, side, size, i);
 					stack = te.getStackInSlot(i);
 					if (stack != null)
 					{
