@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
+import fi.dy.masa.minecraft.mods.enderutilities.init.EnderUtilitiesBlocks;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
 public class EnderFurnace extends BlockContainer
@@ -32,6 +33,7 @@ public class EnderFurnace extends BlockContainer
 	{
 		super(Material.rock);
 		this.setHardness(10.0f);
+		this.setHarvestLevel("pickaxe", 2);
 		this.setStepSound(soundTypePiston);
 		this.setBlockName(Reference.NAME_TILE_ENDER_FURNACE);
 		this.setCreativeTab(CreativeTab.ENDER_UTILITIES_TAB);
@@ -39,7 +41,7 @@ public class EnderFurnace extends BlockContainer
 
 	public Item getItemDropped(int p1, Random r, int p3)
 	{
-		return Item.getItemFromBlock(Blocks.furnace);
+		return Item.getItemFromBlock(EnderUtilitiesBlocks.enderFurnace);
 	}
 
 	// Returns a new instance of a block's tile entity class. Called on placing the block.
@@ -59,6 +61,7 @@ public class EnderFurnace extends BlockContainer
 
 		if (stack.hasDisplayName())
 		{
+			// FIXME add custom TileEntity
 			((TileEntityFurnace)world.getTileEntity(x, y, z)).func_145951_a(stack.getDisplayName());
 		}
 	}
@@ -258,7 +261,7 @@ public class EnderFurnace extends BlockContainer
 	@SideOnly(Side.CLIENT)
 	public Item getItem(World world, int x, int y, int z)
 	{
-		return Item.getItemFromBlock(Blocks.furnace);
+		return Item.getItemFromBlock(EnderUtilitiesBlocks.enderFurnace);
 	}
 
 	// Gets the block's texture. Args: side, meta
