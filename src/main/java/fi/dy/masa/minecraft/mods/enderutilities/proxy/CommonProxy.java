@@ -1,6 +1,8 @@
 package fi.dy.masa.minecraft.mods.enderutilities.proxy;
 
-public class CommonProxy
+public abstract class CommonProxy implements IProxy
 {
-
+	public void registerTileEntities()
+	{
+	}
 }
