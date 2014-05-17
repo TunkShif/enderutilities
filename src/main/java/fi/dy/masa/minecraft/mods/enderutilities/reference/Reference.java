@@ -14,4 +14,6 @@ public class Reference
 	public static final String NAME_ITEM_ENDER_BUCKET = "enderbucket";
 	public static final String NAME_ITEM_ENDER_LASSO = "enderlasso";
 	public static final String NAME_ITEM_ENDER_PEARL_REUSABLE = "enderpearlreusable";
+
+	public static final String NAME_ENTITY_ENDER_PEARL_REUSABLE = "enderpearlreusable";
 }
