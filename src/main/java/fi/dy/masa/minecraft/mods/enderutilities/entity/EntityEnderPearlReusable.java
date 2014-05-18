@@ -82,6 +82,8 @@ public class EntityEnderPearlReusable extends EntityThrowable
 						EntityLiving entity = (EntityLiving)player.ridingEntity;
 						entity.setPositionAndUpdate(this.posX, this.posY, this.posZ);
 						entity.fallDistance = 0.0f;
+						// TODO: Add a config option to decide if the ridingEntity should take damage
+						entity.attackEntityFrom(DamageSource.fall, this.teleportDamage);
 					}
 					else
 					{
@@ -92,13 +94,15 @@ public class EntityEnderPearlReusable extends EntityThrowable
 				}
 			}
 		}
-
-		if (movingObjectPosition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+/*
+		// Failed attempt to fix the portal duplication bug
+		if (movingObjectPosition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK &&
+			this.worldObj.getBlock(movingObjectPosition.blockX, movingObjectPosition.blockY, movingObjectPosition.blockZ) == Blocks.portal)
 		{
 			//System.out.println("portal");
-			//return;
+			return;
 		}
-
+*/
 		EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ,
 					new ItemStack(EnderUtilitiesItems.enderPearlReusable, 1, 0));
 
