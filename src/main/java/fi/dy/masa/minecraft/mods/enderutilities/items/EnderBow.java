@@ -1,10 +1,16 @@
 package fi.dy.masa.minecraft.mods.enderutilities.items;
 
+import java.util.List;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -20,6 +26,7 @@ public class EnderBow extends ItemBow
 
     public EnderBow()
 	{
+    	super();
 		this.maxStackSize = 1;
 		this.setMaxDamage(384);
 		this.setUnlocalizedName(Reference.NAME_ITEM_ENDER_BOW);
@@ -60,6 +67,21 @@ public class EnderBow extends ItemBow
 			}
 
 			EntityEnderArrow entityenderarrow = new EntityEnderArrow(world, player, f * 2.0F);
+			//int slot = player.inventory.func_146029_c(EnderUtilitiesItems.enderArrow);
+			//ItemStack stack = player.inventory.getStackInSlot(slot);
+			NBTTagCompound nbt = bowStack.getTagCompound();
+			int x = (int)player.posX;
+			int y = (int)player.posY;
+			int z = (int)player.posZ;
+			int dim = player.dimension;
+			if (nbt != null)
+			{
+				x = nbt.getInteger("x");
+				y = nbt.getInteger("y");
+				z = nbt.getInteger("z");
+				dim = nbt.getInteger("dim");
+			}
+			entityenderarrow.setTpTarget(x, y, z, dim);
 /*
 			if (f == 1.0F)
 			{
@@ -120,6 +142,83 @@ public class EnderBow extends ItemBow
 		}
 
 		return stack;
+	}
+
+	@Override
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+	{
+		// Do nothing on the client side
+		if (world.isRemote == true)
+		{
+			return false;
+		}
+
+		NBTTagCompound nbt = stack.getTagCompound();
+
+		if (nbt == null)
+		{
+			nbt = new NBTTagCompound();
+		}
+
+		if (player.isSneaking() == true)
+		{
+			// Sneaking and targeting a block: store the location
+			if (Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+			{
+				String strSide = "top";
+
+				// Adjust the target block position
+				if (side == 0) { --y; strSide = "bottom"; }
+				if (side == 1) { ++y; }
+				if (side == 2) { --z; strSide = "east"; }
+				if (side == 3) { ++z; strSide = "west"; }
+				if (side == 4) { --x; strSide = "north"; }
+				if (side == 5) { ++x; strSide = "south"; }
+
+				nbt.setInteger("dim", player.dimension);
+				nbt.setInteger("x", x);
+				nbt.setInteger("y", y);
+				nbt.setInteger("z", z);
+				nbt.setString("side", strSide);
+				stack.setTagCompound(nbt);
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
+	{
+		NBTTagCompound nbt = stack.getTagCompound();
+
+		if (nbt == null)
+		{
+			list.add("No target set");
+			return;
+		}
+
+		String side	= nbt.getString("side");
+		int dim		= nbt.getInteger("dim");
+		int x		= nbt.getInteger("x");
+		int y		= nbt.getInteger("y");
+		int z		= nbt.getInteger("z");
+
+		String dimPre = "" + EnumChatFormatting.GREEN;
+		String coordPre = "" + EnumChatFormatting.BLUE;
+		String rst = "" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY;
+
+		if (dim >= -1 && dim <= 1)
+		{
+			String dimStr = (dim == -1 ? "Nether" : (dim == 0 ? "Overworld" : "The End"));
+			list.add(String.format("Dimension: %s%s%s", dimPre, dimStr, rst));
+		}
+		else
+		{
+			list.add(String.format("Dimension: %s%d%s", dimPre, dim, rst));
+		}
+
+		list.add(String.format("x: %s%d%s, y: %s%d%s, z: %s%d%s", coordPre, x, rst, coordPre, y, rst, coordPre, z, rst));
 	}
 
 	/**
