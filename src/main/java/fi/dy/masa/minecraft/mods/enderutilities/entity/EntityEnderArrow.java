@@ -120,6 +120,10 @@ public class EntityEnderArrow extends Entity implements IProjectile
 		this.motionZ = (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
 		this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI));
 		this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, par3 * 1.5F, 1.0F);
+
+		// FIXME debug
+		System.out.printf("posX: %f posY: %f posZ: %f motionX: %f motionY: %f motionZ: %f shootingEntity: %s\n",
+				this.posX, this.posY, this.posZ, this.motionX, this.motionY, this.motionZ, this.shootingEntity.toString());
 	}
 
 	protected void entityInit()
@@ -378,7 +382,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 */
 					if (this.shootingEntity == null)
 					{
-						System.out.println("shootinEntity = null");
+						System.out.println("shootingEntity = null");
 					}
 					else
 					{
@@ -561,6 +565,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 	 */
 	public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
 	{
+		System.out.println("onCollideWithPlayer()"); // FIXME debug
 		if (!this.worldObj.isRemote && this.inGround && this.arrowShake <= 0)
 		{
 /*
