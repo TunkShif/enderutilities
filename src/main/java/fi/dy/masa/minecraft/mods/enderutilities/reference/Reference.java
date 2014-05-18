@@ -30,7 +30,7 @@ public class Reference
 
 	public static String getEntityTextureName(String name)
 	{
-		return "textures/entity/" + name;
+		return Reference.MOD_ID + ":textures/entity/entity." + name;
 	}
 
 	public static String getTileName(String name)
