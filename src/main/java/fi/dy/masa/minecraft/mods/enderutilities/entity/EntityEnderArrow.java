@@ -332,11 +332,11 @@ public class EntityEnderArrow extends Entity implements IProjectile
 
 						if (this.shootingEntity == null)
 						{
-							System.out.println("shootingEntity = null");
+							//System.out.println("shootingEntity = null"); // FIXME debug
 						}
 						else
 						{
-							System.out.println("shootingEntity != null");
+							//System.out.println("shootingEntity != null"); // FIXME debug
 							this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
 							double x = shootingEntity.posX;
@@ -346,9 +346,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 							y = (double)this.tpTargetY;
 							z = (double)this.tpTargetZ + 0.5d;
 							int dim = this.tpTargetDim;
-							//movingobjectposition.entityHit.setLocationAndAngles(x, y, z,
-							//	movingobjectposition.entityHit.rotationYaw, movingobjectposition.entityHit.rotationPitch);
-							System.out.printf("tp to: dim: %d x: %f y: %f z: %f\n", dim, x, y, z);
+							//System.out.printf("tp to: dim: %d x: %f y: %f z: %f\n", dim, x, y, z); // FIXME debug
 							TeleportEntity.teleportEntity((EntityLiving)entitylivingbase, this.dimension, this.tpTargetDim, x, y, z);
 
 							EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ,
