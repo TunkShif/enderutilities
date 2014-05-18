@@ -46,7 +46,7 @@ public class EnderUtilitiesItems
 		GameRegistry.addShapelessRecipe(new ItemStack(enderArrow), eye, arrow, gold);
 		GameRegistry.addRecipe(new ItemStack(enderBag), "BLB", "LEL", "BLB", 'B', powder, 'L', leather, 'E', eye);
 		GameRegistry.addRecipe(new ItemStack(enderBow), "SE ", "S T", "SE ", 'S', string, 'T', stick, 'E', eye);
-		GameRegistry.addRecipe(new ItemStack(enderBucket), "DED", "DBD", "DED", 'D', diamond, 'E', eye, 'B', bucket);
+		GameRegistry.addRecipe(new ItemStack(enderBucket), "EGE", "DBD", "EGE", 'E', eye, 'G', gold, 'D', diamond, 'B', bucket);
 		GameRegistry.addRecipe(new ItemStack(enderLasso), "DED", "EGE", "DSD", 'D', diamond, 'E', eye, 'G', gold, 'S', string);
 		GameRegistry.addRecipe(new ItemStack(enderPearlReusable), "PEP", "ERE", "PEP", 'P', pearl, 'E', eye, 'R', rsblock);
 	}
