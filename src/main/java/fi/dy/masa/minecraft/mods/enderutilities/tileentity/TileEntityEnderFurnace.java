@@ -24,6 +24,8 @@ import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
 public class TileEntityEnderFurnace extends TileEntity implements ISidedInventory
 {
+	// How long items take to cook?
+	protected static final int COOK_TIME = 60;
 	protected static final int[] slotsTop = new int[] {0};
 	protected static final int[] slotsBottom = new int[] {2, 1};
 	protected static final int[] slotsSides = new int[] {1};
@@ -187,7 +189,7 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 	@SideOnly(Side.CLIENT)
 	public int getCookProgressScaled(int i)
 	{
-		return this.furnaceCookTime * i / 200;
+		return this.furnaceCookTime * i / COOK_TIME;
 	}
 
 	// Returns an integer between 0 and the passed value representing how much burn time is left on the current fuel
@@ -197,7 +199,7 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 	{
 		if (this.currentItemBurnTime == 0)
 		{
-			this.currentItemBurnTime = 200;
+			this.currentItemBurnTime = COOK_TIME;
 		}
 
 		return this.furnaceBurnTime * i / this.currentItemBurnTime;
@@ -245,7 +247,7 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 			{
 				++this.furnaceCookTime;
 
-				if (this.furnaceCookTime == 200)
+				if (this.furnaceCookTime >= COOK_TIME)
 				{
 					this.furnaceCookTime = 0;
 					this.smeltItem();
@@ -265,10 +267,10 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 			}
 		}
 
-		if (flag1)
-		{
+		//if (flag1)
+		//{
 			this.markDirty();
-		}
+		//}
 	}
 
 	// Returns true if the furnace can smelt an item, i.e. has a source item, destination stack isn't full, etc.
