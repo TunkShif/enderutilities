@@ -1,13 +1,21 @@
 package fi.dy.masa.minecraft.mods.enderutilities.render;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
+
+import org.lwjgl.opengl.GL11;
 
 public class RenderEnderBow implements IItemRenderer
 {
+	Minecraft mc = Minecraft.getMinecraft();
+
 	/** 
 	 * Checks if this renderer should handle a specific item's render type
 	 * @param item The item we are trying to render
@@ -55,8 +63,29 @@ public class RenderEnderBow implements IItemRenderer
 		}
 	}
 
-	public void renderItem(EntityLivingBase living, ItemStack stack, int pass, ItemRenderType type)
+	public void renderItem(EntityLivingBase living, ItemStack stack, int renderPass, ItemRenderType type)
 	{
-		
+		IIcon icon = null;
+
+		if (living instanceof EntityPlayer)
+		{
+			EntityPlayer player = (EntityPlayer)living;
+			icon = stack.getItem().getIcon(stack, renderPass, player, player.getItemInUse(), player.getItemInUseCount());
+		}
+		else
+		{
+			icon = living.getItemIcon(stack, renderPass);
+		}
+		if (icon == null)
+		{
+			return;
+		}
+
+		GL11.glPushMatrix();
+		TextureManager textureManager = this.mc.getTextureManager();
+		textureManager.bindTexture(textureManager.getResourceLocation(stack.getItemSpriteNumber()));
+		//ItemRenderer.renderItemIn2D(par0Tessellator, par1, par2, par3, par4, par5, par6, par7);
+
+		GL11.glPopMatrix();
 	}
 }
