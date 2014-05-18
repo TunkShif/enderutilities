@@ -252,12 +252,12 @@ public class EnderBow extends Item
     @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
 	{
-		this.itemIcon = iconRegister.registerIcon(this.getIconString() + "_standby");
+		this.itemIcon = iconRegister.registerIcon(this.getIconString() + ".standby");
 		this.iconArray = new IIcon[bowPullIconNameArray.length];
 
 		for (int i = 0; i < this.iconArray.length; ++i)
 		{
-			this.iconArray[i] = iconRegister.registerIcon(this.getIconString() + "_" + bowPullIconNameArray[i]);
+			this.iconArray[i] = iconRegister.registerIcon(this.getIconString() + "." + bowPullIconNameArray[i]);
 		}
 	}
 
