@@ -1,6 +1,8 @@
 package fi.dy.masa.minecraft.mods.enderutilities.init;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 import fi.dy.masa.minecraft.mods.enderutilities.items.EnderArrow;
 import fi.dy.masa.minecraft.mods.enderutilities.items.EnderBag;
@@ -27,5 +29,15 @@ public class EnderUtilitiesItems
 		GameRegistry.registerItem(enderBucket, Reference.NAME_ITEM_ENDER_BUCKET);
 		GameRegistry.registerItem(enderLasso, Reference.NAME_ITEM_ENDER_LASSO);
 		GameRegistry.registerItem(enderPearlReusable, Reference.NAME_ITEM_ENDER_PEARL_REUSABLE);
+		ItemStack eye = new ItemStack(Items.ender_eye);
+		ItemStack pearl = new ItemStack(Items.ender_pearl);
+		ItemStack gold = new ItemStack(Items.gold_ingot);
+		ItemStack powder = new ItemStack(Items.blaze_powder);
+		ItemStack leather = new ItemStack(Items.leather);
+		ItemStack string = new ItemStack(Items.string);
+		ItemStack stick = new ItemStack(Items.stick);
+		GameRegistry.addShapelessRecipe(new ItemStack(enderArrow), "EAG", 'E', eye, 'A', new ItemStack(Items.arrow), 'G', gold);
+		GameRegistry.addRecipe(new ItemStack(enderBag), "BLB", "LEL", "BLB", 'B', powder, 'L', leather, 'E', eye);
+		GameRegistry.addRecipe(new ItemStack(enderBow), "SE ", "S T", "SE ", 'S', string, 'T', stick, 'E', eye);
 	}
 }
