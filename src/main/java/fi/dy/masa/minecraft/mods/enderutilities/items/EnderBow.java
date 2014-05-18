@@ -25,12 +25,12 @@ import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
 public class EnderBow extends ItemBow
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon[] iconArray;
+	@SideOnly(Side.CLIENT)
+	private IIcon[] iconArray;
 
-    public EnderBow()
+	public EnderBow()
 	{
-    	super();
+		super();
 		this.maxStackSize = 1;
 		this.setMaxDamage(384);
 		this.setUnlocalizedName(Reference.NAME_ITEM_ENDER_BOW);
