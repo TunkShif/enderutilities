@@ -323,46 +323,11 @@ public class EntityEnderArrow extends Entity implements IProjectile
 					System.out.println("hit non null (323)");
 					f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
 /*
-					int k = MathHelper.ceiling_double_int((double)f2 * this.damage);
-					if (this.getIsCritical())
-					{
-						k += this.rand.nextInt(k / 2 + 2);
-					}
-					DamageSource damagesource = null;
-					if (this.shootingEntity == null)
-					{
-						//damagesource = DamageSource.causeArrowDamage(this, this);
-					}
-					else
-					{
-						//damagesource = DamageSource.causeArrowDamage(this, this.shootingEntity);
-					}
-					if (this.isBurning() && !(movingobjectposition.entityHit instanceof EntityEnderman))
-					{
-						movingobjectposition.entityHit.setFire(5);
-					}
 					if (movingobjectposition.entityHit.attackEntityFrom(damagesource, (float)k))
 					{
 						if (movingobjectposition.entityHit instanceof EntityLivingBase)
 						{
 							EntityLivingBase entitylivingbase = (EntityLivingBase)movingobjectposition.entityHit;
-							if (!this.worldObj.isRemote)
-							{
-								entitylivingbase.setArrowCountInEntity(entitylivingbase.getArrowCountInEntity() + 1);
-							}
-							if (this.knockbackStrength > 0)
-							{
-								f4 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-								if (f4 > 0.0F)
-								{
-									movingobjectposition.entityHit.addVelocity(this.motionX * (double)this.knockbackStrength * 0.6000000238418579D / (double)f4, 0.1D, this.motionZ * (double)this.knockbackStrength * 0.6000000238418579D / (double)f4);
-								}
-							}
-							if (this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
-							{
-								EnchantmentHelper.func_151384_a(entitylivingbase, this.shootingEntity);
-								EnchantmentHelper.func_151385_b((EntityLivingBase)this.shootingEntity, entitylivingbase);
-							}
 							if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
 							{
 								((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
@@ -459,7 +424,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 				this.prevRotationYaw += 180.0F;
 				this.ticksInAir = 0;
 			}
-/*
+
 			if (this.getIsCritical())
 			{
 				for (i = 0; i < 4; ++i)
@@ -467,7 +432,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 					this.worldObj.spawnParticle("crit", this.posX + this.motionX * (double)i / 4.0D, this.posY + this.motionY * (double)i / 4.0D, this.posZ + this.motionZ * (double)i / 4.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ);
 				}
 			}
-*/
+
 			this.posX += this.motionX;
 			this.posY += this.motionY;
 			this.posZ += this.motionZ;
@@ -479,21 +444,9 @@ public class EntityEnderArrow extends Entity implements IProjectile
 				;
 			}
 
-			while (this.rotationPitch - this.prevRotationPitch >= 180.0F)
-			{
-				this.prevRotationPitch += 360.0F;
-			}
-
-			while (this.rotationYaw - this.prevRotationYaw < -180.0F)
-			{
-				this.prevRotationYaw -= 360.0F;
-			}
-
-			while (this.rotationYaw - this.prevRotationYaw >= 180.0F)
-			{
-				this.prevRotationYaw += 360.0F;
-			}
-
+			while (this.rotationPitch - this.prevRotationPitch >= 180.0F) { this.prevRotationPitch += 360.0F; }
+			while (this.rotationYaw - this.prevRotationYaw < -180.0F) { this.prevRotationYaw -= 360.0F; }
+			while (this.rotationYaw - this.prevRotationYaw >= 180.0F) { this.prevRotationYaw += 360.0F; }
 			this.rotationPitch = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * 0.2F;
 			this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
 			float f3 = 0.99F;
@@ -506,7 +459,6 @@ public class EntityEnderArrow extends Entity implements IProjectile
 					f4 = 0.25F;
 					this.worldObj.spawnParticle("bubble", this.posX - this.motionX * (double)f4, this.posY - this.motionY * (double)f4, this.posZ - this.motionZ * (double)f4, this.motionX, this.motionY, this.motionZ);
 				}
-
 				f3 = 0.8F;
 			}
 
