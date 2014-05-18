@@ -66,7 +66,7 @@ public class EnderFurnace extends BlockContainer
 		if (stack.hasDisplayName())
 		{
 			// FIXME add custom TileEntity
-			((TileEntityFurnace)world.getTileEntity(x, y, z)).func_145951_a(stack.getDisplayName());
+			((TileEntityEnderFurnace)world.getTileEntity(x, y, z)).func_145951_a(stack.getDisplayName());
 		}
 	}
 
@@ -123,13 +123,13 @@ public class EnderFurnace extends BlockContainer
 		{
 			// FIXME debug
 			//System.out.printf("x: %d y: %d z: %d hitX: %f hitY: %f hitZ: %f\n", x, y, z, hitX, hitY, hitZ);
-			TileEntityFurnace tileentityfurnace = (TileEntityFurnace)world.getTileEntity(x, y, z);
+			TileEntityEnderFurnace tileentityfurnace = (TileEntityEnderFurnace)world.getTileEntity(x, y, z);
 
 			if (tileentityfurnace != null)
 			{
 				if (x >= 1260)
 				{
-					TileEntityFurnace te = tileentityfurnace;
+					TileEntityEnderFurnace te = tileentityfurnace;
 					if (te != null)
 					{
 						ItemStack stack;
@@ -155,7 +155,7 @@ public class EnderFurnace extends BlockContainer
 						}
 					}
 				}
-				player.func_146101_a(tileentityfurnace);
+				//player.func_146101_a((TileEntityFurnace)tileentityfurnace);
 			}
 
 			return true;
@@ -323,7 +323,7 @@ public class EnderFurnace extends BlockContainer
 		//System.out.println("front");
 		if (x >= 1260)
 		{
-			TileEntityFurnace te = (TileEntityFurnace)blockAccess.getTileEntity(x, y, z);
+			TileEntityEnderFurnace te = (TileEntityEnderFurnace)blockAccess.getTileEntity(x, y, z);
 			if (te != null)
 			{
 				ItemStack stack;
