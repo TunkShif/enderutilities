@@ -2,7 +2,7 @@ package fi.dy.masa.minecraft.mods.enderutilities.entity;
 
 import java.util.Random;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -64,14 +64,26 @@ public class EntityEnderPearlReusable extends EntityThrowable
 
 					if (MinecraftForge.EVENT_BUS.post(event) == false)
 					{
+						/*
 						if (this.getThrower().isRiding())
 						{
 							this.getThrower().mountEntity((Entity)null);
 						}
+						*/
 
-						this.getThrower().setPositionAndUpdate(this.posX, this.posY, this.posZ);
-						this.getThrower().fallDistance = 0.0f;
-						this.getThrower().attackEntityFrom(DamageSource.fall, this.teleportDamage);
+						EntityPlayerMP player = (EntityPlayerMP)this.getThrower();
+						if (player.isRiding() == true && player.ridingEntity instanceof EntityLiving)
+						{
+							EntityLiving entity = (EntityLiving)player.ridingEntity;
+							entity.setPositionAndUpdate(this.posX, this.posY, this.posZ);
+							entity.fallDistance = 0.0f;
+						}
+						else
+						{
+							player.setPositionAndUpdate(this.posX, this.posY, this.posZ);
+							player.fallDistance = 0.0f;
+							player.attackEntityFrom(DamageSource.fall, this.teleportDamage);
+						}
 					}
 				}
 			}
