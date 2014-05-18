@@ -158,7 +158,11 @@ public class EnderBow extends Item
 
 		if (player.inventory.hasItem(EnderUtilitiesItems.enderArrow))
 		{
-			player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+			NBTTagCompound nbt = stack.getTagCompound();
+			if (nbt != null && nbt.hasKey("x") && nbt.hasKey("y") && nbt.hasKey("z") && nbt.hasKey("dim"))
+			{
+				player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+			}
 		}
 
 		return stack;
