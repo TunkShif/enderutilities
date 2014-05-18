@@ -141,7 +141,7 @@ public class EnderBow extends Item
 	 */
 	public EnumAction getItemUseAction(ItemStack par1ItemStack)
 	{
-		return EnumAction.bow;
+		return EnumAction.none; // .bow;
 	}
 
     /**
