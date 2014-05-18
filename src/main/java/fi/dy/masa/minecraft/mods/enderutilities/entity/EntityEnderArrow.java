@@ -40,7 +40,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 	/** Seems to be some sort of timer for animating an arrow. */
 	public int arrowShake;
 	/** The owner of this arrow. */
-	public Entity shootingEntity;
+	private Entity shootingEntity;
 	private int ticksInGround;
 	private int ticksInAir;
 	private double damage = 2.0D;
@@ -302,10 +302,12 @@ public class EntityEnderArrow extends Entity implements IProjectile
 			if (movingobjectposition != null && movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityPlayer)
 			{
 				EntityPlayer entityplayer = (EntityPlayer)movingobjectposition.entityHit;
+				System.out.println("hit a player (305)"); // FIXME debug
 
 				// entityplayer.capabilities.disableDamage || 
 				if (this.shootingEntity instanceof EntityPlayer && !((EntityPlayer)this.shootingEntity).canAttackPlayer(entityplayer))
 				{
+					System.out.println("can't attack player (310)"); // FIXME debug
 					movingobjectposition = null;
 				}
 			}
@@ -315,8 +317,10 @@ public class EntityEnderArrow extends Entity implements IProjectile
 
 			if (movingobjectposition != null && movingobjectposition.entityHit != this.shootingEntity)
 			{
+				System.out.println("hit other than the owner (320)"); // FIXME debug
 				if (movingobjectposition.entityHit != null)
 				{
+					System.out.println("hit non null (323)");
 					f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
 /*
 					int k = MathHelper.ceiling_double_int((double)f2 * this.damage);
@@ -382,10 +386,11 @@ public class EntityEnderArrow extends Entity implements IProjectile
 */
 					if (this.shootingEntity == null)
 					{
-						System.out.println("shootingEntity = null");
+						System.out.println("shootingEntity = null (389)");
 					}
 					else
 					{
+					System.out.println("shootingEntity != null && hit (393)");
 					this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					// TODO: fix interdimensional teleport, get coordinates from entity NBT
 					double x = shootingEntity.posX;
@@ -565,7 +570,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 	 */
 	public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
 	{
-		System.out.println("onCollideWithPlayer()"); // FIXME debug
+		//System.out.println("onCollideWithPlayer()"); // FIXME debug
 		if (!this.worldObj.isRemote && this.inGround && this.arrowShake <= 0)
 		{
 /*
