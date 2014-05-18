@@ -1,10 +1,5 @@
 package fi.dy.masa.minecraft.mods.enderutilities.tileentity;
 
-import net.minecraft.tileentity.TileEntity;
-
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.material.Material;
@@ -21,6 +16,11 @@ import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
 public class TileEntityEnderFurnace extends TileEntity implements ISidedInventory
 {
@@ -44,9 +44,9 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 	}
 
 	// Returns the stack in slot i
-	public ItemStack getStackInSlot(int par1)
+	public ItemStack getStackInSlot(int slotNum)
 	{
-		return this.furnaceItemStacks[par1];
+		return this.furnaceItemStacks[slotNum];
 	}
 
 	// Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a new stack.
@@ -110,7 +110,7 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 	// Returns the name of the inventory
 	public String getInventoryName()
 	{
-		return this.hasCustomInventoryName() ? this.customInvName : "container.furnace";
+		return this.hasCustomInventoryName() ? this.customInvName : Reference.NAME_CONTAINER_ENDER_FURNACE;
 	}
 
 	// Returns if the inventory is named
@@ -260,7 +260,8 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 			if (flag != this.furnaceBurnTime > 0)
 			{
 				flag1 = true;
-				BlockFurnace.updateFurnaceBlockState(this.furnaceBurnTime > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+				// FIXME add the custom stuff
+				//BlockFurnace.updateFurnaceBlockState(this.furnaceBurnTime > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
 			}
 		}
 
@@ -279,6 +280,7 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 		}
 		else
 		{
+			// FIXME add custom recipes
 			ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
 			if (itemstack == null) return false;
 			if (this.furnaceItemStacks[2] == null) return true;
@@ -293,6 +295,7 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 	{
 		if (this.canSmelt())
 		{
+			// FIXME add custom recipes
 			ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
 
 			if (this.furnaceItemStacks[2] == null)
@@ -324,6 +327,7 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 		{
 			Item item = stack.getItem();
 
+			// FIXME add custom burn times
 			if (item instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.air)
 			{
 				Block block = Block.getBlockFromItem(item);
@@ -356,16 +360,16 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 		}
 	}
 
-	public static boolean isItemFuel(ItemStack p_145954_0_)
+	public static boolean isItemFuel(ItemStack stack)
 	{
 		// Returns the number of ticks that the supplied fuel item will keep the furnace burning, or 0 if the item isn't fuel
-		return getItemBurnTime(p_145954_0_) > 0;
+		return getItemBurnTime(stack) > 0;
 	}
 
 	// Do not make give this method the name canInteractWith because it clashes with Container
-	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+	public boolean isUseableByPlayer(EntityPlayer player)
 	{
-		return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
+		return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : player.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
 	}
 
 	public void openInventory() {}
@@ -373,9 +377,9 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 	public void closeInventory() {}
 
 	// Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
-	public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+	public boolean isItemValidForSlot(int par1, ItemStack stack)
 	{
-		return par1 == 2 ? false : (par1 == 1 ? isItemFuel(par2ItemStack) : true);
+		return par1 == 2 ? false : (par1 == 1 ? isItemFuel(stack) : true);
 	}
 
 	// Returns an array containing the indices of the slots that can be accessed by automation on the given side of this block.
@@ -385,14 +389,15 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 	}
 
 	// Returns true if automation can insert the given item in the given slot from the given side. Args: Slot, item, side
-	public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3)
+	public boolean canInsertItem(int slot, ItemStack stack, int side)
 	{
-		return this.isItemValidForSlot(par1, par2ItemStack);
+		return this.isItemValidForSlot(slot, stack);
 	}
 
 	// Returns true if automation can extract the given item in the given slot from the given side. Args: Slot, item, side
-	public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3)
+	public boolean canExtractItem(int slot, ItemStack stack, int side)
 	{
-		return par3 != 0 || par1 != 1 || par2ItemStack.getItem() == Items.bucket;
+		// FIXME
+		return side != 0 || slot != 1 || stack.getItem() == Items.bucket;
 	}
 }
