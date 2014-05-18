@@ -1,6 +1,7 @@
 package fi.dy.masa.minecraft.mods.enderutilities.entity;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -9,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityTracker;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -348,12 +350,23 @@ public class EntityEnderArrow extends Entity implements IProjectile
 						double x = shootingEntity.posX;
 						double y = this.shootingEntity.posY + 5.0d;
 						double z = this.shootingEntity.posZ;
-						x = (double)this.tpTargetX;
+						x = (double)this.tpTargetX + 0.5d;
 						y = (double)this.tpTargetY;
-						z = (double)this.tpTargetZ;
+						z = (double)this.tpTargetZ + 0.5d;
 						//int dim = this.tpTargetDim;
 						movingobjectposition.entityHit.setLocationAndAngles(x, y, z,
 								movingobjectposition.entityHit.rotationYaw, movingobjectposition.entityHit.rotationPitch);
+
+						EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ,
+								new ItemStack(EnderUtilitiesItems.enderArrow, 1, 0));
+
+						Random r = new Random();
+						entityitem.motionX = 0.01d * r.nextGaussian();
+						entityitem.motionY = 0.01d * r.nextGaussian() + 0.05d;
+						entityitem.motionZ = 0.01d * r.nextGaussian();
+						entityitem.delayBeforeCanPickup = 10;
+						this.worldObj.spawnEntityInWorld(entityitem);
+						this.setDead();
 						}
 
 						this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
@@ -368,7 +381,6 @@ public class EntityEnderArrow extends Entity implements IProjectile
 						this.motionZ *= -0.10000000149011612D;
 						this.rotationYaw += 180.0F;
 						this.prevRotationYaw += 180.0F;
-						this.setRotation(0.0f, 0.0f);
 						this.ticksInAir = 0;
 					}
 				}
