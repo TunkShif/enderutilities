@@ -213,6 +213,7 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 
 	public void updateEntity()
 	{
+		boolean wasBurning = this.furnaceBurnTime > 0;
 		boolean flag = this.furnaceBurnTime > 0;
 		boolean flag1 = false;
 
@@ -269,8 +270,15 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 
 		//if (flag1)
 		//{
-			this.markDirty();
+		//	this.markDirty();
 		//}
+		this.markDirty();
+
+		// Burning status changed
+		if (wasBurning != this.furnaceBurnTime > 0)
+		{
+			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+		}
 	}
 
 	// Returns true if the furnace can smelt an item, i.e. has a source item, destination stack isn't full, etc.
@@ -282,7 +290,6 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 		}
 		else
 		{
-			// FIXME add custom recipes
 			ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
 			if (itemstack == null) return false;
 			if (this.furnaceItemStacks[2] == null) return true;
@@ -297,7 +304,6 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 	{
 		if (this.canSmelt())
 		{
-			// FIXME add custom recipes
 			ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
 
 			if (this.furnaceItemStacks[2] == null)
@@ -333,21 +339,9 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 			if (item instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.air)
 			{
 				Block block = Block.getBlockFromItem(item);
-
-				if (block == Blocks.wooden_slab)
-				{
-					return 150;
-				}
-
-				if (block.getMaterial() == Material.wood)
-				{
-					return 300;
-				}
-
-				if (block == Blocks.coal_block)
-				{
-					return 16000;
-				}
+				if (block == Blocks.wooden_slab) { return 150; }
+				if (block.getMaterial() == Material.wood) { return 300; }
+				if (block == Blocks.coal_block) { return 16000; }
 			}
 
 			if (item instanceof ItemTool && ((ItemTool)item).getToolMaterialName().equals("WOOD")) return 200;
@@ -358,6 +352,8 @@ public class TileEntityEnderFurnace extends TileEntity implements ISidedInventor
 			if (item == Items.lava_bucket) return 20000;
 			if (item == Item.getItemFromBlock(Blocks.sapling)) return 100;
 			if (item == Items.blaze_rod) return 2400;
+			if (item == Items.ender_pearl) { return 800; }
+			if (item == Items.ender_eye) { return 1200; }
 			return GameRegistry.getFuelValue(stack);
 		}
 	}

@@ -22,6 +22,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
 import fi.dy.masa.minecraft.mods.enderutilities.init.EnderUtilitiesBlocks;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
+import fi.dy.masa.minecraft.mods.enderutilities.tileentity.TileEntityEnderFurnace;
 
 public class EnderFurnace extends BlockContainer
 {
@@ -50,7 +51,7 @@ public class EnderFurnace extends BlockContainer
 	// Returns a new instance of a block's tile entity class. Called on placing the block.
 	public TileEntity createNewTileEntity(World world, int i)
 	{
-		return new TileEntityFurnace();
+		return new TileEntityEnderFurnace();
 	}
 
 	// Called when the block is placed in the world.
