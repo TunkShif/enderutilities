@@ -15,7 +15,7 @@ public class EnderUtilitiesBlocks
 	public static void init()
 	{
 		GameRegistry.registerBlock(enderFurnace, Reference.NAME_TILE_ENDER_FURNACE);
-		GameRegistry.addRecipe(new ItemStack(enderFurnace), "EDE", "DFD", "PDP",
+		GameRegistry.addRecipe(new ItemStack(enderFurnace), "PDP", "DFD", "EDE",
 				'E', new ItemStack(Items.ender_eye), 'D', new ItemStack(Items.diamond), 'F', new ItemStack(Blocks.furnace), 'P', new ItemStack(Items.ender_pearl));
 	}
 }
