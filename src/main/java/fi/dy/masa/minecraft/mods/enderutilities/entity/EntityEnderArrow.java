@@ -9,13 +9,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityTracker;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.S0DPacketCollectItem;
@@ -29,6 +25,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import fi.dy.masa.minecraft.mods.enderutilities.init.EnderUtilitiesItems;
 
 public class EntityEnderArrow extends Entity implements IProjectile
 {
@@ -289,7 +286,8 @@ public class EntityEnderArrow extends Entity implements IProjectile
 			{
 				EntityPlayer entityplayer = (EntityPlayer)movingobjectposition.entityHit;
 
-				if (entityplayer.capabilities.disableDamage || this.shootingEntity instanceof EntityPlayer && !((EntityPlayer)this.shootingEntity).canAttackPlayer(entityplayer))
+				// entityplayer.capabilities.disableDamage || 
+				if (this.shootingEntity instanceof EntityPlayer && !((EntityPlayer)this.shootingEntity).canAttackPlayer(entityplayer))
 				{
 					movingobjectposition = null;
 				}
@@ -303,15 +301,13 @@ public class EntityEnderArrow extends Entity implements IProjectile
 				if (movingobjectposition.entityHit != null)
 				{
 					f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+/*
 					int k = MathHelper.ceiling_double_int((double)f2 * this.damage);
-
 					if (this.getIsCritical())
 					{
 						k += this.rand.nextInt(k / 2 + 2);
 					}
-
 					DamageSource damagesource = null;
-
 					if (this.shootingEntity == null)
 					{
 						//damagesource = DamageSource.causeArrowDamage(this, this);
@@ -320,47 +316,38 @@ public class EntityEnderArrow extends Entity implements IProjectile
 					{
 						//damagesource = DamageSource.causeArrowDamage(this, this.shootingEntity);
 					}
-
 					if (this.isBurning() && !(movingobjectposition.entityHit instanceof EntityEnderman))
 					{
 						movingobjectposition.entityHit.setFire(5);
 					}
-
 					if (movingobjectposition.entityHit.attackEntityFrom(damagesource, (float)k))
 					{
 						if (movingobjectposition.entityHit instanceof EntityLivingBase)
 						{
 							EntityLivingBase entitylivingbase = (EntityLivingBase)movingobjectposition.entityHit;
-
 							if (!this.worldObj.isRemote)
 							{
 								entitylivingbase.setArrowCountInEntity(entitylivingbase.getArrowCountInEntity() + 1);
 							}
-
 							if (this.knockbackStrength > 0)
 							{
 								f4 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-
 								if (f4 > 0.0F)
 								{
 									movingobjectposition.entityHit.addVelocity(this.motionX * (double)this.knockbackStrength * 0.6000000238418579D / (double)f4, 0.1D, this.motionZ * (double)this.knockbackStrength * 0.6000000238418579D / (double)f4);
 								}
 							}
-
 							if (this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
 							{
 								EnchantmentHelper.func_151384_a(entitylivingbase, this.shootingEntity);
 								EnchantmentHelper.func_151385_b((EntityLivingBase)this.shootingEntity, entitylivingbase);
 							}
-
 							if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
 							{
 								((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
 							}
 						}
-
 						this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-
 						if (!(movingobjectposition.entityHit instanceof EntityEnderman))
 						{
 							this.setDead();
@@ -375,6 +362,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 						this.prevRotationYaw += 180.0F;
 						this.ticksInAir = 0;
 					}
+*/
 				}
 				else
 				{
@@ -401,7 +389,17 @@ public class EntityEnderArrow extends Entity implements IProjectile
 					}
 				}
 			}
-
+			else
+			{
+				// EU added
+				this.motionX *= -0.10000000149011612D;
+				this.motionY *= -0.10000000149011612D;
+				this.motionZ *= -0.10000000149011612D;
+				this.rotationYaw += 180.0F;
+				this.prevRotationYaw += 180.0F;
+				this.ticksInAir = 0;
+			}
+/*
 			if (this.getIsCritical())
 			{
 				for (i = 0; i < 4; ++i)
@@ -409,7 +407,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 					this.worldObj.spawnParticle("crit", this.posX + this.motionX * (double)i / 4.0D, this.posY + this.motionY * (double)i / 4.0D, this.posZ + this.motionZ * (double)i / 4.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ);
 				}
 			}
-
+*/
 			this.posX += this.motionX;
 			this.posY += this.motionY;
 			this.posZ += this.motionZ;
@@ -519,8 +517,8 @@ public class EntityEnderArrow extends Entity implements IProjectile
 	{
 		if (!this.worldObj.isRemote && this.inGround && this.arrowShake <= 0)
 		{
+/*
 			boolean flag = this.canBePickedUp == 1 || this.canBePickedUp == 2 && par1EntityPlayer.capabilities.isCreativeMode;
-
 			if (this.canBePickedUp == 1 && !par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(Items.arrow, 1)))
 			{
 				flag = false;
@@ -534,6 +532,13 @@ public class EntityEnderArrow extends Entity implements IProjectile
 				entitytracker.func_151247_a(this, new S0DPacketCollectItem(this.getEntityId(), this.getEntityId()));
 				this.setDead();
 			}
+*/
+			par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(EnderUtilitiesItems.enderArrow, 1));
+			this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+			//par1EntityPlayer.onItemPickup(this, 1);
+			EntityTracker entitytracker = ((WorldServer)this.worldObj).getEntityTracker();
+			entitytracker.func_151247_a(this, new S0DPacketCollectItem(this.getEntityId(), this.getEntityId()));
+			this.setDead();
 		}
 	}
 
