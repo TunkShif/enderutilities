@@ -15,13 +15,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import fi.dy.masa.minecraft.mods.enderutilities.EnderUtilities;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
 import fi.dy.masa.minecraft.mods.enderutilities.init.EnderUtilitiesBlocks;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
@@ -158,6 +158,7 @@ public class EnderFurnace extends BlockContainer
 */
 				//TileEntity tev = world.getTileEntity(x, y, z);
 				//player.func_146101_a((TileEntityFurnace)tev);
+				player.openGui(EnderUtilities.instance, 0, world, x, y, z);
 			}
 
 			return true;
