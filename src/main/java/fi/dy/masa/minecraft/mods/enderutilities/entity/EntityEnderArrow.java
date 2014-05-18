@@ -46,6 +46,11 @@ public class EntityEnderArrow extends Entity implements IProjectile
 	private double damage = 2.0D;
 	/** The amount of knockback an arrow applies when it hits a mob. */
 	private int knockbackStrength;
+	// EnderArrow target coordinates:
+	private int tpTargetX;
+	private int tpTargetY;
+	private int tpTargetZ;
+	private int tpTargetDim;
 
 	public EntityEnderArrow(World par1World)
 	{
@@ -120,6 +125,14 @@ public class EntityEnderArrow extends Entity implements IProjectile
 	protected void entityInit()
 	{
 		this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
+	}
+
+	public void setTpTarget(int x, int y, int z, int dim)
+	{
+		this.tpTargetX = x;
+		this.tpTargetY = y;
+		this.tpTargetZ = z;
+		this.tpTargetDim = dim;
 	}
 
 	/**
@@ -363,6 +376,17 @@ public class EntityEnderArrow extends Entity implements IProjectile
 						this.ticksInAir = 0;
 					}
 */
+					this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+					// TODO: fix interdimensional teleport, get coordinates from entity NBT
+					double x = shootingEntity.posX;
+					double y = this.shootingEntity.posY + 5.0d;
+					double z = this.shootingEntity.posZ;
+					x = (double)this.tpTargetX;
+					y = (double)this.tpTargetY;
+					z = (double)this.tpTargetZ;
+					//int dim = this.tpTargetDim;
+					movingobjectposition.entityHit.setLocationAndAngles(x, y, z,
+							movingobjectposition.entityHit.rotationYaw, movingobjectposition.entityHit.rotationPitch);
 				}
 				else
 				{
@@ -479,6 +503,10 @@ public class EntityEnderArrow extends Entity implements IProjectile
 		par1NBTTagCompound.setByte("inGround", (byte)(this.inGround ? 1 : 0));
 		par1NBTTagCompound.setByte("pickup", (byte)this.canBePickedUp);
 		par1NBTTagCompound.setDouble("damage", this.damage);
+		par1NBTTagCompound.setInteger("tpTargetX", this.tpTargetX);
+		par1NBTTagCompound.setInteger("tpTargetY", this.tpTargetY);
+		par1NBTTagCompound.setInteger("tpTargetZ", this.tpTargetZ);
+		par1NBTTagCompound.setInteger("tpTargetDim", this.tpTargetDim);
 	}
 
 	/**
@@ -494,6 +522,10 @@ public class EntityEnderArrow extends Entity implements IProjectile
 		this.inData = par1NBTTagCompound.getByte("inData") & 255;
 		this.arrowShake = par1NBTTagCompound.getByte("shake") & 255;
 		this.inGround = par1NBTTagCompound.getByte("inGround") == 1;
+		this.tpTargetX = par1NBTTagCompound.getInteger("tpTargetX");
+		this.tpTargetY = par1NBTTagCompound.getInteger("tpTargetY");
+		this.tpTargetZ = par1NBTTagCompound.getInteger("tpTargetZ");
+		this.tpTargetDim = par1NBTTagCompound.getInteger("tpTargetDim");
 
 		if (par1NBTTagCompound.hasKey("damage", 99))
 		{
