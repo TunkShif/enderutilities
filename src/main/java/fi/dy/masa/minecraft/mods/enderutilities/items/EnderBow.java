@@ -4,6 +4,8 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
@@ -12,6 +14,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
@@ -37,19 +41,20 @@ public class EnderBow extends ItemBow
 	/**
 	 * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount
 	 */
+    @Override
 	public void onPlayerStoppedUsing(ItemStack bowStack, World world, EntityPlayer player, int itemInUseCount)
 	{
 		int j = this.getMaxItemUseDuration(bowStack) - itemInUseCount;
-/*
+
 		ArrowLooseEvent event = new ArrowLooseEvent(player, bowStack, j);
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled())
 		{
 			return;
 		}
-		j = event.charge;
-		boolean flag = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, bowStack) > 0;
-*/
+//		j = event.charge;
+//		boolean flag = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, bowStack) > 0;
+
 		// flag ||
 		if (player.inventory.hasItem(EnderUtilitiesItems.enderArrow))
 		{
