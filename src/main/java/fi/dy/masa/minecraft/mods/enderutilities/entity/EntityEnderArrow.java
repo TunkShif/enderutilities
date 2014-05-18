@@ -357,7 +357,8 @@ public class EntityEnderArrow extends Entity implements IProjectile
 						}
 
 						this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-						this.setDead(); // FIXME change this to drop the item
+						this.setRotation(0.0f, 0.0f);
+						//this.setDead(); // FIXME change this to drop the item
 					}
 					// In vanilla: Could not damage the entity
 					else
@@ -367,6 +368,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 						this.motionZ *= -0.10000000149011612D;
 						this.rotationYaw += 180.0F;
 						this.prevRotationYaw += 180.0F;
+						this.setRotation(0.0f, 0.0f);
 						this.ticksInAir = 0;
 					}
 				}
@@ -529,8 +531,9 @@ public class EntityEnderArrow extends Entity implements IProjectile
 			par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(EnderUtilitiesItems.enderArrow, 1));
 			this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 			//par1EntityPlayer.onItemPickup(this, 1);
-			EntityTracker entitytracker = ((WorldServer)this.worldObj).getEntityTracker();
-			entitytracker.func_151247_a(this, new S0DPacketCollectItem(this.getEntityId(), this.getEntityId()));
+			// FIXME ??
+			//EntityTracker entitytracker = ((WorldServer)this.worldObj).getEntityTracker();
+			//entitytracker.func_151247_a(this, new S0DPacketCollectItem(this.getEntityId(), this.getEntityId()));
 			this.setDead();
 		}
 	}
