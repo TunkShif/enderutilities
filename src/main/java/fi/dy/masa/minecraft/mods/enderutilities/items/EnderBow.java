@@ -4,10 +4,9 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBow;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -16,6 +15,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import fi.dy.masa.minecraft.mods.enderutilities.creativetab.CreativeTab;
@@ -23,8 +23,9 @@ import fi.dy.masa.minecraft.mods.enderutilities.entity.EntityEnderArrow;
 import fi.dy.masa.minecraft.mods.enderutilities.init.EnderUtilitiesItems;
 import fi.dy.masa.minecraft.mods.enderutilities.reference.Reference;
 
-public class EnderBow extends ItemBow
+public class EnderBow extends Item
 {
+	public static final String[] bowPullIconNameArray = new String[] {"pulling.0", "pulling.1", "pulling.2"};
 	@SideOnly(Side.CLIENT)
 	private IIcon[] iconArray;
 
@@ -120,27 +121,41 @@ public class EnderBow extends ItemBow
 			player.inventory.consumeInventoryItem(EnderUtilitiesItems.enderArrow);
 			bowStack.damageItem(1, player);
 			world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-			if (!world.isRemote)
+			if (world.isRemote == false)
 			{
 				world.spawnEntityInWorld(entityenderarrow);
 			}
 		}
 	}
 
+    /**
+	 * How long it takes to use or consume an item
+	 */
+	public int getMaxItemUseDuration(ItemStack par1ItemStack)
+	{
+		return 72000;
+	}
 
 	/**
+	 * returns the action that specifies what animation to play when the items is being used
+	 */
+	public EnumAction getItemUseAction(ItemStack par1ItemStack)
+	{
+		return EnumAction.bow;
+	}
+
+    /**
 	 * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
 	 */
 	public ItemStack onItemRightClick(ItemStack stack, World par2World, EntityPlayer player)
 	{
-/*
 		ArrowNockEvent event = new ArrowNockEvent(player, stack);
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled())
 		{
 			return event.result;
 		}
-*/
+
 		if (player.inventory.hasItem(EnderUtilitiesItems.enderArrow))
 		{
 			player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
@@ -234,7 +249,7 @@ public class EnderBow extends ItemBow
 		return 0;
 	}
 
-	@SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister)
 	{
 		this.itemIcon = iconRegister.registerIcon(this.getIconString() + "_standby");
@@ -244,5 +259,14 @@ public class EnderBow extends ItemBow
 		{
 			this.iconArray[i] = iconRegister.registerIcon(this.getIconString() + "_" + bowPullIconNameArray[i]);
 		}
+	}
+
+	/**
+	 * used to cycle through icons based on their used duration, i.e. for the bow
+	 */
+	@SideOnly(Side.CLIENT)
+	public IIcon getItemIconForUseDuration(int par1)
+	{
+		return this.iconArray[par1];
 	}
 }
