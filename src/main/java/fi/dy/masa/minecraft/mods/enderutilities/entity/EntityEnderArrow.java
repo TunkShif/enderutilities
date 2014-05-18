@@ -315,30 +315,51 @@ public class EntityEnderArrow extends Entity implements IProjectile
 			float f2;
 			float f4;
 
-			if (movingobjectposition != null && movingobjectposition.entityHit != this.shootingEntity)
+			// Hit something
+			if (movingobjectposition != null)
 			{
-				System.out.println("hit other than the owner (320): " + movingobjectposition.entityHit.toString()); // FIXME debug
+				System.out.println("Hit something (321): " + movingobjectposition.toString()); // FIXME debug
+				// Hit an entity
 				if (movingobjectposition.entityHit != null)
 				{
-					System.out.println("hit non null (323)");
+					System.out.println("Hit an entity (325)"); // FIXME debug
 					f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
-/*
-					if (movingobjectposition.entityHit.attackEntityFrom(damagesource, (float)k))
+
+					// Hit a living entity
+					if (movingobjectposition.entityHit instanceof EntityLivingBase)
 					{
-						if (movingobjectposition.entityHit instanceof EntityLivingBase)
+						System.out.println("Hit a living entity (331)");
+						EntityLivingBase entitylivingbase = (EntityLivingBase)movingobjectposition.entityHit;
+
+						if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
 						{
-							EntityLivingBase entitylivingbase = (EntityLivingBase)movingobjectposition.entityHit;
-							if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
-							{
-								((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
-							}
+							((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
 						}
+
+						if (this.shootingEntity == null)
+						{
+							System.out.println("shootingEntity = null (341)");
+						}
+						else
+						{
+						System.out.println("shootingEntity != null && hit (345)");
 						this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-						if (!(movingobjectposition.entityHit instanceof EntityEnderman))
-						{
-							this.setDead();
+						// TODO: fix interdimensional teleport, get coordinates from entity NBT
+						double x = shootingEntity.posX;
+						double y = this.shootingEntity.posY + 5.0d;
+						double z = this.shootingEntity.posZ;
+						x = (double)this.tpTargetX;
+						y = (double)this.tpTargetY;
+						z = (double)this.tpTargetZ;
+						//int dim = this.tpTargetDim;
+						movingobjectposition.entityHit.setLocationAndAngles(x, y, z,
+								movingobjectposition.entityHit.rotationYaw, movingobjectposition.entityHit.rotationPitch);
 						}
+
+						this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+						this.setDead(); // FIXME change this to drop the item
 					}
+					// In vanilla: Could not damage the entity
 					else
 					{
 						this.motionX *= -0.10000000149011612D;
@@ -348,48 +369,10 @@ public class EntityEnderArrow extends Entity implements IProjectile
 						this.prevRotationYaw += 180.0F;
 						this.ticksInAir = 0;
 					}
-*/
-					if (this.shootingEntity == null)
-					{
-						System.out.println("shootingEntity = null (389)");
-					}
-					else
-					{
-					System.out.println("shootingEntity != null && hit (393)");
-					this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-					// TODO: fix interdimensional teleport, get coordinates from entity NBT
-					double x = shootingEntity.posX;
-					double y = this.shootingEntity.posY + 5.0d;
-					double z = this.shootingEntity.posZ;
-					x = (double)this.tpTargetX;
-					y = (double)this.tpTargetY;
-					z = (double)this.tpTargetZ;
-					//int dim = this.tpTargetDim;
-					movingobjectposition.entityHit.setLocationAndAngles(x, y, z,
-							movingobjectposition.entityHit.rotationYaw, movingobjectposition.entityHit.rotationPitch);
-
-					this.motionX = 0.0d;
-					this.motionY = 0.0d;
-					this.motionZ = 0.0d;
-					this.setDead();
-					}
 				}
+				// Hit a non-entity, so a block
 				else
 				{
-					this.motionX *= -0.10000000149011612D;
-					this.motionY *= -0.10000000149011612D;
-					this.motionZ *= -0.10000000149011612D;
-					this.rotationYaw += 180.0F;
-					this.prevRotationYaw += 180.0F;
-					this.ticksInAir = 0;
-/*
-					this.motionX = 0.0d;
-					this.motionY = 0.0d;
-					this.motionZ = 0.0d;
-					this.setDead();
-					return;
-*/
-/*
 					this.field_145791_d = movingobjectposition.blockX;
 					this.field_145792_e = movingobjectposition.blockY;
 					this.field_145789_f = movingobjectposition.blockZ;
@@ -411,18 +394,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 					{
 						this.field_145790_g.onEntityCollidedWithBlock(this.worldObj, this.field_145791_d, this.field_145792_e, this.field_145789_f, this);
 					}
-*/
 				}
-			}
-			else
-			{
-				// EU added
-				this.motionX *= -0.10000000149011612D;
-				this.motionY *= -0.10000000149011612D;
-				this.motionZ *= -0.10000000149011612D;
-				this.rotationYaw += 180.0F;
-				this.prevRotationYaw += 180.0F;
-				this.ticksInAir = 0;
 			}
 
 			if (this.getIsCritical())
