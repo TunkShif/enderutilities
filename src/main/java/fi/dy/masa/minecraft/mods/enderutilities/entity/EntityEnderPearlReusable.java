@@ -83,7 +83,7 @@ public class EntityEnderPearlReusable extends EntityThrowable
 						entity.setPositionAndUpdate(this.posX, this.posY, this.posZ);
 						entity.fallDistance = 0.0f;
 						// TODO: Add a config option to decide if the ridingEntity should take damage
-						entity.attackEntityFrom(DamageSource.fall, this.teleportDamage);
+						//entity.attackEntityFrom(DamageSource.fall, this.teleportDamage);
 					}
 					else
 					{
