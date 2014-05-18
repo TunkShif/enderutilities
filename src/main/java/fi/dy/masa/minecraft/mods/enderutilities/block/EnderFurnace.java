@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
@@ -125,39 +126,38 @@ public class EnderFurnace extends BlockContainer
 		{
 			// FIXME debug
 			//System.out.printf("x: %d y: %d z: %d hitX: %f hitY: %f hitZ: %f\n", x, y, z, hitX, hitY, hitZ);
-			TileEntityEnderFurnace tileentityfurnace = (TileEntityEnderFurnace)world.getTileEntity(x, y, z);
+			TileEntityEnderFurnace te = (TileEntityEnderFurnace)world.getTileEntity(x, y, z);
 
-			if (tileentityfurnace != null)
+			if (te != null)
 			{
+/*
 				if (x >= 1260)
 				{
-					TileEntityEnderFurnace te = tileentityfurnace;
-					if (te != null)
+					ItemStack stack;
+					int size = te.getSizeInventory();
+					for (int j = 0; j < size; j++)
 					{
-						ItemStack stack;
-						int size = te.getSizeInventory();
-						for (int j = 0; j < size; j++)
+						System.out.printf("activated: x: %d y: %d z: %d size: %d j: %d\n", x, y, z, size, j);
+						stack = te.getStackInSlot(j);
+						if (stack != null)
 						{
-							System.out.printf("activated: x: %d y: %d z: %d size: %d j: %d\n", x, y, z, size, j);
-							stack = te.getStackInSlot(j);
-							if (stack != null)
-							{
-								System.out.println("onBlockActivated(): stack not null: " + j);
-							}
-						}
-						World wo = te.getWorldObj();
-						if (wo != null && wo.isRemote == false)
-						{
-							System.out.println("marked");
-							wo.markBlockForUpdate(x, y, z);
-							int meta = wo.getBlockMetadata(x, y, z);
-							//wo.notifyBlockChange(x, y, z, wo.getBlock(x, y, z));
-							wo.setBlockMetadataWithNotify(x, y, z, (++meta & 0x7), 2);
-							//wo.setBlockMetadataWithNotify(x, y, z, meta, 2);
+							System.out.println("onBlockActivated(): stack not null: " + j);
 						}
 					}
+					World wo = te.getWorldObj();
+					if (wo != null && wo.isRemote == false)
+					{
+						System.out.println("marked");
+						wo.markBlockForUpdate(x, y, z);
+						int meta = wo.getBlockMetadata(x, y, z);
+						//wo.notifyBlockChange(x, y, z, wo.getBlock(x, y, z));
+						//wo.setBlockMetadataWithNotify(x, y, z, (++meta & 0x7), 2);
+						//wo.setBlockMetadataWithNotify(x, y, z, meta, 2);
+					}
 				}
-				//player.func_146101_a((TileEntityFurnace)tileentityfurnace);
+*/
+				//TileEntity tev = world.getTileEntity(x, y, z);
+				//player.func_146101_a((TileEntityFurnace)tev);
 			}
 
 			return true;
@@ -321,7 +321,7 @@ public class EnderFurnace extends BlockContainer
 			//System.out.println("side");
 			return this.blockIcon;
 		}
-
+/*
 		//System.out.println("front");
 		if (x >= 1260)
 		{
@@ -343,6 +343,7 @@ public class EnderFurnace extends BlockContainer
 				else { return this.iconFront; }
 			}
 		}
+*/
 		return this.iconFront;
     }
 
