@@ -10,10 +10,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerFurnace;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.server.S2DPacketOpenWindow;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
@@ -158,7 +160,15 @@ public class EnderFurnace extends BlockContainer
 */
 				//TileEntity tev = world.getTileEntity(x, y, z);
 				//player.func_146101_a((TileEntityFurnace)tev);
-				player.openGui(EnderUtilities.instance, 0, world, x, y, z);
+/*
+				this.getNextWindowId();
+		        this.playerNetServerHandler.sendPacket(new S2DPacketOpenWindow(this.currentWindowId, 2, p_146101_1_.getInventoryName(), p_146101_1_.getSizeInventory(), p_146101_1_.hasCustomInventoryName()));
+		        this.openContainer = new ContainerFurnace(this.inventory, p_146101_1_);
+		        this.openContainer.windowId = this.currentWindowId;
+		        this.openContainer.addCraftingToCrafters(this);
+*/
+		        //if (te instanceof TileEntityEnderFurnace && te.getContainer(player.inventory) != null)
+				//player.openGui(EnderUtilities.instance, 0, world, x, y, z);
 			}
 
 			return true;
