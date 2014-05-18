@@ -2,17 +2,19 @@ package fi.dy.masa.minecraft.mods.enderutilities.block;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
@@ -187,18 +189,18 @@ public class EnderFurnace extends BlockContainer
 			p_149931_1_.setTileEntity(p_149931_2_, p_149931_3_, p_149931_4_, tileentity);
 		}
 	}
-
+*/
 	public void breakBlock(World world, int x, int y, int z, Block block, int meta)
 	{
 		if (!field_149934_M)
 		{
-			TileEntityFurnace tileentityfurnace = (TileEntityFurnace)world.getTileEntity(x, y, z);
+			TileEntityEnderFurnace te = (TileEntityEnderFurnace)world.getTileEntity(x, y, z);
 	
-			if (tileentityfurnace != null)
+			if (te != null)
 			{
-				for (int i1 = 0; i1 < tileentityfurnace.getSizeInventory(); ++i1)
+				for (int i1 = 0; i1 < te.getSizeInventory(); ++i1)
 				{
-					ItemStack itemstack = tileentityfurnace.getStackInSlot(i1);
+					ItemStack itemstack = te.getStackInSlot(i1);
 	
 					if (itemstack != null)
 					{
@@ -238,7 +240,7 @@ public class EnderFurnace extends BlockContainer
 	
 		super.breakBlock(world, x, y, z, block, meta);
 	}
-*/
+
 	// If this returns true, then comparators facing away from this block will use the value from
 	// getComparatorInputOverride instead of the actual redstone signal strength.
 	public boolean hasComparatorInputOverride()
