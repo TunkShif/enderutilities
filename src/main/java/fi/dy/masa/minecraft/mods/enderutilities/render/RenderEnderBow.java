@@ -18,7 +18,7 @@ public class RenderEnderBow implements IItemRenderer
 {
 	Minecraft mc = Minecraft.getMinecraft();
 
-	/** 
+	/**
 	 * Checks if this renderer should handle a specific item's render type
 	 * @param item The item we are trying to render
 	 * @param type A render type to check if this renderer handles
@@ -30,7 +30,7 @@ public class RenderEnderBow implements IItemRenderer
 	{
 		return type == ItemRenderType.EQUIPPED || type == ItemRenderType.EQUIPPED_FIRST_PERSON;
 	}
-	
+
 	/**
 	 * Checks if certain helper functionality should be executed for this renderer.
 	 * See ItemRendererHelper for more info
@@ -45,7 +45,7 @@ public class RenderEnderBow implements IItemRenderer
 	{
 		return true;
 	}
-	
+
 	/**
 	 * Called to do the actual rendering, see ItemRenderType for details on when specific 
 	 * types are run, and what extra data is passed into the data parameter.

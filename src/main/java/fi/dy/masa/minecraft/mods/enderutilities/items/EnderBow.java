@@ -129,7 +129,12 @@ public class EnderBow extends Item
 		}
 	}
 
-    /**
+	public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+	{
+		return par1ItemStack;
+	}
+
+	/**
 	 * How long it takes to use or consume an item
 	 */
 	public int getMaxItemUseDuration(ItemStack par1ItemStack)
@@ -142,7 +147,7 @@ public class EnderBow extends Item
 	 */
 	public EnumAction getItemUseAction(ItemStack par1ItemStack)
 	{
-		return EnumAction.none; // .bow;
+		return EnumAction.bow;
 	}
 
     /**
@@ -286,10 +291,13 @@ public class EnderBow extends Item
 	@Override
 	public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
 	{
-		int inUse = stack.getMaxItemUseDuration() - useRemaining;
-		if (inUse >= 18) { return this.getItemIconForUseDuration(2); }
-		if (inUse >= 13) { return this.getItemIconForUseDuration(1); }
-		if (inUse > 0) { return this.getItemIconForUseDuration(0); }
+		if (player.getItemInUse() != null)
+		{
+			int inUse = stack.getMaxItemUseDuration() - useRemaining;
+			if (inUse >= 18) { return this.getItemIconForUseDuration(2); }
+			if (inUse >= 13) { return this.getItemIconForUseDuration(1); }
+			if (inUse > 0) { return this.getItemIconForUseDuration(0); }
+		}
 		return this.itemIcon;
 	}
 }
