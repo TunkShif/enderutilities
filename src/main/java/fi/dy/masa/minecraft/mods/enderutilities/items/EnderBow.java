@@ -46,6 +46,12 @@ public class EnderBow extends Item
     @Override
 	public void onPlayerStoppedUsing(ItemStack bowStack, World world, EntityPlayer player, int itemInUseCount)
 	{
+		// Do nothing on the client side
+		if (world.isRemote == true)
+		{
+			return;
+		}
+
 		int j = this.getMaxItemUseDuration(bowStack) - itemInUseCount;
 
 		ArrowLooseEvent event = new ArrowLooseEvent(player, bowStack, j);
@@ -131,8 +137,14 @@ public class EnderBow extends Item
     /**
 	 * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
 	 */
-	public ItemStack onItemRightClick(ItemStack stack, World par2World, EntityPlayer player)
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
+		// Do nothing on the client side
+		if (world.isRemote == true)
+		{
+			return stack;
+		}
+
 		ArrowNockEvent event = new ArrowNockEvent(player, stack);
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled())
@@ -141,10 +153,13 @@ public class EnderBow extends Item
 		}
 
 		// Don't shoot when sneaking and looking at a block, aka. binding the bow to a new location
-		if (Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK &&
-				player.isSneaking() == true)
+		if (player.isSneaking() == true)
 		{
-			return stack;
+			MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
+			if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+			{
+				return stack;
+			}
 		}
 
 		if (player.inventory.hasItem(EnderUtilitiesItems.enderArrow))
@@ -174,7 +189,8 @@ public class EnderBow extends Item
 		if (player.isSneaking() == true)
 		{
 			// Sneaking and targeting a block: store the location
-			if (Minecraft.getMinecraft().objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+			MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
+			if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
 			{
 				String strSide = "top";
 
