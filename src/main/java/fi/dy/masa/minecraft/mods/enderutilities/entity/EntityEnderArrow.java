@@ -302,12 +302,12 @@ public class EntityEnderArrow extends Entity implements IProjectile
 			if (movingobjectposition != null && movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityPlayer)
 			{
 				EntityPlayer entityplayer = (EntityPlayer)movingobjectposition.entityHit;
-				System.out.println("hit a player (305)"); // FIXME debug
+				System.out.println("hit a player (305): " + entityplayer.toString()); // FIXME debug
 
 				// entityplayer.capabilities.disableDamage || 
 				if (this.shootingEntity instanceof EntityPlayer && !((EntityPlayer)this.shootingEntity).canAttackPlayer(entityplayer))
 				{
-					System.out.println("can't attack player (310)"); // FIXME debug
+					System.out.println("can't attack player (310): " + entityplayer.toString()); // FIXME debug
 					movingobjectposition = null;
 				}
 			}
@@ -317,7 +317,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 
 			if (movingobjectposition != null && movingobjectposition.entityHit != this.shootingEntity)
 			{
-				System.out.println("hit other than the owner (320)"); // FIXME debug
+				System.out.println("hit other than the owner (320): " + movingobjectposition.entityHit.toString()); // FIXME debug
 				if (movingobjectposition.entityHit != null)
 				{
 					System.out.println("hit non null (323)");
