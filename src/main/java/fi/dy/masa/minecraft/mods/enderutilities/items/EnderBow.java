@@ -269,7 +269,7 @@ public class EnderBow extends Item
 	@SideOnly(Side.CLIENT)
 	public IIcon getItemIconForUseDuration(int par1)
 	{
-		System.out.printf("geticon: %d\n", par1);
+//		System.out.printf("geticon: %d\n", par1);
 		return this.iconArray[par1];
 	}
 
@@ -289,7 +289,7 @@ public class EnderBow extends Item
 		int inUse = stack.getMaxItemUseDuration() - useRemaining;
 		if (inUse >= 18) { return this.getItemIconForUseDuration(2); }
 		if (inUse >= 13) { return this.getItemIconForUseDuration(1); }
-		if (inUse >= 0) { return this.getItemIconForUseDuration(0); }
+		if (inUse > 0) { return this.getItemIconForUseDuration(0); }
 		return this.itemIcon;
 	}
 }
