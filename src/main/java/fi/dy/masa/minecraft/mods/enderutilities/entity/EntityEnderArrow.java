@@ -402,15 +402,28 @@ public class EntityEnderArrow extends Entity implements IProjectile
 					//int dim = this.tpTargetDim;
 					movingobjectposition.entityHit.setLocationAndAngles(x, y, z,
 							movingobjectposition.entityHit.rotationYaw, movingobjectposition.entityHit.rotationPitch);
+
+					this.motionX = 0.0d;
+					this.motionY = 0.0d;
+					this.motionZ = 0.0d;
+					this.setDead();
 					}
 				}
 				else
 				{
+					this.motionX *= -0.10000000149011612D;
+					this.motionY *= -0.10000000149011612D;
+					this.motionZ *= -0.10000000149011612D;
+					this.rotationYaw += 180.0F;
+					this.prevRotationYaw += 180.0F;
+					this.ticksInAir = 0;
+/*
 					this.motionX = 0.0d;
 					this.motionY = 0.0d;
 					this.motionZ = 0.0d;
 					this.setDead();
 					return;
+*/
 /*
 					this.field_145791_d = movingobjectposition.blockX;
 					this.field_145792_e = movingobjectposition.blockY;
