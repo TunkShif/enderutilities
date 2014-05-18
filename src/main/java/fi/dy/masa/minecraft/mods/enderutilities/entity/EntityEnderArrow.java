@@ -1,22 +1,24 @@
 package fi.dy.masa.minecraft.mods.enderutilities.entity;
 
-package net.minecraft.entity.projectile;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityTracker;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.server.S0DPacketCollectItem;
 import net.minecraft.network.play.server.S2BPacketChangeGameState;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -24,6 +26,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityEnderArrow extends Entity implements IProjectile
 {
@@ -309,11 +314,11 @@ public class EntityEnderArrow extends Entity implements IProjectile
 
 					if (this.shootingEntity == null)
 					{
-						damagesource = DamageSource.causeArrowDamage(this, this);
+						//damagesource = DamageSource.causeArrowDamage(this, this);
 					}
 					else
 					{
-						damagesource = DamageSource.causeArrowDamage(this, this.shootingEntity);
+						//damagesource = DamageSource.causeArrowDamage(this, this.shootingEntity);
 					}
 
 					if (this.isBurning() && !(movingobjectposition.entityHit instanceof EntityEnderman))
@@ -524,7 +529,9 @@ public class EntityEnderArrow extends Entity implements IProjectile
 			if (flag)
 			{
 				this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-				par1EntityPlayer.onItemPickup(this, 1);
+				//par1EntityPlayer.onItemPickup(this, 1);
+				EntityTracker entitytracker = ((WorldServer)this.worldObj).getEntityTracker();
+				entitytracker.func_151247_a(this, new S0DPacketCollectItem(this.getEntityId(), this.getEntityId()));
 				this.setDead();
 			}
 		}
