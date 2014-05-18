@@ -66,7 +66,7 @@ public class TeleportEntity
 			//if (entity.worldObj.getCollidingBoundingBoxes(entity, entity.boundingBox).isEmpty() == true)
 			{
 				TeleportEntity.addEnderSoundsAndParticles(entity);
-				System.out.printf("x: %f y: %f z: %f yaw: %f pitch: %f maxDist: %f\n", x, y, z, deltaYaw, deltaPitch, maxDist); // FIXME debug
+				//System.out.printf("x: %f y: %f z: %f yaw: %f pitch: %f maxDist: %f\n", x, y, z, deltaYaw, deltaPitch, maxDist); // FIXME debug
 				entity.setPosition(x, y, z);
 				//entity.setLocationAndAngles(x, y, z, entity.rotationYaw, entity.rotationPitch);
 				return;

@@ -139,12 +139,6 @@ public class EnderBow extends Item
 	 */
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
-		// Do nothing on the client side
-		if (world.isRemote == true)
-		{
-			return stack;
-		}
-
 		ArrowNockEvent event = new ArrowNockEvent(player, stack);
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled())
