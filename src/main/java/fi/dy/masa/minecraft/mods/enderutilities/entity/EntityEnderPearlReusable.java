@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
@@ -42,6 +43,11 @@ public class EntityEnderPearlReusable extends EntityThrowable
 	 */
 	protected void onImpact(MovingObjectPosition movingObjectPosition)
 	{
+		if (this.worldObj.isRemote == true)
+		{
+			return;
+		}
+
 		if (movingObjectPosition.entityHit != null)
 		{
 			movingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0.0f);
@@ -52,53 +58,57 @@ public class EntityEnderPearlReusable extends EntityThrowable
 			this.worldObj.spawnParticle("portal", this.posX, this.posY + this.rand.nextDouble() * 2.0d, this.posZ, this.rand.nextGaussian(), 0.0d, this.rand.nextGaussian());
 		}
 
-		if (this.worldObj.isRemote == false)
+
+		if (this.getThrower() != null && this.getThrower() instanceof EntityPlayerMP)
 		{
-			if (this.getThrower() != null && this.getThrower() instanceof EntityPlayerMP)
+			EntityPlayerMP entityplayermp = (EntityPlayerMP)this.getThrower();
+
+			if (entityplayermp.playerNetServerHandler.func_147362_b().isChannelOpen() && entityplayermp.worldObj == this.worldObj)
 			{
-				EntityPlayerMP entityplayermp = (EntityPlayerMP)this.getThrower();
+				EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, this.teleportDamage);
 
-				if (entityplayermp.playerNetServerHandler.func_147362_b().isChannelOpen() && entityplayermp.worldObj == this.worldObj)
+				if (MinecraftForge.EVENT_BUS.post(event) == false)
 				{
-					EnderTeleportEvent event = new EnderTeleportEvent(entityplayermp, this.posX, this.posY, this.posZ, this.teleportDamage);
-
-					if (MinecraftForge.EVENT_BUS.post(event) == false)
+					/*
+					if (this.getThrower().isRiding())
 					{
-						/*
-						if (this.getThrower().isRiding())
-						{
-							this.getThrower().mountEntity((Entity)null);
-						}
-						*/
+						this.getThrower().mountEntity((Entity)null);
+					}
+					*/
 
-						EntityPlayerMP player = (EntityPlayerMP)this.getThrower();
-						if (player.isRiding() == true && player.ridingEntity instanceof EntityLiving)
-						{
-							EntityLiving entity = (EntityLiving)player.ridingEntity;
-							entity.setPositionAndUpdate(this.posX, this.posY, this.posZ);
-							entity.fallDistance = 0.0f;
-						}
-						else
-						{
-							player.setPositionAndUpdate(this.posX, this.posY, this.posZ);
-							player.fallDistance = 0.0f;
-							player.attackEntityFrom(DamageSource.fall, this.teleportDamage);
-						}
+					EntityPlayerMP player = (EntityPlayerMP)this.getThrower();
+					if (player.isRiding() == true && player.ridingEntity instanceof EntityLiving)
+					{
+						EntityLiving entity = (EntityLiving)player.ridingEntity;
+						entity.setPositionAndUpdate(this.posX, this.posY, this.posZ);
+						entity.fallDistance = 0.0f;
+					}
+					else
+					{
+						player.setPositionAndUpdate(this.posX, this.posY, this.posZ);
+						player.fallDistance = 0.0f;
+						player.attackEntityFrom(DamageSource.fall, this.teleportDamage);
 					}
 				}
 			}
-
-			EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ,
-						new ItemStack(EnderUtilitiesItems.enderPearlReusable, 1, 0));
-
-			Random r = new Random();
-			entityitem.motionX = 0.05d * r.nextGaussian();
-			entityitem.motionY = 0.05d * r.nextGaussian() + 0.2d;
-			entityitem.motionZ = 0.05d * r.nextGaussian();
-			entityitem.delayBeforeCanPickup = 20;
-			this.worldObj.spawnEntityInWorld(entityitem);
-
-			this.setDead();
 		}
+
+		if (movingObjectPosition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+		{
+			//System.out.println("portal");
+			//return;
+		}
+
+		EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ,
+					new ItemStack(EnderUtilitiesItems.enderPearlReusable, 1, 0));
+
+		Random r = new Random();
+		entityitem.motionX = 0.05d * r.nextGaussian();
+		entityitem.motionY = 0.05d * r.nextGaussian() + 0.2d;
+		entityitem.motionZ = 0.05d * r.nextGaussian();
+		entityitem.delayBeforeCanPickup = 20;
+		this.worldObj.spawnEntityInWorld(entityitem);
+
+		this.setDead();
 	}
 }
