@@ -309,7 +309,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 			float f2;
 			float f4;
 
-			if (movingobjectposition != null)
+			if (movingobjectposition != null && movingobjectposition.entityHit != this.shootingEntity)
 			{
 				if (movingobjectposition.entityHit != null)
 				{
@@ -376,6 +376,12 @@ public class EntityEnderArrow extends Entity implements IProjectile
 						this.ticksInAir = 0;
 					}
 */
+					if (this.shootingEntity == null)
+					{
+						System.out.println("shootinEntity = null");
+					}
+					else
+					{
 					this.playSound("random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					// TODO: fix interdimensional teleport, get coordinates from entity NBT
 					double x = shootingEntity.posX;
@@ -387,9 +393,16 @@ public class EntityEnderArrow extends Entity implements IProjectile
 					//int dim = this.tpTargetDim;
 					movingobjectposition.entityHit.setLocationAndAngles(x, y, z,
 							movingobjectposition.entityHit.rotationYaw, movingobjectposition.entityHit.rotationPitch);
+					}
 				}
 				else
 				{
+					this.motionX = 0.0d;
+					this.motionY = 0.0d;
+					this.motionZ = 0.0d;
+					this.setDead();
+					return;
+/*
 					this.field_145791_d = movingobjectposition.blockX;
 					this.field_145792_e = movingobjectposition.blockY;
 					this.field_145789_f = movingobjectposition.blockZ;
@@ -411,6 +424,7 @@ public class EntityEnderArrow extends Entity implements IProjectile
 					{
 						this.field_145790_g.onEntityCollidedWithBlock(this.worldObj, this.field_145791_d, this.field_145792_e, this.field_145789_f, this);
 					}
+*/
 				}
 			}
 			else
