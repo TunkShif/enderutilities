@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -270,5 +271,25 @@ public class EnderBow extends Item
 	{
 		System.out.printf("geticon: %d\n", par1);
 		return this.iconArray[par1];
+	}
+
+	/**
+	 * Player, Render pass, and item usage sensitive version of getIconIndex.
+	 *
+	 * @param stack The item stack to get the icon for. (Usually this, and usingItem will be the same if usingItem is not null)
+	 * @param renderPass The pass to get the icon for, 0 is default.
+	 * @param player The player holding the item
+	 * @param usingItem The item the player is actively using. Can be null if not using anything.
+	 * @param useRemaining The ticks remaining for the active item.
+	 * @return The icon index
+	 */
+	@Override
+	public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
+	{
+		int inUse = stack.getMaxItemUseDuration() - useRemaining;
+		if (inUse >= 18) { return this.getItemIconForUseDuration(2); }
+		if (inUse >= 13) { return this.getItemIconForUseDuration(1); }
+		if (inUse >= 0) { return this.getItemIconForUseDuration(0); }
+		return this.itemIcon;
 	}
 }
