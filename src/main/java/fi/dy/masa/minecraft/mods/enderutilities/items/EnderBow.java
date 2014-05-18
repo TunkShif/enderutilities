@@ -257,6 +257,7 @@ public class EnderBow extends Item
 
 		for (int i = 0; i < this.iconArray.length; ++i)
 		{
+			System.out.printf("registered icon %d %s\n", i, this.getIconString() + "." + bowPullIconNameArray[i]);
 			this.iconArray[i] = iconRegister.registerIcon(this.getIconString() + "." + bowPullIconNameArray[i]);
 		}
 	}
@@ -267,6 +268,7 @@ public class EnderBow extends Item
 	@SideOnly(Side.CLIENT)
 	public IIcon getItemIconForUseDuration(int par1)
 	{
+		System.out.printf("geticon: %d\n", par1);
 		return this.iconArray[par1];
 	}
 }
