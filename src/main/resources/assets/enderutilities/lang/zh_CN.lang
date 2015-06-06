@@ -1,0 +1,196 @@
+language.name=简体中文
+language.region=CN
+language.code=zh_CN
+
+category.enderutilities=末影实用设备
+enderutilities.key.togglemode=切换模式
+
+
+############################
+# 容器/背包名称:
+############################
+
+enderutilities.container.enderfurnace=末影熔炉
+enderutilities.container.enderinfuser=末影灌注器
+enderutilities.container.toolworkstation=末影装配站
+
+
+##############
+# 方块名称:
+##############
+
+tile.enderutilities.enderfurnace.name=末影熔炉
+tile.enderutilities.enderinfuser.name=末影灌注器
+tile.enderutilities.toolworkstation.name=末影装配站
+tile.enderutilities.energybridge.transmitter.name=能源桥发射器
+tile.enderutilities.energybridge.receiver.name=能源桥接收器
+tile.enderutilities.energybridge.resonator.name=能源桥谐振器
+
+
+#############
+# 实体:
+#############
+entity.enderutilities.enderarrow.name=末影箭矢
+entity.enderutilities.endermanfighter.name=末影斗者
+entity.enderutilities.enderpearlreusable.name=可重复使用的末影珍珠
+
+
+#############
+# 物品名称:
+#############
+
+item.enderutilities.enderarrow.name=末影箭矢
+item.enderutilities.enderbag.name=末影背包
+item.enderutilities.enderbow.name=末影弓
+item.enderutilities.enderbucket.name=末影桶
+item.enderutilities.endercapacitor.0.name=末影电容 (基础)
+item.enderutilities.endercapacitor.1.name=末影电容 (增强)
+item.enderutilities.endercapacitor.2.name=末影电容 (高级)
+item.enderutilities.endercapacitor.3.name=末影电容 (创造)
+item.enderutilities.enderlasso.name=末影套索
+item.enderutilities.enderpart.enderalloy.0.name=末影合金 (基础)
+item.enderutilities.enderpart.enderalloy.1.name=末影合金 (增强)
+item.enderutilities.enderpart.enderalloy.2.name=末影合金 (高级)
+item.enderutilities.enderpart.endercore.0.active.name=末影核心 (基础)
+item.enderutilities.enderpart.endercore.1.active.name=末影核心 (增强)
+item.enderutilities.enderpart.endercore.2.active.name=末影核心 (高级)
+item.enderutilities.enderpart.endercore.0.inactive.name=未激活末影核心 (基础)
+item.enderutilities.enderpart.endercore.1.inactive.name=未激活末影核心 (增强)
+item.enderutilities.enderpart.endercore.2.inactive.name=未激活末影核心 (高级)
+item.enderutilities.enderpart.enderrelic.name=末影遗迹
+item.enderutilities.enderpart.enderrope.name=末影绳索
+item.enderutilities.enderpart.enderstick.name=末影注能棍
+item.enderutilities.enderpart.mobpersistence.name=狱卒模块
+item.enderutilities.enderpearlreusable.name=末影之眼 (可重复使用)
+item.enderutilities.enderpearlreusable.elite.name=精英之眼 (可重复使用)
+item.enderutilities.enderporter.name=末影之门
+item.enderutilities.enderporter.advanced.name=高级末影之门
+item.enderutilities.endertool.enderpickaxe.name=末影镐
+item.enderutilities.endertool.enderaxe.name=末影斧
+item.enderutilities.endertool.endershovel.name=末影铲
+item.enderutilities.endertool.enderhoe.name=末影锄
+item.enderutilities.endersword.name=末影剑
+item.enderutilities.linkcrystal.0.name=链接水晶 (地点)
+item.enderutilities.linkcrystal.1.name=链接水晶 (方块)
+item.enderutilities.linkcrystal.2.name=链接水晶 (传送门)
+item.enderutilities.mobharness.name=生物马具
+
+
+###################################################
+# 显示在"新鲜"的,不含有NBT数据的物品上的提示:
+###################################################
+
+####################
+# 所有模块化物品:
+####################
+enderutilities.tooltips.itemlocationboundmodular=- 潜行 + 右键来绑定|lf- Alt + Shift + 切换模式键: 存储玩家的|lf  目前位置, 包括所处角度|lf- Shift + 模式切换键|lf  向前选择链接水晶或|lf  Shift + Ctrl + 切换模式键向后选择链接水晶|lf- Ctrl + 鼠标滚轮选定|lf  持有物品不能相同 :)|lf- Alt + 切换模式键来切换公共/私有|lf  备注: 保护好你的每一块链接水晶!
+
+###################
+# 个人物品:
+###################
+item.enderutilities.enderarrow.tooltips=- 用箭撞击生物来娱乐!|lf  (小鸡网球?)
+item.enderutilities.enderbag.tooltips=- 只有一些原版方块能够正常工作
+item.enderutilities.enderbow.tooltips=- 用切换模式键在TP目标/TP自身之间选择|lf- 添加生物持久模块|lf  防止生物Despawning|lf- 用末影合金在铁砧里面修复
+item.enderutilities.enderbucket.tooltips=- 用切换模式键来循环切换操作模式|lf- (在绑定模式下)潜行 + 右键来绑定储罐|lf- Ctrl + 切换模式键在常规操作|lf  和绑定储罐模式下切换|lf- 储罐模式下使用需冷却30秒|lf- 在默认模式下: 右击储罐|lf  取出液体|lf  潜行 + 右击存入液体
+item.enderutilities.endercapacitor.0.tooltips=- (在末地)右击末影水晶以充能|lf- 或者用于末影灌注器|lf- 或者用于建造能源桥
+item.enderutilities.endercapacitor.1.tooltips=- (在末地)右击末影水晶以充能|lf- 或者用于末影灌注器|lf- 或者用于建造能源桥
+item.enderutilities.endercapacitor.2.tooltips=- (在末地)右击末影水晶以充能|lf- 或者用于末影灌注器|lf- 或者用于建造能源桥
+item.enderutilities.enderlasso.tooltips=- 右击来传送生物|lf- 添加生物持久模块|lf  防止生物Despawning
+item.enderutilities.enderpart.endercore.0.active.tooltips=- 用未激活版本来右击末影水晶
+item.enderutilities.enderpart.endercore.1.active.tooltips=- 用未激活版本来右击末影水晶
+item.enderutilities.enderpart.endercore.2.active.tooltips=- 用未激活版本来右击末影水晶
+item.enderutilities.enderpart.endercore.0.inactive.tooltips=- (在末地)右击末影水晶以激活
+item.enderutilities.enderpart.endercore.1.inactive.tooltips=- (在末地)右击末影水晶以激活
+item.enderutilities.enderpart.endercore.2.inactive.tooltips=- (在末地)右击末影水晶以激活
+item.enderutilities.enderpart.enderrelic.tooltips=- 生成一个新的末影水晶|lf- 在末地的黑曜石柱子上|lf  的基岩方块上使用|lf- 在末地, 它至少需要基岩下有3x3x6的黑曜石柱|lf  有3x3x6的黑曜石柱|lf- 可能会危害你的生命...|lf- 也能在其他地方生成末影水晶
+item.enderutilities.enderpart.mobpersistence.tooltips=- 右击生物以防止Despawning|lf- 安装到末影弓上来获得同样的效果|lf- 右击使用物品, 弓和套索不是
+item.enderutilities.enderpearlreusable.elite.tooltips=带你装逼带你飞!
+item.enderutilities.enderporter.tooltips=- 传送到同一个维度|lf- 非单独使用!|lf- 右击长按直到"已充能" 
+item.enderutilities.enderporter.advanced.tooltips=- 玩家传送到对立维度|lf- 右击长按直到"已充能" 
+item.enderutilities.endertool.enderpickaxe.tooltips=- Add Efficiency V for instant mining of common|lf  blocks in the fast mode|lf- Fast mode uses two durability per mined block|lf- The tool will never break completely|lf- Repair in an anvil with one Advanced Ender Alloy and 15 levels|lf- Right click to place blocks from adjacent slot|lf- Toggle mode key: toggle between normal/fast mode|lf- Ctrl + Toggle mode: cycle the drops handling mode|lf  - Normal: items drop normally|lf  - Player: items will be inserted directly to the player's|lf    inventory, if possible. If not, they will drop normally.|lf  - Remote: items will be teleported to|lf    the selected Link Crystal's destination, if possible.|lf- Player mode requires an active Basic Ender Core|lf- Remote mode requires either an active Enhanced|lf  Ender Core (inter-dimensional transport) or an active|lf  Advanced Ender Core (cross-dimensional transport)|lf- Sneak + right click to bind to inventories|lf- Alt + Shift + Toggle mode: Store the players's|lf  current position
+item.enderutilities.endertool.enderaxe.tooltips=- Add Efficiency V for instant mining of common|lf  blocks in the fast mode|lf- Fast mode uses two durability per mined block|lf- The tool will never break completely|lf- Repair in an anvil with one Advanced Ender Alloy and 15 levels|lf- Right click to place blocks from adjacent slot|lf- Toggle mode key: toggle between normal/fast mode|lf- Ctrl + Toggle mode: cycle the drops handling mode|lf  - Normal: items drop normally|lf  - Player: items will be inserted directly to the player's|lf    inventory, if possible. If not, they will drop normally.|lf  - Remote: items will be teleported to|lf    the selected Link Crystal's destination, if possible.|lf- Player mode requires an active Basic Ender Core|lf- Remote mode requires either an active Enhanced|lf  Ender Core (inter-dimensional transport) or an active|lf  Advanced Ender Core (cross-dimensional transport)|lf- Sneak + right click to bind to inventories|lf- Alt + Shift + Toggle mode: Store the players's|lf  current position
+item.enderutilities.endertool.endershovel.tooltips=- Add Efficiency V for instant mining of common|lf  blocks in the fast mode|lf- Fast mode uses two durability per mined block|lf- The tool will never break completely|lf- Repair in an anvil with one Advanced Ender Alloy and 15 levels|lf- Right click to place blocks from adjacent slot|lf- Toggle mode key: toggle between normal/fast mode|lf- Ctrl + Toggle mode: cycle the drops handling mode|lf  - Normal: items drop normally|lf  - Player: items will be inserted directly to the player's|lf    inventory, if possible. If not, they will drop normally.|lf  - Remote: items will be teleported to|lf    the selected Link Crystal's destination, if possible.|lf- Player mode requires an active Basic Ender Core|lf- Remote mode requires either an active Enhanced|lf  Ender Core (inter-dimensional transport) or an active|lf  Advanced Ender Core (cross-dimensional transport)|lf- Sneak + right click to bind to inventories|lf- Alt + Shift + Toggle mode: Store the players's|lf  current position
+item.enderutilities.endertool.enderhoe.tooltips=- Can till and plant a 3x3 area in the "Fast" mode|lf- Can plant crops from player or linked inventory|lf  (to plant right click on the farmland|lf  and have something to plant in your|lf  inventory or the linked inventory)|lf- The tool will never break completely|lf- Repair in an anvil with one Advanced Ender Alloy and 15 levels|lf- Toggle mode key: toggle between 1x1 and 3x3 mode|lf- Ctrl + Toggle mode: cycle the inventory mode|lf  - Normal: No special functionality|lf  - Player: items will be inserted into/taken from the player's|lf    inventory, if possible. If not, they will drop normally.|lf  - Remote: items will be teleported to/from|lf    the selected Link Crystal's destination, if possible.|lf- Player mode requires an active Basic Ender Core|lf- Remote mode requires either an active Enhanced|lf  Ender Core (inter-dimensional transport) or an active|lf  Advanced Ender Core (cross-dimensional transport)|lf- Sneak + right click to bind to inventories|lf- Alt + Shift + Toggle mode: Store the players's|lf  current position
+item.enderutilities.endersword.tooltips=- The sword will never break completely|lf- Repair in an anvil with one Advanced Ender Alloy and 15 levels|lf- Ctrl + Toggle mode: cycle the sword mode|lf  - Normal: no special functionality|lf  - Player: drops from killed mobs will be inserted|lf    directly to the player's inventory, if possible.|lf  - Remote: items will be teleported to|lf    the selected Link Crystal's destination, if possible.|lf  - Summon: Does minimal direct damage, spawns up to 3|lf    new Ender Fighters to attack the target.|lf- The Ender Fighters start to rage and attack players|lf  if there is no player holding an Ender Sword|lf  in the Summon mode within 32 blocks.|lf- Idle Ender Fighters disappear sometime after 10 seconds.|lf- Using a Name Tag on them makes them peaceful.|lf- Player mode requires an active Basic Ender Core|lf- Remote mode requires either an active Enhanced|lf  Ender Core (inter-dimensional transport) or an active|lf  Advanced Ender Core (cross-dimensional transport)|lf- Sneak + right click to bind to inventories|lf- Alt + Shift + Toggle mode: Store the players's|lf  current position
+item.enderutilities.linkcrystal.0.tooltips=- Sneak + right click to bind to a location|lf- Alt + Shift + Toggle mode: Store the players's|lf  current position, INCLUDING the yaw/pitch rotations|lf- Alt + Toggle mode to toggle public/private|lf- Tip: Rename in an anvil; the name is usually|lf  shown after the container item's name
+item.enderutilities.linkcrystal.1.tooltips=- Sneak + right click to bind to a block|lf- Alt + Toggle mode to toggle public/private|lf- Tip: Rename in an anvil; the name is usually|lf  shown after the container item's name
+item.enderutilities.linkcrystal.2.tooltips=*WIP*
+item.enderutilities.mobharness.tooltips=- 右击生物骑上它|lf- 潜行 + 右击来 '存储' 生物,|lf  然后 潜行 + 右键另一只生物放在它身上|lf  的第一层|lf- 潜行k + 右键双击同一只生物|lf  来放在自己头上|lf- 潜行 + 右键正骑在别人身上的生物|lf  让它下来|lf- 朝着地下潜行 + 右击|lf  来清除'绑定'|lf- 朝着天空潜行 + 右击|lf  让骑在自己身上的生物下来|lf- 提示: 如果骑着爬行者, 不要让它|lf  在你骑上之前看见你!
+
+tile.enderutilities.enderfurnace.tooltips=- 比原版熔炉快了许多|lf  (正常模式下3秒一个物品, 快速模式下一秒一个)|lf- 能够使用末影珍珠, 末影之眼和烈焰棒作为燃料|lf- 也能用来自流体容器的岩浆作为燃料|lf  比如末影水桶或者TE4的便携储罐|lf- 也可以在无燃料下工作 (60秒烧制一个物品)|lf- 缓慢模式下每个燃料|lf  烧制的物品是原版熔炉的1.5倍|lf- 快速模式下燃料消耗是缓慢模式的6倍|lf  (每个燃料能烧制的物品数量是原版的0.75倍)|lf- 能够直接把产物输出到它的主人的原版末影箱子里面|lf- 拥有能够储存1024个物品的缓存区
+tile.enderutilities.enderinfuser.tooltips=- 能够给末影电容充能|lf- 用末影珍珠或末影之眼作为"燃料"|lf- 三个充能选项之一
+tile.enderutilities.toolworkstation.tooltips=- 用于查看/更改物品里面的模块
+
+tile.enderutilities.energybridge.transmitter.tooltips=- 能源桥能够自动地|lf 给安装有模块的末影电容|lf  并且是在玩家背包里面的电容|lf  进行充能|lf- 你需要在末地有一个发射器|lf- 它不需要保持所在区块加载|lf  (它实际上并不会主动地做任何事)|lf- 在魔影水晶周围建造发射器|lf  (在末地的黑曜石柱子上面建造)|lf- 离水晶约两格距离|lf  放置发射器|lf- 放置四个谐振器在|lf  末影水晶同水平上, 两个空方块之间|lf- 谐振器必须面对着水晶|lf  (place them when looking out)|lf- There can only be transparent blocks above|lf  the Transmitter all the way up to the sky
+tile.enderutilities.energybridge.receiver.tooltips=- 能源桥能够自动地|lf  给安装有模块的末影电容,|lf  并且是在玩家背包里面的电容|lf  进行充能|lf- 你需要在每一个维度都有一个接收器|lf  want the recharging to work in|lf- It doesn't need to be chunk loaded|lf  (it doesn't actually actively do anything)|lf- Place the Receiver in the middle|lf- Place four Resonators on the same level as|lf  the Receiver, two blocks of air between them|lf- The Resonators must face the Receiver|lf  (place them when looking out)|lf- There can only be transparent blocks above|lf  and below the Receiver all the way down|lf  to Bedrock and up to the sky
+tile.enderutilities.energybridge.resonator.tooltips=- See the description for the Transmitter and Receiver|lf- There must only be air "between" the Resonators|lf  (ie. where the beams will form, diagonally between Resonators|lf  and between the Resonators and the Receiver)
+
+###################################
+# GUI和物品标签/提示等:
+###################################
+
+enderutilities.gui.label.outputbuffer=缓冲
+enderutilities.gui.label.modulestorage=模块存储
+enderutilities.gui.label.enderinfuser.input=末影珍珠或末影之眼
+enderutilities.gui.label.enderinfuser.chargeableinput=充能物品
+enderutilities.gui.label.outputtoenderchest=启用/禁用输出到末影箱子
+enderutilities.gui.label.slowfasttoggle=切换 缓慢/快速 模式
+
+enderutilities.tooltip.dimension=维度
+enderutilities.tooltip.dimension.compact=DIM
+enderutilities.tooltip.durability=耐久
+enderutilities.tooltip.item.1x1=1x1
+enderutilities.tooltip.item.3x3=3x3
+enderutilities.tooltip.item.advanced=高级
+enderutilities.tooltip.item.amount=数量
+enderutilities.tooltip.item.basic=基础
+enderutilities.tooltip.item.bucket.mode.bind=链接到储罐
+enderutilities.tooltip.item.bucket.mode.fill=填充水桶
+enderutilities.tooltip.item.bucket.mode.drain=排出水桶
+enderutilities.tooltip.item.bucket.mode.normal=默认
+enderutilities.tooltip.item.cached.amount=最后查看数量
+enderutilities.tooltip.item.cached.fluid=最后查看流体
+enderutilities.tooltip.item.cached.fluid.compact=最后
+enderutilities.tooltip.item.charge=充能
+enderutilities.tooltip.item.craftingingredient=合成成分
+enderutilities.tooltip.item.endercore=末影核心
+enderutilities.tooltip.item.endersword.summon=召唤
+enderutilities.tooltip.item.endertool.digmode=采掘模式
+enderutilities.tooltip.item.endertool.dropsmode=掉落
+enderutilities.tooltip.item.endertool.playerinv=玩家
+enderutilities.tooltip.item.endertool.remote=远程
+enderutilities.tooltip.item.enhanced=增强
+enderutilities.tooltip.item.empty=空
+enderutilities.tooltip.item.fast=快速
+enderutilities.tooltip.item.fluid=液体
+enderutilities.tooltip.item.holdshift=按住 §e§oShift§7 显示更多
+enderutilities.tooltip.item.holdshiftfordescription=按住 §e§oShift§7 查看描述
+enderutilities.tooltip.item.jailer=遇阻
+enderutilities.tooltip.item.linked=已链接
+enderutilities.tooltip.item.linkedto=链接到
+enderutilities.tooltip.item.mode=模式
+enderutilities.tooltip.item.no=否
+enderutilities.tooltip.item.nolinkcrystals=未安装链接水晶
+enderutilities.tooltip.item.none=无
+enderutilities.tooltip.item.normal=默认
+enderutilities.tooltip.item.notargetset=无目标设置
+enderutilities.tooltip.item.notlinked=没有链接
+enderutilities.tooltip.item.owner=主人
+enderutilities.tooltip.item.private=私有
+enderutilities.tooltip.item.public=公共
+enderutilities.tooltip.item.selectedlinkcrystal=选择链接水晶:
+enderutilities.tooltip.item.selectedlinkcrystal.short=LC:
+enderutilities.tooltip.item.slots=槽位
+enderutilities.tooltip.item.target=目标
+enderutilities.tooltip.item.tier=等级
+enderutilities.tooltip.item.tpself=TP 自身
+enderutilities.tooltip.item.tptarget=TP 目标
+enderutilities.tooltip.item.usetoolworkstation=使用工具装配台来增加或移除模块
+enderutilities.tooltip.item.yes=是
+
+
+# 聊天信息:
+
+enderutilities.chat.message.bound.block.changed=目标方块绑定已更改, 移除绑定.
+enderutilities.chat.message.enderbag.blocknotwhitelisted=目标方块不在白名单中:
+enderutilities.chat.message.enderbag.outofrange=目标超出了客户端的范围
